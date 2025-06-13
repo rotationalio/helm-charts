@@ -1,9 +1,7 @@
 parlance:
   django:
-    debug: "True"
-    settingsModule: parlance.settings.development
-  sentry:
-    dsn: "https://sentry.example.com/1234567890"
+    debug: "False"
+    settingsModule: parlance.settings.testing
 
 secrets:
   create: true
