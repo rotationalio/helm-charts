@@ -1,0 +1,34 @@
+parlance:
+  django:
+    debug: "False"
+    settingsModule: parlance.settings.testing
+
+secrets:
+  create: true
+  secretKey:
+    value: "supersecretkey"
+  databaseURL:
+    value: "postgres://user:password@localhost:5432/parlance"
+  adminPassword:
+    value: "theeaglefliesatmidnight"
+
+jobs:
+  ensureAdmin:
+    username: benjamin
+    email: benjamin@example.com
+
+ingress:
+  enabled: true
+  hosts:
+    - host: parlance.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: parlance.example.dev
+      paths:
+        - path: /
+          pathType: Prefix
+
+# TODO: add back when parlance has probes.
+readinessProbe: null
+livenessProbe: null

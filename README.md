@@ -30,5 +30,5 @@ rotational` to see the charts.
 For example, to debug the parlance charts; in the `charts/parlance` directory, run:
 
 ```
-$ helm template --debug parlance . --values examples/values.yaml
+$ helm template --debug parlance . --values ci/all-values.yaml
 ```
