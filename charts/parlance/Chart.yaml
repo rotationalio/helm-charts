@@ -29,5 +29,5 @@ icon: https://rotational.io/img/favicon.png
 sources:
   - https://github.com/rotationalio/parlance
 maintainers:
-  - name: Rotational Labs
+  - name: rotationalio
     email: support@rotational.io

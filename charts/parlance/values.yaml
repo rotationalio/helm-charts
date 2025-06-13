@@ -29,7 +29,7 @@ parlance:
 # specify the secretName and secretKey rather than a value for each secret item and
 # create the secret(s) manually.
 secrets:
-  create: false  # Set to true to create secrets from the values below.
+  create: true  # Set to false to use an pre-installed secret instead.
   secretKey:
     secretName: ""
     secretKey: secretKey
