@@ -36,9 +36,12 @@ Common labels
 {{- define "parlance.labels" -}}
 helm.sh/chart: {{ include "parlance.chart" . }}
 {{ include "parlance.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
+{{- if .Values.image.tag }}
+app.kubernetes.io/version: {{ .Values.image.tag | quote }}
+{{- else if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: "django"
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
@@ -51,12 +54,9 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create the name of the service account to use
+Create the name of the ingress to use
 */}}
-{{- define "parlance.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "parlance.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
+{{- define "parlance.ingressName" -}}
+{{- default (include "aurora.fullname" .) .Values.ingress.name }}
 {{- end }}
-{{- end }}
+

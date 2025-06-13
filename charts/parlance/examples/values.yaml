@@ -1,0 +1,32 @@
+parlance:
+  django:
+    debug: "True"
+    settingsModule: parlance.settings.development
+  sentry:
+    dsn: "https://sentry.example.com/1234567890"
+
+secrets:
+  create: true
+  secretKey:
+    value: "supersecretkey"
+  databaseURL:
+    value: "postgres://user:password@localhost:5432/parlance"
+  adminPassword:
+    value: "theeaglefliesatmidnight"
+
+jobs:
+  ensureAdmin:
+    username: benjamin
+    email: benjamin@example.com
+
+ingress:
+  enabled: true
+  hosts:
+    - host: parlance.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: parlance.example.dev
+      paths:
+        - path: /
+          pathType: Prefix
