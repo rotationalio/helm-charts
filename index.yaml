@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  parlance:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-06-13T15:22:50.166623913Z"
+    description: A Helm chart for Kubernetes
+    digest: 6fbfdfd11ade4560f40d7d7491d72e9992a7fb452091f81ee6d142f1f8ba81fd
+    name: parlance
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/parlance-0.1.0/parlance-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-06-13T15:22:50.166629264Z"
