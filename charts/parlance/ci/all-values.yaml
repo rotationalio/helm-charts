@@ -28,7 +28,3 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-
-# TODO: add back when parlance has probes.
-readinessProbe: null
-livenessProbe: null
