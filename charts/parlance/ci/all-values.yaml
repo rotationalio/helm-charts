@@ -13,7 +13,10 @@ secrets:
     value: "theeaglefliesatmidnight"
 
 jobs:
+  migrate:
+    create: true
   ensureAdmin:
+    create: true
     username: benjamin
     email: benjamin@example.com
 
