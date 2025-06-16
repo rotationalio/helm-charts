@@ -28,3 +28,7 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
+
+# NOTE: if readiness probes are added the tests will actually try to access a PG database.
+readinessProbe: null
+livenessProbe: null
