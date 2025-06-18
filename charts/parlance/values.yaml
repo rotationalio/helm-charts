@@ -48,10 +48,12 @@ secrets:
 jobs:
   migrate:
     create: true
+    backoffLimit: 3
   ensureAdmin:
     create: true
     username: admin
     email:
+    backoffLimit: 3
 
 # Specify how pods are created in the deployment.
 pod:

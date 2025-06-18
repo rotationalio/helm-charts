@@ -8,12 +8,15 @@ secrets:
   secretKey:
     value: "supersecretkey"
   databaseURL:
-    value: "postgres://user:password@localhost:5432/parlance"
+    value: "postgres://postgres:hiddenelephant@postgres-postgresql.postgres.svc.cluster.local:5432/parlance"
   adminPassword:
     value: "theeaglefliesatmidnight"
 
 jobs:
+  migrate:
+    create: true
   ensureAdmin:
+    create: true
     username: benjamin
     email: benjamin@example.com
 
@@ -29,6 +32,6 @@ ingress:
         - path: /
           pathType: Prefix
 
-# TODO: add back when parlance has probes.
+# NOTE: if readiness probes are added the tests will actually try to access a PG database.
 readinessProbe: null
 livenessProbe: null

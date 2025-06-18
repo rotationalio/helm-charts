@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -39,6 +39,13 @@ jobs:
       - name: Create kind cluster
         if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.10.0
+
+      - name: Install Postgres on Kind
+        if: steps.list-changed.outputs.changed == 'true'
+        run: |
+          kubectl create namespace postgres || true
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm install postgres bitnami/postgresql --namespace postgres --values ci/postgres.yaml --wait
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
