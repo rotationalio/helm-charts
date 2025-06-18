@@ -20,7 +20,7 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["python", "manage.py", "migrate"]
+          command: ["python", "manage.py", "lockedmigrate"]
           {{- include "parlance.environment" . | nindent 10 }}
       restartPolicy: Never
   backoffLimit: {{ .Values.jobs.migrate.backoffLimit | default 5 }}
