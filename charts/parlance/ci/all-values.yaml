@@ -8,7 +8,7 @@ secrets:
   secretKey:
     value: "supersecretkey"
   databaseURL:
-    value: "postgres://postgres:postgres@localhost:5432/parlance"
+    value: "postgres://postgres:postgres@postgres.postgres.svc.cluster.local:5432/parlance"
   adminPassword:
     value: "theeaglefliesatmidnight"
 
