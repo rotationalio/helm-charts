@@ -45,7 +45,7 @@ jobs:
         run: |
           kubectl create namespace postgres || true
           helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm install postgres bitnami/postgresql --namespace postgres --values ci/postgres.yaml
+          helm install postgres bitnami/postgresql --namespace postgres --values ci/postgres.yaml --wait
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'

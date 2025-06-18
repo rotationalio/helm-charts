@@ -24,6 +24,17 @@ env:
   - name: SENTRY_DSN
     value: {{ .Values.parlance.sentry.dsn | quote }}
   {{- end }}
+  {{- if .Values.jobs.ensureAdmin.create }}
+  - name: DJANGO_ADMIN_USERNAME
+    value: {{ .Values.jobs.ensureAdmin.username | quote }}
+  - name: DJANGO_ADMIN_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "parlance.adminPasswordSecretName" . }}
+        key: {{ .Values.secrets.adminPassword.secretKey }}
+  - name: DJANGO_ADMIN_EMAIL
+    value: {{ .Values.jobs.ensureAdmin.email | quote }}
+  {{- end }}
 {{- end -}}
 
 {{- define "parlance.allowedHosts" -}}
@@ -57,5 +68,13 @@ env:
 {{ include "parlance.fullname" . }}
 {{- else -}}
 {{ default (include "parlance.fullname" .) .Values.secrets.databaseURL.secretName }}
+{{- end -}}
+{{- end -}}
+
+{{- define "parlance.adminPasswordSecretName" -}}
+{{- if .Values.secrets.create -}}
+{{ include "parlance.fullname" . }}
+{{- else -}}
+{{ default (include "parlance.fullname" .) .Values.secrets.adminPassword.secretName }}
 {{- end -}}
 {{- end -}}
