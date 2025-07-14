@@ -1,0 +1,174 @@
+# Default values for deploying Quarterdeck.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Name overrides: by default the name for most objects will be release-quarterdeck. It
+# is recommended # to create a descriptive release name, but if you must override the
+# names separate from the release, you can set nameOverride. To remove the -quarterdeck
+# suffix, set fullnameOverride.
+nameOverride: ""
+fullnameOverride: ""
+
+# Quarterdeck operates in several modes: either as a statefulset with a sqlite database,
+# or as a deployment with an external database. It is recommended to increase the
+# replicaCount only when using the deployment mode.
+replicaCount: 1
+
+image:
+  repository: rotationalio/quarterdeck
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+imagePullSecrets: []
+
+# Set the specific configuration for the Quarterdeck service. For more information about
+# the various configuration options, use quarterdeck config on the command line.
+quarterdeck:
+  # Maintenance mode is used to start Quarterdeck without connecting to external
+  # services and can be used to run the pod without starting the service for debugging.
+  maintenance: false
+
+  # One of test, debug, or release (should only use release in production).
+  mode: release
+
+  # Logging outputs JSON logs unless consoleLog is set to true. Log levels are trace,
+  # debug, info, warn, error, fatal, or panic.
+  logLevel: info
+  consoleLog: false
+
+  # CORS settings: by default allows all origins, but generally should be restricted to
+  # the domains specified in the audience configuration.
+  allowOrigins: ["*"]
+
+  # Enable rate limiting to prevent spam and abuse.
+  # Rate limiting is implemented as a token bucket algorithm; perSecond is the number of
+  # tokens added to the bucket every second, and burst is the maximum number of tokens
+  # that can be in the bucket at any time. E.g. perSecond: 32 and burst: 128 means
+  # that the service can handle up to 128 requests per second, but will only reset after
+  # 4 seconds of no requests.
+  # TODO: allow per-IP rate limiting in addition to constant rate limiting.
+  rateLimit:
+    enabled: true
+    perSecond: 32
+    burst: 128
+
+  # The DSN to connect to the database. If using a statefulset, this should be set to
+  # a sqlite3 volume mount point, if using an external database, this should be
+  # configured to allow connection to the databse server.
+  # TODO: allow this to be stored in a secret if it has database credentials.
+  databaseURL: sqlite3:////data/db/quarterdeck.db
+
+# Modifies how Quarterdeck handles authentication and authorization for its applications.
+authentication:
+  # If you're configuring Quarterdeck to use specific Ed25519 keys, set the key value
+  # to the KeyID and the value to the path the PEM encoded key is mounted to. If this is
+  # empty, then Quarterdeck will generate a new key pair on startup.
+  keys: {}
+
+  # If specifing keys, then you must manually create a secret with the keys as files
+  # that will be mounted to the pods as specified below:
+  keysSecret:
+    name: ""
+    mountPath: /data/keys
+
+  # The audience is a list of domains that are allowed to authenticate with Quarterdeck.
+  # including the Quarterdeck domain itself. This is used to verify the JWT tokens
+  # issued by Quarterdeck.
+  audience: []
+
+  # Should be set to the same domain as the Quarterdeck service, or leave blank to use
+  # the ingress domain defined below.
+  issuer: ""
+
+  # How long access and refresh tokens are valid for. The overlap is a negative duration
+  # that specifies how long before an access token expires that a refresh token can be used.
+  accessTokenTTL: 1h
+  refreshTokenTTL: 4h
+  tokenOverlap: -15m
+
+# Quarterdeck can be configured to return a security.txt file that defines security policies
+# see: https://securitytxt.org/ for more information.
+securitytxt:
+  path: /data/info/security.txt
+  text: ""
+
+# Define PVCs that are allocated per pod on the stateful set (e.g. quarterdeck data)
+storage:
+  # The database data spec will be included in volume claim templates.
+  database:
+    mountPath: /data/db
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 32Gi
+
+# Add any annotations to all Quarterdeck kubernetes resources.
+annotations: {}
+
+# Configuration for the Quarterdeck service.
+service:
+  type: ClusterIP
+  port: 8888
+
+# Configuration for the Quarterdeck ingress.
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# Setup the liveness and readiness probes on the pods.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: http
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: http
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}
