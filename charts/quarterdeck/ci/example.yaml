@@ -1,0 +1,19 @@
+authentication:
+  keys:
+    01K059W7D5ASCF2E7S5TH91NJA: /data/keys/01K059W7D5ASCF2E7S5TH91NJA.pem
+    01K059WJ39Z8HXRTNGRP42YXBW: /data/keys/01K059WJ39Z8HXRTNGRP42YXBW.pem
+  keysSecret:
+    name: quarterdeck-keys
+  audience:
+  - "rotational.app"
+  - "auth.rotational.app"
+  - "honu.rotational.app"
+
+securitytxt:
+  text: |
+    Contact: mailto:security@example.com
+    Expires: 2037-11-14T22:07:00.000Z
+    Encryption: https://example.com/pgp-key.txt
+    Preferred-Languages: en
+    Canonical: https://example.com/.well-known/security.txt
+    Policy: https://example.com/security
