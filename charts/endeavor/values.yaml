@@ -121,7 +121,7 @@ livenessProbe:
   initialDelaySeconds: 2
   periodSeconds: 10
 
-# The readiness probe requires Endeavor to be running and connected to the database.     
+# The readiness probe requires Endeavor to be running and connected to the database.
 readinessProbe:
   httpGet:
     path: /readyz
