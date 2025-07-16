@@ -1,0 +1,164 @@
+# Default values for deploying endeavor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Name overrides: by default the name for most objects will be release-endeavor. It is
+# recommended to create a descriptive release name, but if you must override the names
+# separate from the release, you can set nameOverride. To remove the -endeavor suffix
+# set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+# Environment should be set to "demo", "development", "staging", or "production".
+environment: "production"
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: rotationalio/endeavor
+  # This sets the pull policy for images.
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+
+# Set the Endeavor specific configuration.
+endeavor:
+  # Maintenance mode can be used to run the pod without starting the serice for debugging
+  maintenance: false
+  # Specify the mode of the server (release, debug, testing)
+  mode: release
+  # Specify the verbosity of logging (trace, debug, info, warn, error, fatal, panic)
+  logLevel: info
+  # If true logs colorized human readable output instead of json
+  consoleLog: true
+  # DSN containing backend database configuration
+  databaseURL: sqlite3:///endeavor.db
+  # DSN containing backend database configuration for documents
+  documentsURL: clover:///documents.db
+  # Web server specific configuration
+  web:
+    # If true sets the web UI to run in maintenance mode; inherited from parent
+    maintenance: false
+    # If false, the web UI server will not be run
+    enabled: true
+    # If false, the API server will return unavailable when accessed; subordinate to the enabled flag
+    APIenabled: true
+    # If false, the UI server will return unavailable when accessed; subordinate to the enabled flag
+    UIenabled: true
+    # The ip address and port to bind the web server on
+    bindAddr: 8000
+    # Origin (url) of the UI server for creating endpoints and CORS access
+    origin: http://localhost:8000
+    # Auth Manages authentication and authorization for the Endeavor API server.
+    auth:
+      # Static key configuration as a map of keyID to path on disk
+      keys: {}
+      # The value of the audience JWT claim
+      audience: http://localhost:8000
+      # The value of the issuer JWT claim
+      issuer: http://localhost:8000
+      # Limit cookies to the specified domain (exclude port)
+      cookieDomain: localhost
+      # The amount of time before an access token expires
+      accessTokenTTL: 1h
+      # The amount of time before a refresh token expires
+      refreshTokenTTL: 2h
+      # The amount of overlap between the access and refresh tokens
+      tokenOverlap: -15m
+    docsName: ""
+  # Inference specifies the configuration for the inference client
+  inference:
+    # The URL of the inference endpoint
+    endpointURL: http://localhost:8000
+    # The api key to use for the inference client, if required
+    apikey: apikey
+  # Radish specifies the configuration for the async task client
+  radish:
+    workers: 4
+    queuesize: 64
+
+# Specify how pods are created in the deployment.
+pod:
+  # Add additional annotations to the pods
+  annotations: {}
+  # Add additional labels to the pods
+  labels: {}
+  # Specify a pod security context
+  securityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: endeavor.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources: {}
+
+# The liveness probe requires Endeavor to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# The readiness probe requires Endeavor to be running and connected to the database.     
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+# Enable persistence using Persistent Volume Claims
+persistence:
+  type: pvc
+  enabled: true
+  storageClassName: endeavor-pvc
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  size: 20Gi
+  annotations: {}
+  finalizers:
+    - kubernetes.io/pvc-protection
+  selectorLabels: {}
+  extraPvcLabels: {}
+  disableWarning: false
+
+# Optionally specify how nodes are selected to place pods on.
+nodeSelector: {}
+
+# Optionally specify tolerations to ensure pods are not scheduled on incompatible nodes.
+tolerations: []
+
+# Optionally specify affinities to ensure pods and resources are together or apart.
+affinity: {}
