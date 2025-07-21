@@ -27,7 +27,7 @@ env:
   - name: ENDEAVOR_WEB_BIND_ADDR
     value: {{ .Values.endeavor.web.bindAddr | quote }}
   - name: ENDEAVOR_WEB_ORIGIN
-    value: {{ .Values.endeavor.web.origin | quote }}
+    value: "{{ .Values.service.type }}:{{ .Values.service.port }}"
   - name: ENDEAVOR_WEB_AUTH_KEYS
     value: {{ .Values.endeavor.web.auth.keys | quote }}
   - name: ENDEAVOR_WEB_AUTH_AUDIENCE
@@ -42,17 +42,27 @@ env:
     value: {{ .Values.endeavor.web.auth.refreshTokenTTL | quote }}
   - name: ENDEAVOR_WEB_TOKEN_OVERLAP
     value: {{ .Values.endeavor.web.auth.tokenOverlap | quote }}
-  - name: ENDEAVOR_WEB_DOCSNAME
+  - name: ENDEAVOR_WEB_DOCS_NAME
     value: {{ .Values.endeavor.web.docsName | quote }}
   - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
-    value: {{ .Values.endeavor.inferenceEndpointURL | quote }}
+  {{- if .Values.endeavor.inference.endpointURL -}}
+      value: {{ .Values.endeavor.inferenceEndpointURL | quote }}
+  {{- end -}}
   - name: ENDEAVOR_INFERENCE_API_KEY
-    value: {{ .Values.endeavor.inferenceAPIKey | quote }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "endeavor.inferenceAPIKeySecretName" . }}
+        key: {{ .Values.secrets.inferenceAPIKey.secretKey }}
   - name: ENDEAVOR_RADISH_WORKERS
     value: {{ .Values.endeavor.radish.workers | quote }}
   - name: ENDEAVOR_RADISH_QUEUE_SIZE
     value: {{ .Values.endeavor.radish.queueSize | quote }}
 {{- end -}}
 
-
-
+{{- define "endeavor.inferenceAPIKeySecretName" -}}
+{{- if .Values.secrets.create -}}
+{{ include "endeavor.fullname" . }}
+{{- else -}}
+{{ default (include "endeavor.fullname" .) .Values.secrets.inferenceAPIKey.secretName }}
+{{- end -}}
+{{- end -}}

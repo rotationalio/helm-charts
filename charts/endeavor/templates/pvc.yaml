@@ -1,4 +1,3 @@
-{{- if and (not .Values.useStatefulSet) .Values.persistence.enabled (not .Values.persistence.existingClaim) (eq .Values.persistence.type "pvc")}}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -10,10 +9,6 @@ metadata:
     {{- end }}
   {{- with .Values.persistence.annotations  }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-  {{- with .Values.persistence.finalizers  }}
-  finalizers:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -31,5 +26,4 @@ spec:
   selector:
     matchLabels:
     {{- toYaml . | nindent 6 }}
-  {{- end }}
 {{- end }}
