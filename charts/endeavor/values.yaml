@@ -37,7 +37,7 @@ endeavor:
   # If true logs colorized human readable output instead of json
   consoleLog: true
   # DSN containing backend database configuration
-  databaseURL: sqlite3:///endeavor.db
+  databaseURL: sqlite3:////data/endeavor.db
   # DSN containing backend database configuration for documents
   documentsURL: bolt:////data/documents.db
   # Web server specific configuration
