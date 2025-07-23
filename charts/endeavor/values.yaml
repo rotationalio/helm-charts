@@ -65,11 +65,11 @@ endeavor:
       # Limit cookies to the specified domain (exclude port)
       cookieDomain: localhost
       # The amount of time before an access token expires
-      accessTokenTTL: 1h
+      accessTokenTTL: "1h"
       # The amount of time before a refresh token expires
-      refreshTokenTTL: 2h
+      refreshTokenTTL: "2h"
       # The amount of overlap between the access and refresh tokens
-      tokenOverlap: -15m
+      tokenOverlap: "-15m"
     docsName: "Endeavor API Docs"
 
   # Inference specifies the configuration for the inference client
@@ -117,6 +117,16 @@ ingress:
 
 resources: {}
 
+storage:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    mountPath: /data/db
+    spec:
+      accessModes: ["ReadWriteOncePod"]
+      resources:
+        requests:
+          storage: 32Gi
+
 # The liveness probe requires Endeavor to be running.
 livenessProbe:
   httpGet:
@@ -138,20 +148,6 @@ readinessProbe:
       value: readiness
   initialDelaySeconds: 2
   periodSeconds: 10
-
-# Enable persistence using Persistent Volume Claims
-persistence:
-  type: pvc
-  enabled: true
-  storageClassName: endeavor-pvc
-  accessModes:
-    - ReadWriteOnce
-    - ReadOnlyMany
-  size: 20Gi
-  annotations: {}
-  selectorLabels: {}
-  extraPvcLabels: {}
-  disableWarning: false
 
 # Additional volumes on the output Deployment definition.
 volumes: []

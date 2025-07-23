@@ -75,3 +75,10 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+    volumeClaimTemplates:
+    - metadata:
+        name: {{ include "endeavor.name" . }}-data
+      spec:
+        {{- with .Values.storage.nodeData.spec }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
