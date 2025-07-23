@@ -71,12 +71,12 @@ endeavor:
       # The amount of overlap between the access and refresh tokens
       tokenOverlap: -15m
     docsName: "Endeavor API Docs"
+
   # Inference specifies the configuration for the inference client
   inference:
     # The URL of the inference endpoint
     endpointURL: https://openrouter.ai
-    # The api key to use for the inference client, if required
-    apikey: apikey
+
   # Radish specifies the configuration for the async task client
   radish:
     workers: 8
@@ -86,7 +86,7 @@ secrets:
   create: true  # Set to false to use an pre-installed secret instead.
   inferenceAPIKey:
     secretName: ""
-    secretKey: secretKey
+    secretKey: inferenceAPIKey
     value: ""
 
 # Specify how pods are created in the deployment.
