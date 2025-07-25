@@ -75,7 +75,7 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    volumeClaimTemplates:
+  volumeClaimTemplates:
     - metadata:
         name: {{ include "endeavor.name" . }}-data
       spec:
