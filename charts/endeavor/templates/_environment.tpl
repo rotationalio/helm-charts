@@ -25,29 +25,45 @@ env:
   - name: ENDEAVOR_WEB_UI_ENABLED
     value: {{ .Values.endeavor.web.UIenabled | quote }}
   - name: ENDEAVOR_WEB_BIND_ADDR
-    value: {{ .Values.endeavor.web.bindAddr | quote }}
+    value: ":{{ .Values.service.port }}"
+  {{- if .Values.endeavor.web.origin }}
   - name: ENDEAVOR_WEB_ORIGIN
-    value: "{{ .Values.service.type }}:{{ .Values.service.port }}"
+    value: {{ .Values.endeavor.web.origin | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.keys }}
   - name: ENDEAVOR_WEB_AUTH_KEYS
     value: {{ .Values.endeavor.web.auth.keys | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.audience }}
   - name: ENDEAVOR_WEB_AUTH_AUDIENCE
     value: {{ .Values.endeavor.web.auth.audience | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.issuer }}
   - name: ENDEAVOR_WEB_AUTH_ISSUER
     value: {{ .Values.endeavor.web.auth.issuer | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.cookieDomain }}
   - name: ENDEAVOR_WEB_AUTH_COOKIE_DOMAIN
     value: {{ .Values.endeavor.web.auth.cookieDomain | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.accessTokenTTL }}
   - name: ENDEAVOR_WEB_AUTH_ACCESS_TOKEN_TTL
     value: {{ .Values.endeavor.web.auth.accessTokenTTL | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.refreshTokenTTL }}
   - name: ENDEAVOR_WEB_AUTH_REFRESH_TOKEN_TTL
     value: {{ .Values.endeavor.web.auth.refreshTokenTTL | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.web.auth.tokenOverlap }}
   - name: ENDEAVOR_WEB_TOKEN_OVERLAP
     value: {{ .Values.endeavor.web.auth.tokenOverlap | quote }}
+  {{- end }}
   - name: ENDEAVOR_WEB_DOCS_NAME
     value: {{ .Values.endeavor.web.docsName | quote }}
+  {{- if .Values.endeavor.inference.endpointURL }}
   - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
-  {{- if .Values.endeavor.inference.endpointURL -}}
-      value: {{ .Values.endeavor.inferenceEndpointURL | quote }}
-  {{- end -}}
+    value: {{ .Values.endeavor.inference.endpointURL | quote }}
+  {{- end }}
   - name: ENDEAVOR_INFERENCE_API_KEY
     valueFrom:
       secretKeyRef:

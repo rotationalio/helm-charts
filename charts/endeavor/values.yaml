@@ -12,69 +12,63 @@ fullnameOverride: ""
 # Environment should be set to "demo", "development", "staging", or "production".
 environment: "production"
 
-# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: rotationalio/endeavor
-  # This sets the pull policy for images.
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  pullPolicy: Always                 # Specify image pull policy (Always, IfNotPresent, Never).
+  tag: ""                            # Overrides the image tag whose default is the chart appVersion.
 
-# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 
 # Set the Endeavor specific configuration.
 endeavor:
   # Maintenance mode can be used to run the pod without starting the serice for debugging
   maintenance: false
+
   # Specify the mode of the server (release, debug, testing)
   mode: release
+
   # Specify the verbosity of logging (trace, debug, info, warn, error, fatal, panic)
   logLevel: info
-  # If true logs colorized human readable output instead of json
   consoleLog: true
+
   # DSN containing backend database configuration
   databaseURL: sqlite3:////data/endeavor.db
-  # DSN containing backend database configuration for documents
   documentsURL: bolt:////data/documents.db
+
   # Web server specific configuration
   web:
     # If true sets the web UI to run in maintenance mode; inherited from parent
     maintenance: false
+
     # If false, the web UI server will not be run
     enabled: true
+
     # If false, the API server will return unavailable when accessed; subordinate to the enabled flag
     APIenabled: true
+
     # If false, the UI server will return unavailable when accessed; subordinate to the enabled flag
     UIenabled: true
-    # The ip address and port to bind the web server on
-    bindAddr: 8000
+
     # Origin (url) of the UI server for creating endpoints and CORS access
     origin: ""
-    # Auth Manages authentication and authorization for the Endeavor API server.
+
     auth:
       # Static key configuration as a map of keyID to path on disk
       keys: {}
-      # The value of the audience JWT claim
       audience: ""
-      # The value of the issuer JWT claim
       issuer: ""
-      # Limit cookies to the specified domain (exclude port)
-      cookieDomain: localhost
-      # The amount of time before an access token expires
-      accessTokenTTL: "1h"
-      # The amount of time before a refresh token expires
-      refreshTokenTTL: "2h"
-      # The amount of overlap between the access and refresh tokens
-      tokenOverlap: "-15m"
+      cookieDomain: ""
+      accessTokenTTL: ""
+      refreshTokenTTL: ""
+      tokenOverlap: ""
+
+    # Set the display name for the Endeavor API Docs
     docsName: "Endeavor API Docs"
 
   # Inference specifies the configuration for the inference client
   inference:
-    # The URL of the inference endpoint
     endpointURL: https://openrouter.ai
 
   # Radish specifies the configuration for the async task client
@@ -82,8 +76,12 @@ endeavor:
     workers: 8
     queuesize: 128
 
+# Specify the secrets to be used by Endeavor.
+# Endeavor expects these secrets are already pre-installed in the cluster and referenced
+# by the name and keys below. If you want Helm to create the secrets, set create to true
+# and specify the secrets values below.
 secrets:
-  create: true  # Set to false to use an pre-installed secret instead.
+  create: false
   inferenceAPIKey:
     secretName: ""
     secretKey: inferenceAPIKey
