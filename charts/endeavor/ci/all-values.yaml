@@ -15,6 +15,14 @@ ingress:
         - path: /
           pathType: Prefix
 
+volumeClaimTemplates:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      requests:
+        storage: 1Gi
+
 # set readinessProbe and livenessProbe to null to prevent connection to db.
 readinessProbe: null
 livenessProbe: null
