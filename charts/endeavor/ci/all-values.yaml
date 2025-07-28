@@ -1,0 +1,4 @@
+secrets:
+  create: true
+  inferenceAPIKey:
+    value: "inferenceapikey"
