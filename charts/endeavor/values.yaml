@@ -74,7 +74,7 @@ endeavor:
   # Radish specifies the configuration for the async task client
   radish:
     workers: 8
-    queuesize: 128
+    queueSize: 128
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
@@ -120,7 +120,7 @@ storage:
   nodeData:
     mountPath: /data/db
     spec:
-      accessModes: ["ReadWriteOncePod"]
+      accessModes: ["ReadWriteOnce"]
       resources:
         requests:
           storage: 32Gi
