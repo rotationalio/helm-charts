@@ -18,6 +18,7 @@ ingress:
 volumeClaimTemplates:
   # The node data spec will be included in volume claim templates.
   nodeData:
+    mountPath: /data/db
     accessModes: ["ReadWriteOnce"]
     resources:
       requests:
