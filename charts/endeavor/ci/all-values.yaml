@@ -2,3 +2,7 @@ secrets:
   create: true
   inferenceAPIKey:
     value: "inferenceapikey"
+
+# set readinessProbe and livenessProbe to null to prevent connection to db.
+readinessProbe: null
+livenessProbe: null
