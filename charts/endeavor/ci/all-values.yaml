@@ -3,6 +3,18 @@ secrets:
   inferenceAPIKey:
     value: "inferenceapikey"
 
+ingress:
+  enabled: true
+  hosts:
+    - host: endeavor.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: endeavor.example.dev
+      paths:
+        - path: /
+          pathType: Prefix
+
 # set readinessProbe and livenessProbe to null to prevent connection to db.
 readinessProbe: null
 livenessProbe: null
