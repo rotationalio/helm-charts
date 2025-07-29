@@ -34,8 +34,8 @@ endeavor:
   consoleLog: true
 
   # DSN containing backend database configuration
-  databaseURL: sqlite3:///data/endeavor.db
-  documentsURL: bolt:///data/documents.db
+  databaseURL: "sqlite3:////data/endeavor.db"
+  documentsURL: "bolt:////data/documents.db"
 
   # Web server specific configuration
   web:
