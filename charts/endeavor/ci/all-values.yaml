@@ -19,10 +19,11 @@ volumeClaimTemplates:
   # The node data spec will be included in volume claim templates.
   nodeData:
     mountPath: /data/db
-    accessModes: ["ReadWriteOnce"]
-    resources:
-      requests:
-        storage: 1Gi
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
 
 # set readinessProbe and livenessProbe to null to prevent connection to db.
 readinessProbe: null
