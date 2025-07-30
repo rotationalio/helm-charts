@@ -42,6 +42,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- include "endeavor.volumeMounts" . | nindent 10 }}
           {{- include "endeavor.environment" . | nindent 10 }}
           {{- with .Values.livenessProbe }}
           livenessProbe:

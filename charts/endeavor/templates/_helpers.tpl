@@ -49,3 +49,19 @@ Selector labels
 app.kubernetes.io/name: {{ include "endeavor.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+All volume mounts for the envoy node
+*/}}
+{{- define "endeavor.volumeMounts" -}}
+volumeMounts:
+  {{- include "endeavor.volumeMounts.nodeData" . | nindent 2 }}
+{{- end }}
+
+{{/*
+Volume mounts for the database
+*/}}
+{{- define "endeavor.volumeMounts.nodeData" -}}
+- name: {{ include "endeavor.name" . }}
+  mountPath: {{ .Values.storage.nodeData.mountPath }}
+{{- end }}
