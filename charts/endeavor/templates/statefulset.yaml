@@ -71,7 +71,7 @@ spec:
   {{- with .Values.storage.nodeData.spec }}
   volumeClaimTemplates:
     - metadata:
-        name: {{ include "endeavor.fullname" $ }}
+        name: {{ include "endeavor.name" $ }}
       spec:
         {{- toYaml . | nindent 8 }}
   {{- end }}
