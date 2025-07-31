@@ -147,12 +147,6 @@ readinessProbe:
   initialDelaySeconds: 2
   periodSeconds: 10
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-
 # Optionally specify how nodes are selected to place pods on.
 nodeSelector: {}
 

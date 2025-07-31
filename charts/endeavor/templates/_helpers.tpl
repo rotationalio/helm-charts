@@ -51,7 +51,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-All volume mounts for the envoy node
+Volume mounts for the database
 */}}
 {{- define "endeavor.volumeMounts" -}}
 volumeMounts:
