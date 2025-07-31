@@ -1,5 +1,23 @@
 apiVersion: v1
 entries:
+  endeavor:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2025-07-31T02:54:16.810967859Z"
+    description: A Helm chart for Kubernetes
+    digest: 35b011011e69387aab9a9a46be84905cecbbc1a68a22fda4e9330e26c4120e9c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.1.0/endeavor-0.1.0.tgz
+    version: 0.1.0
   parlance:
   - apiVersion: v2
     appVersion: 0.12.0
@@ -46,4 +64,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/parlance-0.1.0/parlance-0.1.0.tgz
     version: 0.1.0
-generated: "2025-06-18T17:58:27.168590558Z"
+generated: "2025-07-31T02:54:16.810979672Z"
