@@ -1,0 +1,36 @@
+secrets:
+  create: true
+  inferenceAPIKey:
+    value: "inferenceapikey"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: endeavor.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: endeavor.example.dev
+      paths:
+        - path: /
+          pathType: Prefix
+
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+volumeClaimTemplates:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      requests:
+        storage: 1Gi
+
+# set readinessProbe and livenessProbe to null to prevent connection to db.
+readinessProbe: null
+livenessProbe: null

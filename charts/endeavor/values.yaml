@@ -1,0 +1,157 @@
+# Default values for deploying endeavor.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Name overrides: by default the name for most objects will be release-endeavor. It is
+# recommended to create a descriptive release name, but if you must override the names
+# separate from the release, you can set nameOverride. To remove the -endeavor suffix
+# set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+# Environment should be set to "demo", "development", "staging", or "production".
+environment: "production"
+
+replicaCount: 1
+
+image:
+  repository: rotationalio/endeavor
+  pullPolicy: Always                 # Specify image pull policy (Always, IfNotPresent, Never).
+  tag: ""                            # Overrides the image tag whose default is the chart appVersion.
+
+imagePullSecrets: []
+
+# Set the Endeavor specific configuration.
+endeavor:
+  # Maintenance mode can be used to run the pod without starting the serice for debugging
+  maintenance: false
+
+  # Specify the mode of the server (release, debug, testing)
+  mode: release
+
+  # Specify the verbosity of logging (trace, debug, info, warn, error, fatal, panic)
+  logLevel: info
+  consoleLog: true
+
+  # DSN containing backend database configuration
+  databaseURL: "sqlite3:////data/endeavor.db"
+  documentsURL: "bolt:////data/documents.db"
+
+  # Web server specific configuration
+  web:
+    # If true sets the web UI to run in maintenance mode; inherited from parent
+    maintenance: false
+
+    # If false, the web UI server will not be run
+    enabled: true
+
+    # If false, the API server will return unavailable when accessed; subordinate to the enabled flag
+    APIenabled: true
+
+    # If false, the UI server will return unavailable when accessed; subordinate to the enabled flag
+    UIenabled: true
+
+    # Origin (url) of the UI server for creating endpoints and CORS access
+    origin: ""
+
+    auth:
+      # Static key configuration as a map of keyID to path on disk
+      keys: {}
+      audience: ""
+      issuer: ""
+      cookieDomain: ""
+      accessTokenTTL: ""
+      refreshTokenTTL: ""
+      tokenOverlap: ""
+
+    # Set the display name for the Endeavor API Docs
+    docsName: "Endeavor API Docs"
+
+  # Inference specifies the configuration for the inference client
+  inference:
+    endpointURL: https://openrouter.ai
+
+  # Radish specifies the configuration for the async task client
+  radish:
+    workers: 8
+    queueSize: 128
+
+# Specify the secrets to be used by Endeavor.
+# Endeavor expects these secrets are already pre-installed in the cluster and referenced
+# by the name and keys below. If you want Helm to create the secrets, set create to true
+# and specify the secrets values below.
+secrets:
+  create: false
+  inferenceAPIKey:
+    secretName: ""
+    secretKey: inferenceAPIKey
+    value: ""
+
+# Specify how pods are created in the deployment.
+pod:
+  # Add additional annotations to the pods
+  annotations: {}
+  # Add additional labels to the pods
+  labels: {}
+  # Specify a pod security context
+  securityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: endeavor.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources: {}
+
+storage:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    mountPath: /data/db
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 32Gi
+
+# The liveness probe requires Endeavor to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# The readiness probe requires Endeavor to be running and connected to the database.
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# Optionally specify how nodes are selected to place pods on.
+nodeSelector: {}
+
+# Optionally specify tolerations to ensure pods are not scheduled on incompatible nodes.
+tolerations: []
+
+# Optionally specify affinities to ensure pods and resources are together or apart.
+affinity: {}
