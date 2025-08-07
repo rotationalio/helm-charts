@@ -17,3 +17,13 @@ securitytxt:
     Preferred-Languages: en
     Canonical: https://example.com/.well-known/security.txt
     Policy: https://example.com/security
+
+
+volumeClaimTemplates:
+  database:
+    mountPath: /data/db
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
