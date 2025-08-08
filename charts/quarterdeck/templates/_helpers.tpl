@@ -85,7 +85,7 @@ volumeMounts:
 Volume mounts for database storage if using sqlite3.
 */}}
 {{- define "quarterdeck.volumeMounts.database" -}}
-- name: {{ include "quarterdeck.name" $ }}-database
+- name: {{ include "quarterdeck.name" . }}-database
   mountPath: {{ .Values.storage.database.mountPath }}
 {{- end }}
 
@@ -99,7 +99,7 @@ Volume mounts for database storage if using sqlite3.
 
 {{- define "quarterdeck.volumeMounts.securitytxt" -}}
 {{- if .Values.securitytxt.text -}}
-- name: {{ include "quarterdeck.name" $ }}-securitytxt
+- name: {{ include "quarterdeck.name" . }}-securitytxt
   mountPath: {{ default "/data/info" (dir .Values.securitytxt.path) }}
   readOnly: true
 {{- end -}}
@@ -125,7 +125,7 @@ volumes:
 
 {{- define "quarterdeck.volumes.keys" -}}
 {{- if and .Values.authentication.keys .Values.authentication.keysSecret.name -}}
-- name: {{ include "quarterdeck.name" $ }}-keys
+- name: {{ include "quarterdeck.name" . }}-keys
   secret:
     secretName: {{ .Values.authentication.keysSecret.name }}
 {{- end -}}
@@ -133,9 +133,9 @@ volumes:
 
 {{- define "quarterdeck.volumes.securitytxt" -}}
 {{- if .Values.securitytxt.text -}}
-- name: {{ include "quarterdeck.name" $ }}-securitytxt
+- name: {{ include "quarterdeck.name" . }}-securitytxt
   configMap:
-    name: {{ include "quarterdeck.name" $ }}-securitytxt
+    name: {{ include "quarterdeck.name" . }}-securitytxt
 {{- end -}}
 {{- end -}}
 

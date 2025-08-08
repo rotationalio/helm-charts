@@ -69,7 +69,7 @@ spec:
       {{- end }}
   volumeClaimTemplates:
   - metadata:
-      name: {{ include "quarterdeck.fullname" . }}
+      name: {{ include "quarterdeck.name" . }}
     spec:
       {{- with .Values.storage.database.spec -}}
       {{- toYaml . | nindent 8 }}
