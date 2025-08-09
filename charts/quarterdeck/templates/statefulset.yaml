@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "quarterdeck.labels" . | nindent 4 }}
-  {{- with .Values.annotations -}}
+  {{- with .Values.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -14,17 +14,17 @@ spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-    {{- include "quarterdeck.selectorLabels" . | nindent 6 }}
+      {{- include "quarterdeck.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- include "quarterdeck.podAnnotations" . | nindent 6 -}}
+      {{- include "quarterdeck.podAnnotations" . | nindent 6 }}
       labels:
         {{- include "quarterdeck.selectorLabels" . | nindent 8 }}
-        {{- with .Values.pod.labels -}}
+        {{- with .Values.pod.labels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      {{- with .Values.imagePullSecrets -}}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end -}}
@@ -36,7 +36,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.containers.securityContext -}}
+          {{- with .Values.containers.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -68,9 +68,9 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
   volumeClaimTemplates:
-  - metadata:
-      name: {{ include "quarterdeck.name" . }}
-    spec:
-      {{- with .Values.storage.database.spec -}}
-      {{- toYaml . | nindent 8 }}
-      {{- end -}}
+    - metadata:
+        name: {{ include "quarterdeck.name" $ }}
+      spec:
+        {{- with .Values.storage.database.spec -}}
+        {{- toYaml . | nindent 8 }}
+        {{- end -}}

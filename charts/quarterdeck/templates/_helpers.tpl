@@ -76,9 +76,9 @@ All volume mounts for the Quarterdeck pods.
 */}}
 {{- define "quarterdeck.volumeMounts" -}}
 volumeMounts:
-  {{- include "quarterdeck.volumeMounts.database" . | nindent 0 }}
-  {{- include "quarterdeck.volumeMounts.keys" . | nindent 0  }}
-  {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 0 }}
+  {{- include "quarterdeck.volumeMounts.database" . | nindent 2 }}
+  {{- include "quarterdeck.volumeMounts.keys" . | nindent 2  }}
+  {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 2 }}
 {{- end -}}
 
 {{/*
