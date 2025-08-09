@@ -56,7 +56,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Pod annotations includes both global annotations and the pod-specific ones.
 */}}
 {{- define "quarterdeck.podAnnotations" -}}
-{{- if or .Values.annotations .Values.pod.annotations -}}
+{{- if or .Values.annotations .Values.pod.annotations }}
 annotations:
   {{- with .Values.annotations }}
     {{- toYaml . | nindent 8 }}
@@ -65,7 +65,7 @@ annotations:
     {{- toYaml . | nindent 8 }}
   {{- end }}
 {{- end }}
-{{- end -}}
+{{- end }}
 
 {{/*
 All volume mounts for the Quarterdeck pods.
@@ -90,7 +90,7 @@ Volume mounts for database storage if using sqlite3.
 {{- end }}
 
 {{- define "quarterdeck.volumeMounts.keys" -}}
-{{- if and .Values.authentication.keys .Values.authentication.keysSecret.name -}}
+{{- if and .Values.authentication.keys .Values.authentication.keysSecret.name }}
 - name: {{ include "quarterdeck.name" . }}-keys
   mountPath: {{ default "/data/keys" .Values.authentication.keysSecret.mountPath }}
   readOnly: true
@@ -98,7 +98,7 @@ Volume mounts for database storage if using sqlite3.
 {{- end }}
 
 {{- define "quarterdeck.volumeMounts.securitytxt" -}}
-{{- if .Values.securitytxt.text -}}
+{{- if .Values.securitytxt.text }}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
   mountPath: {{ default "/data/info" (dir .Values.securitytxt.path) }}
   readOnly: true

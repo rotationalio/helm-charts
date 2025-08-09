@@ -17,7 +17,7 @@ spec:
       {{- include "quarterdeck.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- include "quarterdeck.podAnnotations" . | nindent 6 }}
+      {{- include "quarterdeck.podAnnotations" . | nindent 8 }}
       labels:
         {{- include "quarterdeck.selectorLabels" . | nindent 8 }}
         {{- with .Values.pod.labels }}
