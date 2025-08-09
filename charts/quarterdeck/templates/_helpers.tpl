@@ -58,13 +58,13 @@ Pod annotations includes both global annotations and the pod-specific ones.
 {{- define "quarterdeck.podAnnotations" -}}
 {{- if or .Values.annotations .Values.pod.annotations -}}
 annotations:
-  {{- with .Values.annotations -}}
-    {{- toYaml . | nindent 2 }}
+  {{- with .Values.annotations }}
+    {{- toYaml . | nindent 8 }}
   {{- end }}
-  {{- with .Values.pod.annotations -}}
-    {{- toYaml . | nindent 2 }}
+  {{- with .Values.pod.annotations }}
+    {{- toYaml . | nindent 8 }}
   {{- end }}
-{{- end -}}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -79,7 +79,7 @@ volumeMounts:
   {{- include "quarterdeck.volumeMounts.database" . | nindent 2 }}
   {{- include "quarterdeck.volumeMounts.keys" . | nindent 2  }}
   {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 2 }}
-{{- end -}}
+{{- end }}
 
 {{/*
 Volume mounts for database storage if using sqlite3.
@@ -94,16 +94,16 @@ Volume mounts for database storage if using sqlite3.
 - name: {{ include "quarterdeck.name" . }}-keys
   mountPath: {{ default "/data/keys" .Values.authentication.keysSecret.mountPath }}
   readOnly: true
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
 
 {{- define "quarterdeck.volumeMounts.securitytxt" -}}
 {{- if .Values.securitytxt.text -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
   mountPath: {{ default "/data/info" (dir .Values.securitytxt.path) }}
   readOnly: true
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
 
 {{/*
 All volumes for the Quarterdeck pods.
@@ -114,28 +114,28 @@ All volumes for the Quarterdeck pods.
 {{- define "quarterdeck.volumes" -}}
 {{- with $volumes := (include "quarterdeck.volumes.all" .) -}}
 volumes:
-  {{- $volumes | nindent 0 -}}
-{{- end -}}
-{{- end -}}
+  {{- $volumes | nindent 2 -}}
+{{- end }}
+{{- end }}
 
 {{- define "quarterdeck.volumes.all" -}}
-  {{- include "quarterdeck.volumes.keys" . | nindent 0 -}}
-  {{- include "quarterdeck.volumes.securitytxt" . | nindent 0 -}}
-{{- end -}}
+  {{- include "quarterdeck.volumes.keys" . | nindent 2 -}}
+  {{- include "quarterdeck.volumes.securitytxt" . | nindent 2 -}}
+{{- end }}
 
 {{- define "quarterdeck.volumes.keys" -}}
 {{- if and .Values.authentication.keys .Values.authentication.keysSecret.name -}}
 - name: {{ include "quarterdeck.name" . }}-keys
   secret:
     secretName: {{ .Values.authentication.keysSecret.name }}
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
 
 {{- define "quarterdeck.volumes.securitytxt" -}}
 {{- if .Values.securitytxt.text -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
   configMap:
     name: {{ include "quarterdeck.name" . }}-securitytxt
-{{- end -}}
-{{- end -}}
+{{- end }}
+{{- end }}
 
