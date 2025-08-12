@@ -19,6 +19,16 @@ securitytxt:
     Policy: https://example.com/security
 
 
+# Configuration for the Quarterdeck ingress.
+ingress:
+  enabled: false
+  hosts:
+    - host: quarterdeck.example.com
+      paths:
+        - path: /
+          pathType: Prefix 
+
+
 volumeClaimTemplates:
   database:
     accessModes: ["ReadWriteOnce"]
