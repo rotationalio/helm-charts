@@ -25,3 +25,8 @@ volumeClaimTemplates:
     resources:
       requests:
         storage: 1Gi
+
+
+# set readinessProbe and livenessProbe to null to prevent connection to db.
+readinessProbe: null
+livenessProbe: null
