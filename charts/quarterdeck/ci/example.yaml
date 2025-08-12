@@ -21,7 +21,7 @@ securitytxt:
 
 # Configuration for the Quarterdeck ingress.
 ingress:
-  enabled: false
+  enabled: true
   hosts:
     - host: quarterdeck.example.com
       paths:
@@ -29,6 +29,15 @@ ingress:
           pathType: Prefix 
 
 
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+    
 volumeClaimTemplates:
   database:
     accessModes: ["ReadWriteOnce"]
