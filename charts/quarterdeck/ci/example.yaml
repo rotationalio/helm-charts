@@ -21,9 +21,7 @@ securitytxt:
 
 volumeClaimTemplates:
   database:
-    mountPath: /data/db
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      requests:
+        storage: 1Gi
