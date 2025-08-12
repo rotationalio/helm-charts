@@ -28,6 +28,7 @@ ingress:
         - path: /
           pathType: Prefix 
 
+  tls: []
 
 resources:
   requests:
@@ -37,7 +38,7 @@ resources:
     memory: "512Mi"
     cpu: "500m"
 
-    
+
 volumeClaimTemplates:
   database:
     accessModes: ["ReadWriteOnce"]
