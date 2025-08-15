@@ -114,7 +114,7 @@ All volumes for the Quarterdeck pods.
 {{- define "quarterdeck.volumes" -}}
 {{- with $volumes := (include "quarterdeck.volumes.all" .) -}}
 volumes:
-  {{- $volumes | nindent 2 -}}
+  {{- $volumes }}
 {{- end }}
 {{- end }}
 
