@@ -68,6 +68,15 @@ annotations:
 {{- end }}
 
 {{/*
+Define the keys secret name for access to the keys mounted in the volume
+*/}}
+{{- define "quarterdeck.keysSecretName" -}}
+{{- if .Values.authentication.keysSecret.name -}}
+{{ .Values.authentication.keysSecret.name }}
+{{- end }}
+{{- end }}
+
+{{/*
 All volume mounts for the Quarterdeck pods.
 - database volume mount if databaseURL is sqlite3
 - keys secret volume mount if keys are provided.
