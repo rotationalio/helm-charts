@@ -31,41 +31,31 @@ endeavor:
 
   # Specify the verbosity of logging (trace, debug, info, warn, error, fatal, panic)
   logLevel: info
-  consoleLog: true
+  consoleLog: false
 
   # DSN containing backend database configuration
-  databaseURL: "sqlite3:////data/endeavor.db"
-  documentsURL: "bolt:////data/documents.db"
+  databaseURL: "bolt:////data/endeavor.db"
 
-  # Web server specific configuration
-  web:
-    # If true sets the web UI to run in maintenance mode; inherited from parent
-    maintenance: false
+  # Origin (url) of the UI server for creating endpoints and CORS access
+  # Should be an absolute URL including scheme without trailing slash that matches the
+  # endpoint of the ingress configured below.
+  origin: ""
 
-    # If false, the web UI server will not be run
-    enabled: true
+  # Do not set this unless you're really sure; by default it will be the origin and
+  # the Quarterdeck URL to ensure that CORS is configured correctly.
+  allowOrigins: []
 
-    # If false, the API server will return unavailable when accessed; subordinate to the enabled flag
-    APIenabled: true
+  # Set the display name for the Endeavor API Docs
+  docsName: "Endeavor API Docs"
 
-    # If false, the UI server will return unavailable when accessed; subordinate to the enabled flag
-    UIenabled: true
+  # Authentication configuration
+  auth:
+    quarterdeckURL: ""
+    audience: ""
 
-    # Origin (url) of the UI server for creating endpoints and CORS access
-    origin: ""
-
-    auth:
-      # Static key configuration as a map of keyID to path on disk
-      keys: {}
-      audience: ""
-      issuer: ""
-      cookieDomain: ""
-      accessTokenTTL: ""
-      refreshTokenTTL: ""
-      tokenOverlap: ""
-
-    # Set the display name for the Endeavor API Docs
-    docsName: "Endeavor API Docs"
+  # CSRF protection configuration
+  csrf:
+    cookieTTL: 15m
 
   # Inference specifies the configuration for the inference client
   inference:
@@ -85,6 +75,10 @@ secrets:
   inferenceAPIKey:
     secretName: ""
     secretKey: inferenceAPIKey
+    value: ""
+  csrfSecret:
+    secretName: ""
+    secretKey: csrfSecret
     value: ""
 
 # Specify how pods are created in the deployment.

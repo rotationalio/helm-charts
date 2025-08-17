@@ -1,3 +1,12 @@
+endeavor:
+  origin: "https://endeavor.example.com"
+  allowOrigins:
+    - "https://endeavor.example.com"
+    - "https://auth.example.com"
+  auth:
+    quarterdeckURL: "https://auth.example.com"
+    audience: "https://endeavor.example.com"
+
 secrets:
   create: true
   inferenceAPIKey:

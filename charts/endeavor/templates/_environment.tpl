@@ -14,52 +14,27 @@ env:
     value: {{ .Values.endeavor.consoleLog | quote }}
   - name: ENDEAVOR_DATABASE_URL
     value: {{ .Values.endeavor.databaseURL | quote }}
-  - name: ENDEAVOR_DOCUMENTS_URL
-    value: {{ .Values.endeavor.documentsURL | quote }}
-  - name: ENDEAVOR_WEB_MAINTENANCE
-    value: {{ .Values.endeavor.web.maintenance | quote }}
-  - name: ENDEAVOR_WEB_ENABLED
-    value: {{ .Values.endeavor.web.enabled | quote }}
-  - name: ENDEAVOR_WEB_API_ENABLED
-    value: {{ .Values.endeavor.web.APIenabled | quote }}
-  - name: ENDEAVOR_WEB_UI_ENABLED
-    value: {{ .Values.endeavor.web.UIenabled | quote }}
-  - name: ENDEAVOR_WEB_BIND_ADDR
+  - name: ENDEAVOR_BIND_ADDR
     value: ":{{ .Values.service.port }}"
-  {{- if .Values.endeavor.web.origin }}
-  - name: ENDEAVOR_WEB_ORIGIN
-    value: {{ .Values.endeavor.web.origin | quote }}
+  - name: ENDEAVOR_ORIGIN
+    value: {{ .Values.endeavor.origin | quote }}
+  - name: ENDEAVOR_ALLOW_ORIGINS
+    value: {{ include "endeavor.allowOrigins" . }}
+  - name: ENDEAVOR_DOCS_NAME
+    value: {{ .Values.endeavor.docsName | quote }}
+  - name: ENDEAVOR_AUTH_QUARTERDECK_URL
+    value: {{ .Values.endeavor.auth.quarterdeckURL | quote }}
+  - name: ENDEAVOR_AUTH_AUDIENCE
+    value: {{ .Values.endeavor.auth.audience | quote }}
+  - name: ENDEAVOR_CSRF_COOKIE_TTL
+    value: {{ .Values.endeavor.csrf.cookieTTL | quote }}
+  {{- if or .Values.secrets.csrfSecret.secretName (and .Values.secrets.create .Values.secrets.csrfSecret.value) }}
+  - name: ENDEAVOR_CSRF_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "endeavor.csrfSecretName" . }}
+        key: {{ .Values.secrets.csrfSecret.secretKey }}
   {{- end }}
-  {{- if .Values.endeavor.web.auth.keys }}
-  - name: ENDEAVOR_WEB_AUTH_KEYS
-    value: {{ .Values.endeavor.web.auth.keys | quote }}
-  {{- end }}
-  {{- if .Values.endeavor.web.auth.audience }}
-  - name: ENDEAVOR_WEB_AUTH_AUDIENCE
-    value: {{ .Values.endeavor.web.auth.audience | quote }}
-  {{- end }}
-  {{- if .Values.endeavor.web.auth.issuer }}
-  - name: ENDEAVOR_WEB_AUTH_ISSUER
-    value: {{ .Values.endeavor.web.auth.issuer | quote }}
-  {{- end }}
-  {{- if .Values.endeavor.web.auth.cookieDomain }}
-  - name: ENDEAVOR_WEB_AUTH_COOKIE_DOMAIN
-    value: {{ .Values.endeavor.web.auth.cookieDomain | quote }}
-  {{- end }}
-  {{- if .Values.endeavor.web.auth.accessTokenTTL }}
-  - name: ENDEAVOR_WEB_AUTH_ACCESS_TOKEN_TTL
-    value: {{ .Values.endeavor.web.auth.accessTokenTTL | quote }}
-  {{- end }}
-  {{- if .Values.endeavor.web.auth.refreshTokenTTL }}
-  - name: ENDEAVOR_WEB_AUTH_REFRESH_TOKEN_TTL
-    value: {{ .Values.endeavor.web.auth.refreshTokenTTL | quote }}
-  {{- end }}
-  {{- if .Values.endeavor.web.auth.tokenOverlap }}
-  - name: ENDEAVOR_WEB_TOKEN_OVERLAP
-    value: {{ .Values.endeavor.web.auth.tokenOverlap | quote }}
-  {{- end }}
-  - name: ENDEAVOR_WEB_DOCS_NAME
-    value: {{ .Values.endeavor.web.docsName | quote }}
   {{- if .Values.endeavor.inference.endpointURL }}
   - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
     value: {{ .Values.endeavor.inference.endpointURL | quote }}
@@ -80,5 +55,21 @@ env:
 {{ include "endeavor.fullname" . }}
 {{- else -}}
 {{ default (include "endeavor.fullname" .) .Values.secrets.inferenceAPIKey.secretName }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.csrfSecretName" -}}
+{{- if .Values.secrets.create -}}
+{{ include "endeavor.fullname" . }}
+{{- else -}}
+{{ default (include "endeavor.fullname" .) .Values.secrets.csrfSecret.secretName }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.allowOrigins" -}}
+{{- if .Values.endeavor.allowOrigins }}
+{{- join "," .Values.endeavor.allowOrigins | quote -}}
+{{- else -}}
+{{ .Values.endeavor.origin | quote }}
 {{- end -}}
 {{- end -}}
