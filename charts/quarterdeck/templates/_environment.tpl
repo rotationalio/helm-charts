@@ -29,7 +29,7 @@ env:
   - name: QD_AUTH_AUDIENCE
     value: {{ join "," .Values.authentication.audience | quote }}
   - name: QD_AUTH_ISSUER
-    value: {{ .Values.authentication.issuer | quote }}
+    value: {{ include "endeavor.authIssuer" . | quote }}
   - name: QD_AUTH_ACCESS_TOKEN_TTL
     value: {{ .Values.authentication.accessTokenTTL | quote }}
   - name: QD_AUTH_REFRESH_TOKEN_TTL
@@ -48,4 +48,15 @@ env:
   {{- $parts = append $parts (printf "%s:%s" $key $val) -}}
 {{- end -}}
 {{ join ";" $parts -}}
+{{- end -}}
+
+{{/*
+If the web auth issuer isn't specified, use the origin
+*/}}
+{{- define "endeavor.authIssuer" -}}
+{{- if .Values.authentication.issuer -}}
+{{ .Values.authentication.issuer }}
+{{- else -}}
+{{ .Values.host }}
+{{- end -}}
 {{- end -}}

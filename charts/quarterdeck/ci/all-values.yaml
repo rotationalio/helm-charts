@@ -1,3 +1,9 @@
+authentication:
+  audience:
+  - "rotational.app"
+  - "auth.rotational.app"
+  - "honu.rotational.app"
+
 securitytxt:
   text: |
     Contact: mailto:security@example.com
@@ -12,7 +18,7 @@ securitytxt:
 ingress:
   enabled: true
   hosts:
-    - host: quarterdeck.example.com
+    - host: quarterdeck.svc.local
       paths:
         - path: /
           pathType: Prefix
