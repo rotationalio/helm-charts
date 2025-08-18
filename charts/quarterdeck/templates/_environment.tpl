@@ -29,7 +29,7 @@ env:
   - name: QD_AUTH_AUDIENCE
     value: {{ join "," .Values.authentication.audience | quote }}
   - name: QD_AUTH_ISSUER
-    value: {{ include "endeavor.authIssuer" . | quote }}
+    value: {{ include "quarterdeck.authIssuer" . | quote }}
   - name: QD_AUTH_ACCESS_TOKEN_TTL
     value: {{ .Values.authentication.accessTokenTTL | quote }}
   - name: QD_AUTH_REFRESH_TOKEN_TTL
@@ -51,12 +51,12 @@ env:
 {{- end -}}
 
 {{/*
-If the web auth issuer isn't specified, use the origin
+If the authentication issuer isn't specified, use the host in the values file
 */}}
-{{- define "endeavor.authIssuer" -}}
+{{- define "quarterdeck.authIssuer" -}}
 {{- if .Values.authentication.issuer -}}
 {{ .Values.authentication.issuer }}
 {{- else -}}
-{{ .Values.host }}
+{{ printf "https://%s" .Values.host }}
 {{- end -}}
 {{- end -}}
