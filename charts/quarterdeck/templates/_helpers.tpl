@@ -128,16 +128,7 @@ volumes:
 {{- end }}
 
 {{- define "quarterdeck.volumes.all" -}}
-  {{- include "quarterdeck.volumes.keys" . | nindent 2 -}}
   {{- include "quarterdeck.volumes.securitytxt" . | nindent 2 -}}
-{{- end }}
-
-{{- define "quarterdeck.volumes.keys" -}}
-{{- if and .Values.authentication.keys .Values.authentication.keysSecret.name -}}
-- name: {{ include "quarterdeck.name" . }}-keys
-  secret:
-    secretName: {{ .Values.authentication.keysSecret.name }}
-{{- end }}
 {{- end }}
 
 {{- define "quarterdeck.volumes.securitytxt" -}}
