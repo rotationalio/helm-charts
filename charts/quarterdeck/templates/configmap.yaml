@@ -1,0 +1,14 @@
+{{- if .Values.securitytxt.text -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "quarterdeck.name" . }}-securitytxt
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  securitytxt.txt: {{ .Values.securitytxt.text | b64enc }}
+{{- end }}
+
