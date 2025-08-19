@@ -56,15 +56,18 @@ quarterdeck:
   # 4 seconds of no requests.
   # TODO: allow per-IP rate limiting in addition to constant rate limiting.
   rateLimit:
-    enabled: true
+    type: ipaddr
     perSecond: 32
     burst: 128
+    cacheTTL: 10m
 
   # The DSN to connect to the database. If using a statefulset, this should be set to
   # a sqlite3 volume mount point, if using an external database, this should be
   # configured to allow connection to the databse server.
   # TODO: allow this to be stored in a secret if it has database credentials.
-  databaseURL: sqlite3:////data/db/quarterdeck.db
+  database:
+    URL: sqlite3:////data/db/quarterdeck.db
+    readOnly: true
 
 # Modifies how Quarterdeck handles authentication and authorization for its applications.
 authentication:
@@ -88,11 +91,30 @@ authentication:
   # the ingress domain defined below.
   issuer: ""
 
+  # The URL to the login page for Quarterdeck.
+  LogginURL: ""
+
+  # The URL to redirect to after logging out of Quarterdeck.
+  logoutRedirect: ""
+
+  # The URL to redirect to after logging in to Quarterdeck.
+  loginRedirect: ""
+
+  # The URL to redirect to after authenticating with Quarterdeck.
+  authenticateRedirect: ""
+
+  # The URL to redirect to after re-authenticating with Quarterdeck.
+  reauthenticateRedirect: ""
+
   # How long access and refresh tokens are valid for. The overlap is a negative duration
   # that specifies how long before an access token expires that a refresh token can be used.
   accessTokenTTL: 1h
   refreshTokenTTL: 4h
   tokenOverlap: -15m
+
+csrf:
+  cookieTTL: "20m"
+  secret: ""
 
 # Quarterdeck can be configured to return a security.txt file that defines security policies
 # see: https://securitytxt.org/ for more information.
