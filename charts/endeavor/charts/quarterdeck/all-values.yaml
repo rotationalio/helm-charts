@@ -1,0 +1,47 @@
+authentication:
+  audience:
+  - "rotational.app"
+  - "auth.rotational.app"
+  - "honu.rotational.app"
+
+securitytxt:
+  text: |
+    Contact: mailto:security@example.com
+    Expires: 2037-11-14T22:07:00.000Z
+    Encryption: https://example.com/pgp-key.txt
+    Preferred-Languages: en
+    Canonical: https://example.com/.well-known/security.txt
+    Policy: https://example.com/security
+
+
+# Configuration for the Quarterdeck ingress.
+ingress:
+  enabled: true
+  hosts:
+    - host: quarterdeck.svc.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+  tls: []
+
+resources:
+  requests:
+    memory: "32Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+
+volumeClaimTemplates:
+  database:
+    accessModes: ["ReadWriteOnce"]
+    resources:
+      requests:
+        storage: 1Gi
+
+
+# set readinessProbe and livenessProbe to null to prevent connection to db.
+readinessProbe: null
+livenessProbe: null
