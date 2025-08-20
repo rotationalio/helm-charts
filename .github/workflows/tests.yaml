@@ -45,6 +45,7 @@ jobs:
         run: |
           kubectl create namespace postgres || true
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add rotational https://helm.rotational.dev
           helm install postgres bitnami/postgresql --namespace postgres --values ci/postgres.yaml --wait
 
       - name: Run chart-testing (install)
