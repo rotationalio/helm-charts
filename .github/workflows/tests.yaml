@@ -34,7 +34,10 @@ jobs:
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
+        run: |
+          helm repo add rotational https://helm.rotational.dev
+          helm repo update
+          ct lint --target-branch ${{ github.event.repository.default_branch }}
 
       - name: Create kind cluster
         if: steps.list-changed.outputs.changed == 'true'
@@ -45,8 +48,6 @@ jobs:
         run: |
           kubectl create namespace postgres || true
           helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add rotational https://helm.rotational.dev
-          helm repo update
           helm install postgres bitnami/postgresql --namespace postgres --values ci/postgres.yaml --wait
 
       - name: Run chart-testing (install)
