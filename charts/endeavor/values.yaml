@@ -70,16 +70,11 @@ quarterdeck:
   enabled: true
   authentication:
     audience:
-      - "endeavor.rotational.app"
-      - "auth.rotational.app"
-      - "honu.rotational.app"
-      - "quarterdeck.rotational.app"
+      - "https://endeavor.example.com"
     allowOrigins:
-      - "endeavor.rotational.app"
-      - "auth.rotational.app"
-      - "honu.rotational.app"
-      - "quarterdeck.rotational.app"
-    issuer: "quarterdeck.rotational.app"
+      - "https://endeavor.example.com"
+      - "https://quarterdeck.example.com"
+    issuer: "https://quarterdeck.example.com"
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced

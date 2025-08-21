@@ -2,9 +2,9 @@ endeavor:
   origin: "https://endeavor.example.com"
   allowOrigins:
     - "https://endeavor.example.com"
-    - "https://auth.example.com"
+    - "https://quarterdeck.example.com"
   auth:
-    quarterdeckURL: "https://auth.example.com"
+    quarterdeckURL: "https://quarterdeck.example.com"
     audience: "https://endeavor.example.com"
 
 secrets:
