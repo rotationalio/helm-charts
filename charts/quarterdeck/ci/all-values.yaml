@@ -16,7 +16,7 @@ securitytxt:
 
 # Configuration for the Quarterdeck ingress.
 ingress:
-  enabled: true
+  enabled: false
   hosts:
     - host: quarterdeck.svc.local
       paths:

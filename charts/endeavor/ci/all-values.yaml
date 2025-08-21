@@ -13,13 +13,9 @@ secrets:
     value: "inferenceapikey"
 
 ingress:
-  enabled: true
+  enabled: false
   hosts:
-    - host: endeavor.example.com
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: endeavor.example.dev
+    - host: endeavor.svc.local
       paths:
         - path: /
           pathType: Prefix
