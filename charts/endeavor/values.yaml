@@ -71,10 +71,6 @@ quarterdeck:
   authentication:
     audience:
       - "https://endeavor.example.com"
-    allowOrigins:
-      - "https://endeavor.example.com"
-      - "https://quarterdeck.example.com"
-    issuer: "https://quarterdeck.example.com"
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
