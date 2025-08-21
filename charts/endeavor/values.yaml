@@ -66,6 +66,21 @@ endeavor:
     workers: 8
     queueSize: 128
 
+quarterdeck:
+  enabled: true
+  authentication:
+    audience:
+      - "endeavor.rotational.app"
+      - "auth.rotational.app"
+      - "honu.rotational.app"
+      - "quarterdeck.rotational.app"
+    allowOrigins:
+      - "endeavor.rotational.app"
+      - "auth.rotational.app"
+      - "honu.rotational.app"
+      - "quarterdeck.rotational.app"
+    issuer: "quarterdeck.rotational.app"
+
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
 # by the name and keys below. If you want Helm to create the secrets, set create to true

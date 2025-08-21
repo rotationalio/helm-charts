@@ -43,38 +43,3 @@ volumeClaimTemplates:
 # set readinessProbe and livenessProbe to null to prevent connection to db.
 readinessProbe: null
 livenessProbe: null
-
-quarterdeck:
-  enabled: true
-  authentication:
-    audience:
-    - "rotational.app"
-    - "auth.rotational.app"
-    - "honu.rotational.app"
-
-  securitytxt:
-    text: |
-      Contact: mailto:security@example.com
-      Expires: 2037-11-14T22:07:00.000Z
-      Encryption: https://example.com/pgp-key.txt
-      Preferred-Languages: en
-      Canonical: https://example.com/.well-known/security.txt
-      Policy: https://example.com/security
-
-
-  # Configuration for the Quarterdeck ingress.
-  ingress:
-    enabled: true
-    hosts:
-      - host: quarterdeck.svc.local
-        paths:
-          - path: /
-            pathType: Prefix
-
-
-  volumeClaimTemplates:
-    database:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 1Gi
