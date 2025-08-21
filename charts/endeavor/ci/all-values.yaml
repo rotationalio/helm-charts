@@ -1,16 +1,21 @@
+endeavor:
+  origin: "https://endeavor.example.com"
+  allowOrigins:
+    - "https://endeavor.example.com"
+    - "https://quarterdeck.example.com"
+  auth:
+    quarterdeckURL: "https://quarterdeck.example.com"
+    audience: "https://endeavor.example.com"
+
 secrets:
   create: true
   inferenceAPIKey:
     value: "inferenceapikey"
 
 ingress:
-  enabled: true
+  enabled: false
   hosts:
-    - host: endeavor.example.com
-      paths:
-        - path: /
-          pathType: Prefix
-    - host: endeavor.example.dev
+    - host: endeavor.svc.local
       paths:
         - path: /
           pathType: Prefix
