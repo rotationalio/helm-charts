@@ -23,7 +23,7 @@ version: 0.3.0
 # It is recommended to use it with quotes.
 appVersion: "0.3.0"
 
-# Project Inforamation
+# Project Information
 home: https://rotational.io
 icon: https://rotational.io/img/favicon.png
 sources:
