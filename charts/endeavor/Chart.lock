@@ -1,6 +1,6 @@
 dependencies:
 - name: quarterdeck
-  repository: https://helm.rotational.dev
-  version: 0.1.0
-digest: sha256:8b39a8afc53a9f437c6d5769c5b04d70a246a5f336ad5ca3e90299e4ab17d6ac
-generated: "2025-08-18T22:12:31.247205-04:00"
+  repository: file://../quarterdeck
+  version: 0.3.0
+digest: sha256:4efd79b3dd0c5739998259c99555219a08343d75ea436460def0fda35c882092
+generated: "2025-08-22T09:35:15.223921-04:00"
