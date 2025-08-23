@@ -35,7 +35,17 @@ env:
   - name: QD_AUTH_AUDIENCE
     value: {{ join "," .Values.authentication.audience | quote }}
   - name: QD_AUTH_ISSUER
-    value: {{ include "quarterdeck.authIssuer" . | quote }}
+    value: {{ .Values.authentication.issuer | quote }}
+  - name: QD_AUTH_LOGIN_URL
+    value: {{ include "loginURL" . | quote }}
+  - name: QD_AUTH_LOGOUT_REDIRECT
+    value: {{ include "logoutRedirect" . | quote }}
+  - name: QD_AUTH_AUTHENTICATED_REDIRECT
+    value: {{ include "authenticateRedirect" . | quote }}
+  - name: QD_AUTH_REAUTHENTICATED_REDIRECT
+    value: {{ include "reauthenticateRedirect" . | quote }}
+  - name: QD_AUTH_LOGIN_REDIRECT
+    value: {{ include "loginRedirect" . | quote }}
   - name: QD_AUTH_ACCESS_TOKEN_TTL
     value: {{ .Values.authentication.accessTokenTTL | quote }}
   - name: QD_AUTH_REFRESH_TOKEN_TTL
@@ -62,53 +72,42 @@ env:
 {{ join ";" $parts -}}
 {{- end -}}
 
-{{/*
-If the authentication issuer isn't specified, use the host in the values file
-*/}}
-{{- define "quarterdeck.authIssuer" -}}
-{{- if .Values.authentication.issuer -}}
-{{ .Values.authentication.issuer }}
-{{- else -}}
-{{ printf "https://%s" .Values.host }}
-{{- end -}}
-{{- end -}}
-
-{{- define "quarterdeck.loginURL" -}}
+{{- define "loginURL" -}}
 {{- if .Values.authentication.loginURL -}}
 {{ .Values.authentication.loginURL }}
 {{- else -}}
-{{ printf "https://%s/signin" .Values.host }}
+{{ printf "https://%s/signin" .Values.authentication.issuer }}
 {{- end -}}
 {{- end -}}
 
-{{- define "quarterdeck.logoutRedirect" -}}
+{{- define "logoutRedirect" -}}
 {{- if .Values.authentication.logoutRedirect -}}
 {{ .Values.authentication.logoutRedirect }}
 {{- else -}}
-{{ printf "https://%s/signout" .Values.host }}
+{{ printf "https://%s/signout" .Values.authentication.issuer }}
 {{- end -}}
 {{- end -}}
 
-{{- define "quarterdeck.loginRedirect" -}}
+{{- define "loginRedirect" -}}
 {{- if .Values.authentication.loginRedirect -}}
 {{ .Values.authentication.loginRedirect }}
 {{- else -}}
-{{ printf "https://%s/dashboard" .Values.host }}
+{{ printf "https://%s/dashboard" .Values.authentication.issuer }}
 {{- end -}}
 {{- end -}}
 
-{{- define "quarterdeck.authenticateRedirect" -}}
+{{- define "authenticateRedirect" -}}
 {{- if .Values.authentication.authenticateRedirect -}}
 {{ .Values.authentication.authenticateRedirect }}
 {{- else -}}
-{{ printf "https://%s/dashboard/authenticated" .Values.host }}
+{{ printf "https://%s/dashboard/authenticated" .Values.authentication.issuer }}
 {{- end -}}
 {{- end -}}
 
-{{- define "quarterdeck.reauthenticateRedirect" -}}
+{{- define "reauthenticateRedirect" -}}
 {{- if .Values.authentication.reauthenticateRedirect -}}
 {{ .Values.authentication.reauthenticateRedirect }}
 {{- else -}}
-{{ printf "https://%s/dashboard/reauthenticated" .Values.host }}
+{{ printf "https://%s/dashboard/reauthenticated" .Values.authentication.issuer }}
 {{- end -}}
 {{- end -}}

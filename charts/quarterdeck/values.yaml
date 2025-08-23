@@ -22,13 +22,6 @@ image:
 
 imagePullSecrets: []
 
-# The host is the domain that the Quarterdeck service will be served on. This is used
-  # to set the issuer and audience for the JWT tokens issued by Quarterdeck.
-  # Quarterdeck will use this as the issuer for the JWT tokens
-  # and the ingress will be configured to use this host.
-  # This can be overridden by setting the issuer and/or the ingress host.
-host: "quarterdeck.svc.local"
-
 # Set the specific configuration for the Quarterdeck service. For more information about
 # the various configuration options, use quarterdeck config on the command line.
 quarterdeck:
@@ -92,19 +85,19 @@ authentication:
   issuer: ""
 
   # The URL to the login page for Quarterdeck.
-  LogginURL: ""
+  loginURL: ""
 
   # The URL to redirect to after logging out of Quarterdeck.
   logoutRedirect: ""
-
-  # The URL to redirect to after logging in to Quarterdeck.
-  loginRedirect: ""
 
   # The URL to redirect to after authenticating with Quarterdeck.
   authenticateRedirect: ""
 
   # The URL to redirect to after re-authenticating with Quarterdeck.
   reauthenticateRedirect: ""
+
+  # The URL to redirect to after logging in to Quarterdeck.
+  loginRedirect: ""
 
   # How long access and refresh tokens are valid for. The overlap is a negative duration
   # that specifies how long before an access token expires that a refresh token can be used.

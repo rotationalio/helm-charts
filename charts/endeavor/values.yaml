@@ -71,6 +71,7 @@ quarterdeck:
   authentication:
     audience:
       - "endeavor.svc.local"
+    issuer: "quarterdeck.svc.local"
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
