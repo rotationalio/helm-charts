@@ -21,7 +21,7 @@ securitytxt:
 ingress:
   enabled: false
   hosts:
-    - host: quarterdeck.svc.local
+    - host: auth.quarterdeck.svc.local
       paths:
         - path: /
           pathType: Prefix
