@@ -76,7 +76,7 @@ env:
 {{- if .Values.authentication.loginURL -}}
 {{ .Values.authentication.loginURL }}
 {{- else -}}
-{{ printf "https://%s/signin" .Values.authentication.issuer }}
+{{ printf "%s/login" .Values.host }}
 {{- end -}}
 {{- end -}}
 
@@ -84,7 +84,7 @@ env:
 {{- if .Values.authentication.logoutRedirect -}}
 {{ .Values.authentication.logoutRedirect }}
 {{- else -}}
-{{ printf "https://%s/signout" .Values.authentication.issuer }}
+{{ printf "%s/login" .Values.host }}
 {{- end -}}
 {{- end -}}
 
@@ -92,7 +92,7 @@ env:
 {{- if .Values.authentication.loginRedirect -}}
 {{ .Values.authentication.loginRedirect }}
 {{- else -}}
-{{ printf "https://%s/dashboard" .Values.authentication.issuer }}
+{{ printf "%s/dashboard" .Values.host }}
 {{- end -}}
 {{- end -}}
 
@@ -100,7 +100,7 @@ env:
 {{- if .Values.authentication.authenticateRedirect -}}
 {{ .Values.authentication.authenticateRedirect }}
 {{- else -}}
-{{ printf "https://%s/dashboard/authenticated" .Values.authentication.issuer }}
+{{ printf "%s/dashboard" .Values.host }}
 {{- end -}}
 {{- end -}}
 
@@ -108,6 +108,6 @@ env:
 {{- if .Values.authentication.reauthenticateRedirect -}}
 {{ .Values.authentication.reauthenticateRedirect }}
 {{- else -}}
-{{ printf "https://%s/dashboard/reauthenticated" .Values.authentication.issuer }}
+{{ printf "%s/dashboard" .Values.host }}
 {{- end -}}
 {{- end -}}

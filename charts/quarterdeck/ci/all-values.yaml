@@ -1,3 +1,5 @@
+host: "example.com"
+
 authentication:
   issuer: "quarterdeck.svc.local"
   audience:

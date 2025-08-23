@@ -22,6 +22,11 @@ image:
 
 imagePullSecrets: []
 
+# The host is the base domain that will be used to define the login, logout, and
+# other URLs for Quarterdeck, if those URLs are not explicitly set in the authentication
+# configuration below.
+host: ""
+
 # Set the specific configuration for the Quarterdeck service. For more information about
 # the various configuration options, use quarterdeck config on the command line.
 quarterdeck:
@@ -142,7 +147,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: quarterdeck.svc.local
+    - host: "auth.example.com"
       paths:
         - path: /
           pathType: ImplementationSpecific
