@@ -1,8 +1,9 @@
+host: "https://quarterdeck.example.com"
+
 authentication:
+  issuer: "https://quarterdeck.example.com"
   audience:
-  - "rotational.app"
-  - "auth.rotational.app"
-  - "honu.rotational.app"
+  - "https://endeavor.example.com"
 
 securitytxt:
   text: |
@@ -16,9 +17,9 @@ securitytxt:
 
 # Configuration for the Quarterdeck ingress.
 ingress:
-  enabled: true
+  enabled: false
   hosts:
-    - host: quarterdeck.svc.local
+    - host: auth.quarterdeck.svc.local
       paths:
         - path: /
           pathType: Prefix
