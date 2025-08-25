@@ -1,11 +1,9 @@
-host: "example.com"
+host: "https://quarterdeck.example.com"
 
 authentication:
-  issuer: "quarterdeck.svc.local"
+  issuer: "https://quarterdeck.example.com"
   audience:
-  - "rotational.app"
-  - "auth.rotational.app"
-  - "honu.rotational.app"
+  - "https://endeavor.example.com"
 
 securitytxt:
   text: |
