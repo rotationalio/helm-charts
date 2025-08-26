@@ -158,6 +158,7 @@ ingress:
 
 # Setup the liveness and readiness probes on the pods.
 livenessProbe:
+  enabled: false
   httpGet:
     path: /livez
     port: 8000
@@ -168,6 +169,7 @@ livenessProbe:
   periodSeconds: 10
 
 readinessProbe:
+  enabled: false
   httpGet:
     path: /readyz
     port: 8000
