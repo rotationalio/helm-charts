@@ -65,3 +65,19 @@ Volume mounts for the database
 - name: {{ include "endeavor.name" . }}
   mountPath: {{ .Values.storage.nodeData.mountPath }}
 {{- end }}
+
+{{- define "endeavor.inferenceAPIKeySecretName" -}}
+{{- if .Values.secrets.create -}}
+{{ include "endeavor.fullname" . }}
+{{- else -}}
+{{ default (include "endeavor.fullname" .) .Values.secrets.inferenceAPIKey.secretName }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.csrfSecretName" -}}
+{{- if .Values.secrets.create -}}
+{{ include "endeavor.fullname" . }}
+{{- else -}}
+{{ default (include "endeavor.fullname" .) .Values.secrets.csrfSecret.secretName }}
+{{- end -}}
+{{- end -}}

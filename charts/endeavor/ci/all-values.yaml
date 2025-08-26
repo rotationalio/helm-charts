@@ -1,51 +1,19 @@
-quarterdeck:
-  enabled: true
-  authentication:
-    audience:
-      - "https://endeavor.example.com"
-    issuer: "https://quarterdeck.example.com"
-  host: "https://quarterdeck.example.com"
-  livenessProbe: null
-  readinessProbe: null
+global:
+  origins:
+  - http://quarterdeck.svc.cluster.local
+  - http://endeavor.svc.cluster.local
+
+  issuer: "http://quarterdeck.svc.cluster.local"
 
 endeavor:
-  origin: "https://endeavor.example.com"
-  allowOrigins:
-    - "https://endeavor.example.com"
-    - "https://quarterdeck.example.com"
-  auth:
-    quarterdeckURL: "https://quarterdeck.example.com"
-    audience: "https://endeavor.example.com"
+  origin: http://endeavor.svc.cluster.local
 
 secrets:
   create: true
   inferenceAPIKey:
     value: "inferenceapikey"
 
-ingress:
-  enabled: false
-  hosts:
-    - host: endeavor.svc.local
-      paths:
-        - path: /
-          pathType: Prefix
-
-resources:
-  requests:
-    memory: "32Mi"
-    cpu: "100m"
-  limits:
-    memory: "512Mi"
-    cpu: "500m"
-
-volumeClaimTemplates:
-  # The node data spec will be included in volume claim templates.
-  nodeData:
-    accessModes: ["ReadWriteOnce"]
-    resources:
-      requests:
-        storage: 1Gi
-
-# set readinessProbe and livenessProbe to null to prevent connection to db.
-readinessProbe: null
-livenessProbe: null
+quarterdeck:
+  enabled: true
+  readinessProbe: null
+  livenessProbe: null

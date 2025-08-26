@@ -21,20 +21,42 @@ image:
 
 imagePullSecrets: []
 
-# Set the Endeavor specific configuration.
-endeavor:
-  # Maintenance mode can be used to run the pod without starting the serice for debugging
-  maintenance: false
+# Global variables are available to both Endeavor and Quarterdeck charts
+global:
 
-  # Specify the mode of the server (release, debug, testing)
+  # Origins specifies all hosts that are in the endeavor ecosystem and is used for the
+  # allowed origins setting in CORS and the audience value in Quarterdeck.
+  origins: []
+
+  # Specifies the authentication URL for Quarterdeck, which reconfigures the
+  # quarterdeck subchart as needed as well as Endeavor related fields.
+  issuer: ""
+
+  # Specify a global log level for all microservices (can be overridden)
+  # Verbosity of logging: trace, debug, info, warn, error, fatal, panic
+  logging:
+    level: info
+    console: false
+
+  # Specify a global mode for all microservices (release, debug, testing)
+  # Only specify debug mode if you know what you're doing.
   mode: release
 
-  # Specify the verbosity of logging (trace, debug, info, warn, error, fatal, panic)
-  logLevel: info
-  consoleLog: false
+
+# Set the Endeavor specific configuration.
+endeavor:
+  # Maintenance mode can be used to run the pod without starting the service for debugging
+  maintenance: false
+
+  # Override global.mode
+  mode: null
+
+  # Override global.logging
+  logLevel: null
+  consoleLog: null
 
   # DSN containing backend database configuration
-  databaseURL: "bolt:////data/endeavor.db"
+  databaseURL: "bolt:////data/db/endeavor.db"
 
   # Origin (url) of the UI server for creating endpoints and CORS access
   # Should be an absolute URL including scheme without trailing slash that matches the
@@ -43,15 +65,18 @@ endeavor:
 
   # Do not set this unless you're really sure; by default it will be the origin and
   # the Quarterdeck URL to ensure that CORS is configured correctly.
-  allowOrigins: []
+  allowOrigins: null
 
   # Set the display name for the Endeavor API Docs
   docsName: "Endeavor API Docs"
 
   # Authentication configuration
   auth:
-    quarterdeckURL: ""
-    audience: ""
+    # Override global.issuer (do not set unless you know what you're doing)
+    quarterdeckURL: null
+
+    # Override endeavor.origin as the primary audience (do not set unless you know what you're doing)
+    audience: null
 
   # CSRF protection configuration
   csrf:
@@ -68,10 +93,6 @@ endeavor:
 
 quarterdeck:
   enabled: true
-  authentication:
-    audience:
-      - "endeavor.svc.local"
-    issuer: "quarterdeck.svc.local"
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
@@ -103,16 +124,15 @@ service:
   type: ClusterIP
   port: 8000
 
+# Currently setup for Traefik ingress routes, not nginx or k8s networking ingresses.
 ingress:
   enabled: false
-  className: ""
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
   annotations: {}
-  hosts:
-    - host: endeavor.local
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
+  entryPoints:
+    - websecure
+  tls: {}
 
 resources: {}
 
