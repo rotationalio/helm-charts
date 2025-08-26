@@ -83,7 +83,7 @@ quarterdeck:
   # TODO: allow this to be stored in a secret if it has database credentials.
   database:
     URL: sqlite3:////data/db/quarterdeck.db
-    readOnly: true
+    readOnly: false
 
   # Modifies how Quarterdeck handles authentication and authorization for its applications.
   auth:
