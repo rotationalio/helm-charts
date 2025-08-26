@@ -1,48 +1,15 @@
-host: "https://quarterdeck.example.com"
+global:
+  issuer: https://quarterdeck.svc.cluster.local
+  origins:
+    - https://quarterdeck.svc.cluster.local
+    - https://endeavor.svc.cluster.local
 
-authentication:
-  issuer: "https://quarterdeck.example.com"
-  audience:
-  - "https://endeavor.example.com"
-
-securitytxt:
-  text: |
-    Contact: mailto:security@example.com
-    Expires: 2037-11-14T22:07:00.000Z
-    Encryption: https://example.com/pgp-key.txt
-    Preferred-Languages: en
-    Canonical: https://example.com/.well-known/security.txt
-    Policy: https://example.com/security
-
-
-# Configuration for the Quarterdeck ingress.
-ingress:
-  enabled: false
-  hosts:
-    - host: auth.quarterdeck.svc.local
-      paths:
-        - path: /
-          pathType: Prefix
-
-  tls: []
-
-resources:
-  requests:
-    memory: "32Mi"
-    cpu: "100m"
-  limits:
-    memory: "512Mi"
-    cpu: "500m"
-
-
-volumeClaimTemplates:
-  database:
-    accessModes: ["ReadWriteOnce"]
-    resources:
-      requests:
-        storage: 1Gi
-
-
-# set readinessProbe and livenessProbe to null to prevent connection to db.
-readinessProbe: null
-livenessProbe: null
+quarterdeck:
+  securitytxt:
+    text: |
+      Contact: mailto:security@example.com
+      Expires: 2037-11-14T22:07:00.000Z
+      Encryption: https://example.com/pgp-key.txt
+      Preferred-Languages: en
+      Canonical: https://example.com/.well-known/security.txt
+      Policy: https://example.com/security

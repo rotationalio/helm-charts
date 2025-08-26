@@ -109,16 +109,26 @@ secrets:
     secretKey: csrfSecret
     value: ""
 
-# Specify how pods are created in the deployment.
+# Additional pod spec configuration
 pod:
-  # Add additional annotations to the pods
   annotations: {}
-  # Add additional labels to the pods
   labels: {}
-  # Specify a pod security context
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
   securityContext: {}
 
-securityContext: {}
+storage:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    mountPath: /data/db
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 32Gi
 
 service:
   type: ClusterIP
@@ -133,18 +143,6 @@ ingress:
   entryPoints:
     - websecure
   tls: {}
-
-resources: {}
-
-storage:
-  # The node data spec will be included in volume claim templates.
-  nodeData:
-    mountPath: /data/db
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 32Gi
 
 # The liveness probe requires Endeavor to be running.
 livenessProbe:
@@ -168,11 +166,14 @@ readinessProbe:
   initialDelaySeconds: 2
   periodSeconds: 10
 
-# Optionally specify how nodes are selected to place pods on.
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
 nodeSelector: {}
 
-# Optionally specify tolerations to ensure pods are not scheduled on incompatible nodes.
+# Tolerations for the pods.
 tolerations: []
 
-# Optionally specify affinities to ensure pods and resources are together or apart.
+# Affinity rules for the pods.
 affinity: {}
