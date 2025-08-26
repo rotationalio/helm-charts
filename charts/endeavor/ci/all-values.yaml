@@ -13,6 +13,7 @@ quarterdeck:
     audience:
       - "https://endeavor.example.com"
     issuer: "https://quarterdeck.example.com"
+  host: "https://quarterdeck.example.com"
 
 secrets:
   create: true
