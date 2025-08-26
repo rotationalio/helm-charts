@@ -15,5 +15,3 @@ secrets:
 
 quarterdeck:
   enabled: true
-  readinessProbe: null
-  livenessProbe: null
