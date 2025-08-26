@@ -1,3 +1,12 @@
+endeavor:
+  origin: "https://endeavor.example.com"
+  allowOrigins:
+    - "https://endeavor.example.com"
+    - "https://quarterdeck.example.com"
+  auth:
+    quarterdeckURL: "https://quarterdeck.example.com"
+    audience: "https://endeavor.example.com"
+
 quarterdeck:
   enabled: true
   authentication:
@@ -9,15 +18,6 @@ quarterdeck:
     enabled: false
   readinessProbe:
     enabled: false
-    
-endeavor:
-  origin: "https://endeavor.example.com"
-  allowOrigins:
-    - "https://endeavor.example.com"
-    - "https://quarterdeck.example.com"
-  auth:
-    quarterdeckURL: "https://quarterdeck.example.com"
-    audience: "https://endeavor.example.com"
 
 secrets:
   create: true
