@@ -14,8 +14,6 @@ quarterdeck:
       - "https://endeavor.example.com"
     issuer: "https://quarterdeck.example.com"
   host: "https://quarterdeck.example.com"
-  readinessProbe: {}
-  livenessProbe: {}
 
 secrets:
   create: true
