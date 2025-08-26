@@ -7,6 +7,13 @@ endeavor:
     quarterdeckURL: "https://quarterdeck.example.com"
     audience: "https://endeavor.example.com"
 
+quarterdeck:
+  enabled: true
+  authentication:
+    audience:
+      - "https://endeavor.example.com"
+    issuer: "https://quarterdeck.example.com"
+
 secrets:
   create: true
   inferenceAPIKey:
