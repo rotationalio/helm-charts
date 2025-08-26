@@ -13,7 +13,7 @@ spec:
   entryPoints:
     {{- toYaml .Values.ingress.entryPoints | nindent 4 }}
   routes:
-    - match: Host(`{{ .Values.global.issuer }}`)
+    - match: Host(`{{ include "quarterdeck.hostname" . }}`)
       kind: Rule
       services:
         - name: {{ include "quarterdeck.fullname" . }}

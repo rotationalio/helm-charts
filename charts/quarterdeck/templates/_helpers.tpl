@@ -139,3 +139,14 @@ volumes:
 {{- end }}
 {{- end }}
 
+{{- define "quarterdeck.hostname" -}}
+{{- if hasPrefix "https://" .Values.global.issuer  -}}
+{{ trimPrefix "https://" .Values.global.issuer }}
+{{- else if hasPrefix "http://" .Values.global.issuer -}}
+{{ trimPrefix "http://" .Values.global.issuer }}
+{{- else if hasPrefix "//" .Values.global.issuer -}}
+{{ trimPrefix "//" .Values.global.issuer }}
+{{- else -}}
+{{ .Values.global.issuer }}
+{{- end -}}
+{{- end -}}
