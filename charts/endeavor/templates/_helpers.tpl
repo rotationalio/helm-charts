@@ -81,3 +81,15 @@ Volume mounts for the database
 {{ default (include "endeavor.fullname" .) .Values.secrets.csrfSecret.secretName }}
 {{- end -}}
 {{- end -}}
+
+{{- define "endeavor.hostname" -}}
+{{- if hasPrefix "https://" .Values.endeavor.origin  -}}
+{{ trimPrefix "https://" .Values.endeavor.origin }}
+{{- else if hasPrefix "http://" .Values.endeavor.origin -}}
+{{ trimPrefix "http://" .Values.endeavor.origin }}
+{{- else if hasPrefix "//" .Values.endeavor.origin -}}
+{{ trimPrefix "//" .Values.endeavor.origin }}
+{{- else -}}
+{{ .Values.endeavor.origin }}
+{{- end -}}
+{{- end -}}

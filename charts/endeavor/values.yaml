@@ -24,12 +24,14 @@ imagePullSecrets: []
 # Global variables are available to both Endeavor and Quarterdeck charts
 global:
 
-  # Origins specifies all hosts that are in the endeavor ecosystem and is used for the
+  # Origins specifies all hosts that are in the Endeavor ecosystem and is used for the
   # allowed origins setting in CORS and the audience value in Quarterdeck.
+  # Should be a full URLs with scheme (e.g. https://) and no trailing slashes.
   origins: []
 
   # Specifies the authentication URL for Quarterdeck, which reconfigures the
-  # quarterdeck subchart as needed as well as Endeavor related fields.
+  # Quarterdeck subchart as needed as well as Endeavor related fields.
+  # Should be a full URL with scheme (e.g. https://) and no trailing slash.
   issuer: ""
 
   # Specify a global log level for all microservices (can be overridden)

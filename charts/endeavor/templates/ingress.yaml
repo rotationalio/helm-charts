@@ -13,7 +13,7 @@ spec:
   entryPoints:
     {{- toYaml .Values.ingress.entryPoints | nindent 4 }}
   routes:
-    - match: Host(`{{ .Values.endeavor.origin }}`)
+    - match: Host(`{{ include "endeavor.hostname" . }}`)
       kind: Rule
       services:
         - name: {{ include "endeavor.fullname" . }}
