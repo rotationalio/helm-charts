@@ -13,3 +13,12 @@ quarterdeck:
       Preferred-Languages: en
       Canonical: https://example.com/.well-known/security.txt
       Policy: https://example.com/security
+
+
+  auth:
+    keys:
+      01K3KXRFKSVV9HQ26GD6RRBEK9: /data/jwks/01K3KXRFKSVV9HQ26GD6RRBEK9.pem
+
+secrets:
+  jwks:
+    secretName: rotational-jwks

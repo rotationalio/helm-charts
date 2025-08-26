@@ -68,25 +68,16 @@ annotations:
 {{- end }}
 
 {{/*
-Define the keys secret name for access to the keys mounted in the volume
-*/}}
-{{- define "quarterdeck.keysSecretName" -}}
-{{- if .Values.authentication.keysSecret.name -}}
-{{ .Values.authentication.keysSecret.name }}
-{{- end }}
-{{- end }}
-
-{{/*
 All volume mounts for the Quarterdeck pods.
 - database volume mount if databaseURL is sqlite3
-- keys secret volume mount if keys are provided.
+- jwks secret volume mount if jwks keys are provided.
 - security.txt config map mount if securitytxt.text is provided.
 - additional volume mounts from .Values.volumeMounts
 */}}
 {{- define "quarterdeck.volumeMounts" -}}
 volumeMounts:
   {{- include "quarterdeck.volumeMounts.database" . | nindent 2 -}}
-  {{- include "quarterdeck.volumeMounts.keys" . | nindent 2  -}}
+  {{- include "quarterdeck.volumeMounts.jwks" . | nindent 2  -}}
   {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 2 -}}
 {{- end }}
 
@@ -98,10 +89,10 @@ Volume mounts for database storage if using sqlite3.
   mountPath: {{ .Values.storage.database.mountPath }}
 {{- end -}}
 
-{{- define "quarterdeck.volumeMounts.keys" -}}
-{{- if and .Values.quarterdeck.auth.keys .Values.secrets.jwks.name -}}
-- name: {{ include "quarterdeck.name" . }}-keys
-  mountPath: {{ default "/data/keys" .Values.secrets.jwks.mountPath }}
+{{- define "quarterdeck.volumeMounts.jwks" -}}
+{{- if and .Values.quarterdeck.auth.keys .Values.secrets.jwks.secretName -}}
+- name: {{ include "quarterdeck.name" . }}-jwks
+  mountPath: {{ default "/data/jwks" .Values.secrets.jwks.mountPath }}
   readOnly: true
 {{- end -}}
 {{- end -}}
@@ -116,7 +107,7 @@ Volume mounts for database storage if using sqlite3.
 
 {{/*
 All volumes for the Quarterdeck pods.
-- Keys secret mount if keys are provided.
+- jwks secret mount if jwks keys are provided.
 - security.txt config map mount if securitytxt.text is provided.
 - additional volumes from .Values.volumes
 */}}
@@ -128,16 +119,25 @@ volumes:
 {{- end }}
 
 {{- define "quarterdeck.volumes.all" -}}
+  {{- include "quarterdeck.volumes.jwks" . | nindent 2 -}}
   {{- include "quarterdeck.volumes.securitytxt" . | nindent 2 -}}
-{{- end }}
+{{- end -}}
+
+{{- define "quarterdeck.volumes.jwks" -}}
+{{- if and .Values.quarterdeck.auth.keys .Values.secrets.jwks.secretName -}}
+- name: {{ include "quarterdeck.name" . }}-jwks
+  secret:
+    secretName: {{ .Values.secrets.jwks.secretName }}
+{{- end -}}
+{{- end -}}
 
 {{- define "quarterdeck.volumes.securitytxt" -}}
 {{- if .Values.quarterdeck.securitytxt.text -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
   configMap:
     name: {{ include "quarterdeck.name" . }}-securitytxt
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
 
 {{- define "quarterdeck.hostname" -}}
 {{- if hasPrefix "https://" .Values.global.issuer  -}}
