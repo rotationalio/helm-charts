@@ -1,3 +1,13 @@
+quarterdeck:
+  enabled: true
+  authentication:
+    audience:
+      - "https://endeavor.example.com"
+    issuer: "https://quarterdeck.example.com"
+  host: "https://quarterdeck.example.com"
+  livenessProbe: null
+  readinessProbe: null
+
 endeavor:
   origin: "https://endeavor.example.com"
   allowOrigins:
