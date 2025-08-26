@@ -43,7 +43,7 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
-              protocol: TCP      
+              protocol: TCP
           {{- include "quarterdeck.volumeMounts" . | nindent 10 }}
           {{- include "quarterdeck.environment" . | nindent 10 }}
           livenessProbe:

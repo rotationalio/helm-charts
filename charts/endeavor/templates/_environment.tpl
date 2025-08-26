@@ -7,11 +7,11 @@ env:
   - name: ENDEAVOR_MAINTENANCE
     value: {{ .Values.endeavor.maintenance | quote }}
   - name: ENDEAVOR_MODE
-    value: {{ .Values.endeavor.mode | quote }}
+    value: {{ include "endeavor.mode" . }}
   - name: ENDEAVOR_LOG_LEVEL
-    value: {{ .Values.endeavor.logLevel | quote }}
+    value: {{ include "endeavor.logLevel" . }}
   - name: ENDEAVOR_CONSOLE_LOG
-    value: {{ .Values.endeavor.consoleLog | quote }}
+    value: {{ include "endeavor.consoleLog" . }}
   - name: ENDEAVOR_DATABASE_URL
     value: {{ .Values.endeavor.databaseURL | quote }}
   - name: ENDEAVOR_BIND_ADDR
@@ -23,9 +23,9 @@ env:
   - name: ENDEAVOR_DOCS_NAME
     value: {{ .Values.endeavor.docsName | quote }}
   - name: ENDEAVOR_AUTH_QUARTERDECK_URL
-    value: {{ .Values.endeavor.auth.quarterdeckURL | quote }}
+    value: {{ include "endeavor.quarterdeckURL" . }}
   - name: ENDEAVOR_AUTH_AUDIENCE
-    value: {{ .Values.endeavor.auth.audience | quote }}
+    value: {{ include "endeavor.audience" . }}
   - name: ENDEAVOR_CSRF_COOKIE_TTL
     value: {{ .Values.endeavor.csrf.cookieTTL | quote }}
   {{- if or .Values.secrets.csrfSecret.secretName (and .Values.secrets.create .Values.secrets.csrfSecret.value) }}
@@ -50,25 +50,51 @@ env:
     value: {{ .Values.endeavor.radish.queueSize | quote }}
 {{- end -}}
 
-{{- define "endeavor.inferenceAPIKeySecretName" -}}
-{{- if .Values.secrets.create -}}
-{{ include "endeavor.fullname" . }}
+{{- define "endeavor.logLevel" -}}
+{{- if .Values.endeavor.logLevel -}}
+{{ .Values.endeavor.logLevel | quote }}
 {{- else -}}
-{{ default (include "endeavor.fullname" .) .Values.secrets.inferenceAPIKey.secretName }}
+{{ .Values.global.logging.level | quote }}
 {{- end -}}
 {{- end -}}
 
-{{- define "endeavor.csrfSecretName" -}}
-{{- if .Values.secrets.create -}}
-{{ include "endeavor.fullname" . }}
+{{- define "endeavor.consoleLog" -}}
+{{- if .Values.endeavor.consoleLog -}}
+{{ .Values.endeavor.consoleLog | quote }}
 {{- else -}}
-{{ default (include "endeavor.fullname" .) .Values.secrets.csrfSecret.secretName }}
+{{ .Values.global.logging.console | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.mode" -}}
+{{- if .Values.endeavor.mode -}}
+{{ .Values.endeavor.mode | quote }}
+{{- else -}}
+{{ .Values.global.mode | quote }}
 {{- end -}}
 {{- end -}}
 
 {{- define "endeavor.allowOrigins" -}}
 {{- if .Values.endeavor.allowOrigins }}
 {{- join "," .Values.endeavor.allowOrigins | quote -}}
+{{- else if .Values.global.origins -}}
+{{- join "," .Values.global.origins | quote -}}
+{{- else -}}
+{{ .Values.endeavor.origin | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.quarterdeckURL" -}}
+{{- if .Values.endeavor.auth.quarterdeckURL -}}
+{{ .Values.endeavor.auth.quarterdeckURL | quote }}
+{{- else -}}
+{{ .Values.global.issuer | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.audience" -}}
+{{- if .Values.endeavor.auth.audience -}}
+{{ .Values.endeavor.auth.audience | quote }}
 {{- else -}}
 {{ .Values.endeavor.origin | quote }}
 {{- end -}}

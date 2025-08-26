@@ -22,10 +22,27 @@ image:
 
 imagePullSecrets: []
 
-# The host is the base domain that will be used to define the login, logout, and
-# other URLs for Quarterdeck, if those URLs are not explicitly set in the authentication
-# configuration below.
-host: ""
+# Global variables are available to both Endeavor and Quarterdeck charts
+global:
+
+  # Origins specifies all hosts that are in the endeavor ecosystem and is used for the
+  # allowed origins setting in CORS and the audience value in Quarterdeck.
+  origins: []
+
+  # Specifies the authentication URL for Quarterdeck, which reconfigures the
+  # quarterdeck subchart as needed as well as Endeavor related fields.
+  issuer: ""
+
+  # Specify a global log level for all microservices (can be overridden)
+  # Verbosity of logging: trace, debug, info, warn, error, fatal, panic
+  logging:
+    level: info
+    console: false
+
+  # Specify a global mode for all microservices (release, debug, testing)
+  # Only specify debug mode if you know what you're doing.
+  mode: release
+
 
 # Set the specific configuration for the Quarterdeck service. For more information about
 # the various configuration options, use quarterdeck config on the command line.
@@ -34,17 +51,16 @@ quarterdeck:
   # services and can be used to run the pod without starting the service for debugging.
   maintenance: false
 
-  # One of test, debug, or release (should only use release in production).
-  mode: release
+  # Override global.mode
+  mode: null
 
-  # Logging outputs JSON logs unless consoleLog is set to true. Log levels are trace,
-  # debug, info, warn, error, fatal, or panic.
-  logLevel: info
-  consoleLog: false
+  # Override global.logging
+  logLevel: null
+  consoleLog: null
 
-  # CORS settings: by default allows all origins, but generally should be restricted to
-  # the domains specified in the audience configuration.
-  allowOrigins: ["*"]
+  # Do not set this unless you're really sure; by default it will be set to the global
+  # origins for use across multiple micro-services.
+  allowOrigins: null
 
   # Enable rate limiting to prevent spam and abuse.
   # Rate limiting is implemented as a token bucket algorithm; perSecond is the number of
@@ -67,58 +83,83 @@ quarterdeck:
     URL: sqlite3:////data/db/quarterdeck.db
     readOnly: true
 
-# Modifies how Quarterdeck handles authentication and authorization for its applications.
-authentication:
-  # If you're configuring Quarterdeck to use specific Ed25519 keys, set the key value
-  # to the KeyID and the value to the path the PEM encoded key is mounted to. If this is
-  # empty, then Quarterdeck will generate a new key pair on startup.
-  keys: {}
+  # Modifies how Quarterdeck handles authentication and authorization for its applications.
+  auth:
+    # If you're configuring Quarterdeck to use specific Ed25519 keys, set the key value
+    # to the KeyID and the value to the path the PEM encoded key is mounted to. If this is
+    # empty, then Quarterdeck will generate a new key pair on startup.
+    keys: {}
+
+    # Override global.origins as the primary audience (do not set unless you know what you're doing)
+    # The audience is a list of domains that are allowed to authenticate with Quarterdeck.
+    # including the Quarterdeck domain itself. This is used to verify the JWT tokens
+    # issued by Quarterdeck.
+    audience: null
+
+    # Override global.issuer (do not set unless you know what you're doing)
+    issuer: null
+
+    # The URL to the login page for Quarterdeck.
+    loginURL: ""
+
+    # The URL to redirect to after logging out of Quarterdeck.
+    logoutRedirect: ""
+
+    # The URL to redirect to after authenticating with Quarterdeck.
+    authenticateRedirect: ""
+
+    # The URL to redirect to after re-authenticating with Quarterdeck.
+    reauthenticateRedirect: ""
+
+    # The URL to redirect to after logging in to Quarterdeck.
+    loginRedirect: ""
+
+    # How long access and refresh tokens are valid for. The overlap is a negative duration
+    # that specifies how long before an access token expires that a refresh token can be used.
+    accessTokenTTL: 1h
+    refreshTokenTTL: 4h
+    tokenOverlap: -15m
+
+  csrf:
+    cookieTTL: "15m"
+    secret: ""
+
+  # Quarterdeck can be configured to return a security.txt file that defines security policies
+  # see: https://securitytxt.org/ for more information.
+  securitytxt:
+    path: /data/info/security.txt
+    text: ""
+
+
+# Specify the secrets to be used by Quarterdeck.
+# Endeavor expects these secrets are already pre-installed in the cluster and referenced
+# by the name and keys below. If you want Helm to create the secrets, set create to true
+# and specify the secrets values below.
+secrets:
+  create: false
 
   # If specifing keys, then you must manually create a secret with the keys as files
   # that will be mounted to the pods as specified below:
-  keysSecret:
-    name: ""
-    mountPath: /data/keys
+  jwks:
+    secretName: ""
+    mountPath: /data/jwks
 
-  # The audience is a list of domains that are allowed to authenticate with Quarterdeck.
-  # including the Quarterdeck domain itself. This is used to verify the JWT tokens
-  # issued by Quarterdeck.
-  audience: []
+  # Generally speaking the CSRF token secret does not need to be set
+  csrfSecret:
+    secretName: ""
+    secretKey: csrfSecret
+    value: ""
 
-  # Should be set to the same domain as the Quarterdeck service, or leave blank to use
-  # the ingress domain defined below.
-  issuer: ""
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
 
-  # The URL to the login page for Quarterdeck.
-  loginURL: ""
-
-  # The URL to redirect to after logging out of Quarterdeck.
-  logoutRedirect: ""
-
-  # The URL to redirect to after authenticating with Quarterdeck.
-  authenticateRedirect: ""
-
-  # The URL to redirect to after re-authenticating with Quarterdeck.
-  reauthenticateRedirect: ""
-
-  # The URL to redirect to after logging in to Quarterdeck.
-  loginRedirect: ""
-
-  # How long access and refresh tokens are valid for. The overlap is a negative duration
-  # that specifies how long before an access token expires that a refresh token can be used.
-  accessTokenTTL: 1h
-  refreshTokenTTL: 4h
-  tokenOverlap: -15m
-
-csrf:
-  cookieTTL: "20m"
-  secret: ""
-
-# Quarterdeck can be configured to return a security.txt file that defines security policies
-# see: https://securitytxt.org/ for more information.
-securitytxt:
-  path: /data/info/security.txt
-  text: ""
+# Additional container spec configuration
+containers:
+  securityContext: {}
 
 # Define PVCs that are allocated per pod on the stateful set (e.g. quarterdeck data)
 storage:
@@ -131,62 +172,43 @@ storage:
         requests:
           storage: 32Gi
 
-# Add any annotations to all Quarterdeck kubernetes resources.
-annotations: {}
-
 # Configuration for the Quarterdeck service.
 service:
   type: ClusterIP
   port: 8888
 
 # Configuration for the Quarterdeck ingress.
+# Currently setup for Traefik ingress routes, not nginx or k8s networking ingresses.
 ingress:
   enabled: false
-  className: ""
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: "auth.example.com"
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  entryPoints:
+    - websecure
+  tls: {}
 
-# Setup the liveness and readiness probes on the pods.
+# The liveness probe requires Quarterdeck to be running.
 livenessProbe:
   httpGet:
     path: /livez
-    port: 8000
+    port: 8888
     httpHeaders:
     - name: X-Kubernetes-Probe
       value: liveness
   initialDelaySeconds: 2
   periodSeconds: 10
 
+# The readiness probe requires Quarterdeck to be running and connected to the database.
 readinessProbe:
   httpGet:
     path: /readyz
-    port: 8000
+    port: 8888
     httpHeaders:
     - name: X-Kubernetes-Probe
       value: readiness
   initialDelaySeconds: 2
   periodSeconds: 10
-
-# Additional pod spec configuration
-pod:
-  annotations: {}
-  labels: {}
-  securityContext: {}
-  resources: {}
-
-# Additional container spec configuration
-containers:
-  securityContext: {}
 
 # Pod requested resources and limits.
 resources: {}

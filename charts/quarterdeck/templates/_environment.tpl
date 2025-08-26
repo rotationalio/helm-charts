@@ -9,13 +9,13 @@ env:
   - name: QD_BIND_ADDR
     value: ":{{ .Values.service.port }}"
   - name: QD_MODE
-    value: {{ .Values.quarterdeck.mode | quote }}
+    value: {{ include "quarterdeck.mode" . }}
   - name: QD_LOG_LEVEL
-    value: {{ .Values.quarterdeck.logLevel | quote }}
+    value: {{ include "quarterdeck.logLevel" . }}
   - name: QD_CONSOLE_LOG
-    value: {{ .Values.quarterdeck.consoleLog | quote }}
+    value: {{ include "quarterdeck.consoleLog" . }}
   - name: QD_ALLOW_ORIGINS
-    value: {{ join "," .Values.quarterdeck.allowOrigins | quote }}
+    value: {{ include "quarterdeck.allowOrigins" . }}
   - name: QD_RATE_LIMIT_TYPE
     value: {{ .Values.quarterdeck.rateLimit.type | quote }}
   - name: QD_RATE_LIMIT_PER_SECOND
@@ -28,86 +28,111 @@ env:
     value: {{ .Values.quarterdeck.database.URL | quote }}
   - name: QD_DATABASE_READ_ONLY
     value: {{ .Values.quarterdeck.database.readOnly | quote }}
-  {{- if .Values.authentication.keys }}
+  {{- if .Values.quarterdeck.auth.keys }}
   - name: QD_AUTH_KEYS
-    value: {{ include "authKeys" . | quote }}
+    value: {{ include "authKeys" . }}
   {{- end }}
   - name: QD_AUTH_AUDIENCE
-    value: {{ join "," .Values.authentication.audience | quote }}
+    value: {{ include "quarterdeck.audience" . }}
   - name: QD_AUTH_ISSUER
-    value: {{ .Values.authentication.issuer | quote }}
+    value: {{ include "quarterdeck.issuer" . }}
+  {{- if .Values.quarterdeck.auth.loginURL }}
   - name: QD_AUTH_LOGIN_URL
-    value: {{ include "loginURL" . | quote }}
+    value: {{ .Values.quarterdeck.auth.loginURL | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.auth.logoutRedirect }}
   - name: QD_AUTH_LOGOUT_REDIRECT
-    value: {{ include "logoutRedirect" . | quote }}
+    value: {{ .Values.quarterdeck.auth.logoutRedirect | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.auth.authenticateRedirect }}
   - name: QD_AUTH_AUTHENTICATED_REDIRECT
-    value: {{ include "authenticateRedirect" . | quote }}
+    value: {{ .Values.quarterdeck.auth.authenticateRedirect | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.auth.reauthenticateRedirect }}
   - name: QD_AUTH_REAUTHENTICATED_REDIRECT
-    value: {{ include "reauthenticateRedirect" . | quote }}
+    value: {{ .Values.quarterdeck.auth.reauthenticateRedirect | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.auth.loginRedirect }}
   - name: QD_AUTH_LOGIN_REDIRECT
-    value: {{ include "loginRedirect" . | quote }}
+    value: {{ .Values.quarterdeck.auth.loginRedirect | quote }}
+  {{- end }}
   - name: QD_AUTH_ACCESS_TOKEN_TTL
-    value: {{ .Values.authentication.accessTokenTTL | quote }}
+    value: {{ .Values.quarterdeck.auth.accessTokenTTL | quote }}
   - name: QD_AUTH_REFRESH_TOKEN_TTL
-    value: {{ .Values.authentication.refreshTokenTTL | quote }}
+    value: {{ .Values.quarterdeck.auth.refreshTokenTTL | quote }}
   - name: QD_AUTH_TOKEN_OVERLAP
-    value: {{ .Values.authentication.tokenOverlap | quote }}
+    value: {{ .Values.quarterdeck.auth.tokenOverlap | quote }}
   - name: QD_CSRF_COOKIE_TTL
-    value: {{ .Values.csrf.cookieTTL | quote }}
-  {{- if .Values.csrf.secret -}}
+    value: {{ .Values.quarterdeck.csrf.cookieTTL | quote }}
+  {{- if or .Values.secrets.csrfSecret.secretName (and .Values.secrets.create .Values.secrets.csrfSecret.value) }}
   - name: QD_CSRF_SECRET
-    value: {{ .Values.csrf.secret | quote }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "endeavor.csrfSecretName" . }}
+        key: {{ .Values.secrets.csrfSecret.secretKey }}
   {{- end }}
-  {{- if .Values.securitytxt.text }}
+  {{- if .Values.quarterdeck.securitytxt.text }}
   - name: QD_SECURITY_TXT_PATH
-    value: {{ .Values.securitytxt.path | quote }}
+    value: {{ .Values.quarterdeck.securitytxt.path | quote }}
   {{- end }}
+{{- end -}}
+
+{{- define "quarterdeck.logLevel" -}}
+{{- if .Values.quarterdeck.logLevel -}}
+{{ .Values.quarterdeck.logLevel | quote }}
+{{- else -}}
+{{ .Values.global.logging.level | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.consoleLog" -}}
+{{- if .Values.quarterdeck.consoleLog -}}
+{{ .Values.quarterdeck.consoleLog | quote }}
+{{- else -}}
+{{ .Values.global.logging.console | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.mode" -}}
+{{- if .Values.quarterdeck.mode -}}
+{{ .Values.quarterdeck.mode | quote }}
+{{- else -}}
+{{ .Values.global.mode | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.allowOrigins" -}}
+{{- if .Values.quarterdeck.allowOrigins }}
+{{- join "," .Values.quarterdeck.allowOrigins | quote -}}
+{{- else if .Values.global.origins -}}
+{{- join "," .Values.global.origins | quote -}}
+{{- else -}}
+{{ .Values.global.issuer | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.audience" -}}
+{{- if .Values.quarterdeck.audience }}
+{{- join "," .Values.quarterdeck.audience | quote -}}
+{{- else if .Values.global.origins -}}
+{{- join "," .Values.global.origins | quote -}}
+{{- else -}}
+{{ .Values.global.issuer | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.issuer" -}}
+{{- if .Values.quarterdeck.issuer }}
+{{ .Values.quarterdeck.issuer | quote }}
+{{- else -}}
+{{ .Values.global.issuer | quote }}
+{{- end -}}
 {{- end -}}
 
 {{- define "authKeys" -}}
 {{- $parts := list -}}
-{{- range $key, $val := .Values.authentication.keys -}}
+{{- range $key, $val := .Values.quarterdeck.auth.keys -}}
   {{- $parts = append $parts (printf "%s:%s" $key $val) -}}
 {{- end -}}
 {{ join ";" $parts -}}
-{{- end -}}
-
-{{- define "loginURL" -}}
-{{- if .Values.authentication.loginURL -}}
-{{ .Values.authentication.loginURL }}
-{{- else -}}
-{{ printf "%s/login" .Values.host }}
-{{- end -}}
-{{- end -}}
-
-{{- define "logoutRedirect" -}}
-{{- if .Values.authentication.logoutRedirect -}}
-{{ .Values.authentication.logoutRedirect }}
-{{- else -}}
-{{ printf "%s/login" .Values.host }}
-{{- end -}}
-{{- end -}}
-
-{{- define "loginRedirect" -}}
-{{- if .Values.authentication.loginRedirect -}}
-{{ .Values.authentication.loginRedirect }}
-{{- else -}}
-{{ printf "%s/dashboard" .Values.host }}
-{{- end -}}
-{{- end -}}
-
-{{- define "authenticateRedirect" -}}
-{{- if .Values.authentication.authenticateRedirect -}}
-{{ .Values.authentication.authenticateRedirect }}
-{{- else -}}
-{{ printf "%s/dashboard" .Values.host }}
-{{- end -}}
-{{- end -}}
-
-{{- define "reauthenticateRedirect" -}}
-{{- if .Values.authentication.reauthenticateRedirect -}}
-{{ .Values.authentication.reauthenticateRedirect }}
-{{- else -}}
-{{ printf "%s/dashboard" .Values.host }}
-{{- end -}}
 {{- end -}}

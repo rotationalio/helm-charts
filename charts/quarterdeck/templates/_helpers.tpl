@@ -85,9 +85,9 @@ All volume mounts for the Quarterdeck pods.
 */}}
 {{- define "quarterdeck.volumeMounts" -}}
 volumeMounts:
-  {{- include "quarterdeck.volumeMounts.database" . | nindent 2 }}
-  {{- include "quarterdeck.volumeMounts.keys" . | nindent 2  }}
-  {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 2 }}
+  {{- include "quarterdeck.volumeMounts.database" . | nindent 2 -}}
+  {{- include "quarterdeck.volumeMounts.keys" . | nindent 2  -}}
+  {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 2 -}}
 {{- end }}
 
 {{/*
@@ -96,23 +96,23 @@ Volume mounts for database storage if using sqlite3.
 {{- define "quarterdeck.volumeMounts.database" -}}
 - name: {{ include "quarterdeck.name" . }}-database
   mountPath: {{ .Values.storage.database.mountPath }}
-{{- end }}
+{{- end -}}
 
 {{- define "quarterdeck.volumeMounts.keys" -}}
-{{- if and .Values.authentication.keys .Values.authentication.keysSecret.name }}
+{{- if and .Values.quarterdeck.auth.keys .Values.secrets.jwks.name -}}
 - name: {{ include "quarterdeck.name" . }}-keys
-  mountPath: {{ default "/data/keys" .Values.authentication.keysSecret.mountPath }}
+  mountPath: {{ default "/data/keys" .Values.secrets.jwks.mountPath }}
   readOnly: true
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
 
 {{- define "quarterdeck.volumeMounts.securitytxt" -}}
-{{- if .Values.securitytxt.text }}
+{{- if .Values.quarterdeck.securitytxt.text -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
-  mountPath: {{ default "/data/info" (dir .Values.securitytxt.path) }}
+  mountPath: {{ default "/data/info" (dir .Values.quarterdeck.securitytxt.path) }}
   readOnly: true
-{{- end }}
-{{- end }}
+{{- end -}}
+{{- end -}}
 
 {{/*
 All volumes for the Quarterdeck pods.
@@ -132,7 +132,7 @@ volumes:
 {{- end }}
 
 {{- define "quarterdeck.volumes.securitytxt" -}}
-{{- if .Values.securitytxt.text -}}
+{{- if .Values.quarterdeck.securitytxt.text -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
   configMap:
     name: {{ include "quarterdeck.name" . }}-securitytxt
