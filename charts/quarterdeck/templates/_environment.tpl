@@ -71,6 +71,24 @@ env:
         name: {{ include "endeavor.csrfSecretName" . }}
         key: {{ .Values.secrets.csrfSecret.secretKey }}
   {{- end }}
+  - name: QD_SECURE_CONTENT_TYPE_NOSNIFF
+    value: {{ .Values.quarterdeck.secure.contentTypeNosniff | quote }}
+  {{- if .Values.quarterdeck.secure.crossOriginOpenerPolicy }}
+  - name: QD_SECURE_CROSS_ORIGIN_OPENER_POLICY
+    value: {{ .Values.quarterdeck.secure.crossOriginOpenerPolicy | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.secure.referrerPolicy }}
+  - name: QD_SECURE_REFERRER_POLICY
+    value: {{ .Values.quarterdeck.secure.referrerPolicy | quote }}
+  {{- end }}
+  {{- if gt .Values.quarterdeck.secure.hsts.seconds 0 }}
+  - name: QD_SECURE_HSTS_SECONDS
+    value: {{ .Values.quarterdeck.secure.hsts.seconds | quote }}
+  - name: QD_SECURE_HSTS_INCLUDE_SUBDOMAINS
+    value: {{ .Values.quarterdeck.secure.hsts.includeSubdomains | quote }}
+  - name: QD_SECURE_HSTS_PRELOAD
+    value: {{ .Values.quarterdeck.secure.hsts.preload | quote }}
+  {{- end }}
   {{- if .Values.quarterdeck.securitytxt.text }}
   - name: QD_SECURITY_TXT_PATH
     value: {{ .Values.quarterdeck.securitytxt.path | quote }}
