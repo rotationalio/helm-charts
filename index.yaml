@@ -2,6 +2,29 @@ apiVersion: v1
 entries:
   endeavor:
   - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2025-09-10T21:30:21.203768342Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.4
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 3b0ebbdc93b1dafb9a75daeb83d4e4c81029babd25c1d5387db29cb0a24defea
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.7.0/endeavor-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v2
     appVersion: 0.6.0
     created: "2025-09-10T21:24:23.626204228Z"
     dependencies:
@@ -324,6 +347,24 @@ entries:
     version: 0.1.0
   quarterdeck:
   - apiVersion: v2
+    appVersion: 0.4.0
+    created: "2025-09-10T21:30:21.430642756Z"
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: 4c3d3a0d5b662c2fcf2981bfac6e6bcbe1676e4aecf1750b4d36fa970ec3eaba
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.4.0/quarterdeck-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 0.3.0
     created: "2025-09-10T21:24:23.785725806Z"
     description: Distributed authentication and authorization service for Rotational
@@ -467,4 +508,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-10T21:24:23.785806497Z"
+generated: "2025-09-10T21:30:21.430782257Z"
