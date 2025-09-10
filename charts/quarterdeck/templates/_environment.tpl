@@ -81,9 +81,9 @@ env:
   - name: QD_SECURE_REFERRER_POLICY
     value: {{ .Values.quarterdeck.secure.referrerPolicy | quote }}
   {{- end }}
-  {{- if gt .Values.quarterdeck.secure.hsts.seconds 0 }}
+  {{- if gt (int .Values.quarterdeck.secure.hsts.seconds) 0 }}
   - name: QD_SECURE_HSTS_SECONDS
-    value: {{ .Values.quarterdeck.secure.hsts.seconds | quote }}
+    value: {{ (int .Values.quarterdeck.secure.hsts.seconds) | quote }}
   - name: QD_SECURE_HSTS_INCLUDE_SUBDOMAINS
     value: {{ .Values.quarterdeck.secure.hsts.includeSubdomains | quote }}
   - name: QD_SECURE_HSTS_PRELOAD

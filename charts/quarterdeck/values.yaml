@@ -142,7 +142,7 @@ quarterdeck:
     hsts:
       # If non-zero, the HSTS header is added to responses.
       seconds: 63072000
-      includeSubDomains: true
+      includeSubdomains: true
       preload: true
 
     # Specify directives for the Content-Security-Policy and Content-Security-Policy-Report-Only headers.
