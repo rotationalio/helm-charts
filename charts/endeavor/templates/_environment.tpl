@@ -35,6 +35,24 @@ env:
         name: {{ include "endeavor.csrfSecretName" . }}
         key: {{ .Values.secrets.csrfSecret.secretKey }}
   {{- end }}
+  - name: ENDEAVOR_SECURE_CONTENT_TYPE_NOSNIFF
+    value: {{ .Values.endeavor.secure.contentTypeNosniff | quote }}
+  {{- if .Values.endeavor.secure.crossOriginOpenerPolicy }}
+  - name: ENDEAVOR_SECURE_CROSS_ORIGIN_OPENER_POLICY
+    value: {{ .Values.endeavor.secure.crossOriginOpenerPolicy | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.secure.referrerPolicy }}
+  - name: ENDEAVOR_SECURE_REFERRER_POLICY
+    value: {{ .Values.endeavor.secure.referrerPolicy | quote }}
+  {{- end }}
+  {{- if gt (int .Values.endeavor.secure.hsts.seconds) 0 }}
+  - name: ENDEAVOR_SECURE_HSTS_SECONDS
+    value: {{ (int .Values.endeavor.secure.hsts.seconds) | quote }}
+  - name: ENDEAVOR_SECURE_HSTS_INCLUDE_SUBDOMAINS
+    value: {{ .Values.endeavor.secure.hsts.includeSubdomains | quote }}
+  - name: ENDEAVOR_SECURE_HSTS_PRELOAD
+    value: {{ .Values.endeavor.secure.hsts.preload | quote }}
+  {{- end }}
   {{- if .Values.endeavor.inference.endpointURL }}
   - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
     value: {{ .Values.endeavor.inference.endpointURL | quote }}

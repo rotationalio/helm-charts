@@ -122,16 +122,93 @@ quarterdeck:
     refreshTokenTTL: 4h
     tokenOverlap: -15m
 
+  # Manages CSRF (cross-site request forgery) protection and middleware.
   csrf:
     cookieTTL: "15m"
     secret: ""
+
+  # Manages browser security features such as Referrers, HSTS and Content Security Policies.
+  secure:
+    # If true adds the X-Content-Type-Options header with nosniff directive.
+    contentTypeNosniff: true
+
+    # Value for the Cross-Origin-Opener-Policy header.
+    crossOriginOpenerPolicy: same-origin
+
+    # Value for the Referrer-Policy header.
+    referrerPolicy: strict-origin-when-cross-origin
+
+    # Configure HSTS (HTTP Strict Transport Security) settings.
+    hsts:
+      # If non-zero, the HSTS header is added to responses.
+      seconds: 63072000
+      includeSubdomains: true
+      preload: true
+
+    # Specify directives for the Content-Security-Policy and Content-Security-Policy-Report-Only headers.
+    # Note that if using 'self' or 'none' they must be quoted, e.g. use "'self'" or "'none'".
+    # TODO: configure only the Quarterdeck-specific directives; these are only here as a placeholder.
+    contentSecurity:
+      policy:
+        childSrc: []
+        connectSrc: []
+        defaultSrc: []
+        fencedFrameSrc: []
+        fontSrc: []
+        frameSrc: []
+        imgSrc: []
+        manifestSrc: []
+        mediaSrc: []
+        objectSrc: []
+        prefetchSrc: []
+        scriptSrc: []
+        scriptSrcElem: []
+        scriptSrcAttr: []
+        styleSrc: []
+        styleSrcElem: []
+        styleSrcAttr: []
+        workerSrc: []
+        baseUri: []
+        sandbox: []
+        formAction: []
+        frameAncestors: []
+        reportTo: ""
+        requireTrustedTypesFor: []
+        trustedTypes: []
+        upgradeInsecureRequests: false
+      reportOnly:
+        childSrc: []
+        connectSrc: []
+        defaultSrc: []
+        fencedFrameSrc: []
+        fontSrc: []
+        frameSrc: []
+        imgSrc: []
+        manifestSrc: []
+        mediaSrc: []
+        objectSrc: []
+        prefetchSrc: []
+        scriptSrc: []
+        scriptSrcElem: []
+        scriptSrcAttr: []
+        styleSrc: []
+        styleSrcElem: []
+        styleSrcAttr: []
+        workerSrc: []
+        baseUri: []
+        sandbox: []
+        formAction: []
+        frameAncestors: []
+        reportTo: ""
+        requireTrustedTypesFor: []
+        trustedTypes: []
+        upgradeInsecureRequests: false
 
   # Quarterdeck can be configured to return a security.txt file that defines security policies
   # see: https://securitytxt.org/ for more information.
   securitytxt:
     path: /data/info/security.txt
     text: ""
-
 
 # Specify the secrets to be used by Quarterdeck.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
