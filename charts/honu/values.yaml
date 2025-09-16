@@ -1,0 +1,119 @@
+# Default values for deploying honu.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Name overrides: by default the name for most objects will be release-endeavor. It is
+# recommended to create a descriptive release name, but if you must override the names
+# separate from the release, you can set nameOverride. To remove the -endeavor suffix
+# set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+# # Environment should be set to "demo", "development", "staging", or "production".
+# environment: "production"
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: rotationalio/honu
+  # This sets the pull policy for images.
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+
+# Set the Honu specific configuration.
+honu:
+  pid: 24
+
+  # Maintenance mode can be used to run the pod without starting the service for debugging
+  maintenance: false
+
+  # Override global.logging
+  logLevel: info
+  consoleLog: false
+
+  readTimeOut: 20s
+  writeTimeOut: 20s
+  idleTimeOut: 10m
+
+  store:
+    readOnly: false
+    dataPath: /data/db
+    concurrency: 1024
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+
+storage:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    mountPath: /data/db
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 32Gi
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 3264
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  enabled: false
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  annotations: {}
+  entryPoints:
+    - websecure
+  tls: {}
+
+# The liveness probe requires Endeavor to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# The readiness probe requires Endeavor to be running and connected to the database.
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}
