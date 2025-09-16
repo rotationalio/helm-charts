@@ -3,4 +3,3 @@ honu:
 
 livenessProbe: null
 readinessProbe: null
-
