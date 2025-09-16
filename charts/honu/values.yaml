@@ -88,7 +88,7 @@ ingress:
 livenessProbe:
   httpGet:
     path: /livez
-    port: 8000
+    port: 3264
     httpHeaders:
     - name: X-Kubernetes-Probe
       value: liveness
@@ -99,7 +99,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /readyz
-    port: 8000
+    port: 3264
     httpHeaders:
     - name: X-Kubernetes-Probe
       value: readiness
