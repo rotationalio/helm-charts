@@ -43,7 +43,7 @@ honu:
 
   store:
     readOnly: false
-    dataPath: /data/db
+    dataPath: /data/db/honu.db
     concurrency: 1024
 
 # Additional pod spec configuration
