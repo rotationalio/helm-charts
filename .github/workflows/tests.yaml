@@ -43,13 +43,6 @@ jobs:
         if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.10.0
 
-      # - name: Install Postgres on Kind
-      #   if: steps.list-changed.outputs.changed == 'true'
-      #   run: |
-      #     kubectl create namespace postgres || true
-      #     helm repo add bitnami https://charts.bitnami.com/bitnami
-      #     helm install postgres bitnami/postgresql --namespace postgres --values ci/postgres.yaml --wait
-
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
         run: ct install --target-branch ${{ github.event.repository.default_branch }}
