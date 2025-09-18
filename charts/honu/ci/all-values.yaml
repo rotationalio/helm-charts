@@ -1,0 +1,5 @@
+honu:
+  pid: 20
+
+livenessProbe: null
+readinessProbe: null

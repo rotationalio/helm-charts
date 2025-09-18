@@ -1,6 +1,6 @@
 apiVersion: v2
-name: parlance
-description: An LLM evaluation tool that uses a model-to-model qualitative comparison metric.
+name: honu
+description: Adaptive consistency replication with reinforcement learning for large scale globally distributed storage
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -15,19 +15,19 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.12.2
+version: 0.1.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "0.12.0"
+appVersion: "0.5.0"
 
 # Project Information
 home: https://rotational.io
 icon: https://rotational.io/img/favicon.png
 sources:
-  - https://github.com/rotationalio/parlance
+  - https://github.com/rotationalio/endeavor
 maintainers:
   - name: rotationalio
     email: support@rotational.io
