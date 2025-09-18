@@ -286,6 +286,25 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.1.0/endeavor-0.1.0.tgz
     version: 0.1.0
+  honu:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2025-09-18T17:49:16.553224333Z"
+    description: Adaptive consistency replication with reinforcement learning for
+      large scale globally distributed storage
+    digest: 2a4f9a0b7a53c75d3d1a60061f2f6e33434cbcb09269314f70f13783fd732833
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: honu
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/honu-0.1.0/honu-0.1.0.tgz
+    version: 0.1.0
   parlance:
   - apiVersion: v2
     appVersion: 0.12.0
@@ -549,4 +568,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-11T01:27:16.048064177Z"
+generated: "2025-09-18T17:49:16.553315274Z"
