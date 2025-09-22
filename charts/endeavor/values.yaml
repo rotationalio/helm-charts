@@ -238,11 +238,17 @@ readinessProbe:
   initialDelaySeconds: 2
   periodSeconds: 10
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
+volumeMounts:
+ - name: endeavor-data
+   mountPath: /data/db
+
+# Additional volumes on the output Deployment definition.
+volumes:
+  - name: endeavor-data
+    persistentVolumeClaim:
+      claimName: endeavor-data-pvc
+
 
 # Pod requested resources and limits.
 resources: {}
