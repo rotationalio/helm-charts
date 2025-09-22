@@ -28,6 +28,10 @@ dependencies:
     condition: quarterdeck.enabled
     version: ~0.4
     repository: file://../quarterdeck
+  - name: honu
+    condition: honu.enabled
+    version: ~0.1
+    repository: file://../honu
 
 # Project Information
 home: https://rotational.io
