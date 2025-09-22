@@ -245,9 +245,9 @@ volumeMounts:
 
 # Additional volumes on the output Deployment definition.
 volumes:
-   - name: endeavor-data
-     persistentVolumeClaim:
-       claimName: endeavor-data-pvc
+  - name: endeavor-data
+    persistentVolumeClaim:
+      claimName: endeavor-data-pvc
 
 
 # Pod requested resources and limits.
