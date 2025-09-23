@@ -173,6 +173,9 @@ endeavor:
 quarterdeck:
   enabled: true
 
+honu:
+  enabled: true
+
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
 # by the name and keys below. If you want Helm to create the secrets, set create to true
@@ -198,16 +201,6 @@ pod:
 # Additional container spec configuration
 containers:
   securityContext: {}
-
-storage:
-  # The node data spec will be included in volume claim templates.
-  nodeData:
-    mountPath: /data/db
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 32Gi
 
 service:
   type: ClusterIP
@@ -244,6 +237,18 @@ readinessProbe:
       value: readiness
   initialDelaySeconds: 2
   periodSeconds: 10
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+  - name: endeavor-data
+    mountPath: /data/db
+
+# Additional volumes on the output Deployment definition.
+volumes:
+  - name: endeavor-data
+    persistentVolumeClaim:
+      claimName: endeavor-data-pvc
+
 
 # Pod requested resources and limits.
 resources: {}

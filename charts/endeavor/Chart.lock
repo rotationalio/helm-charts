@@ -2,5 +2,8 @@ dependencies:
 - name: quarterdeck
   repository: file://../quarterdeck
   version: 0.4.1
-digest: sha256:27ff184e6636463823472d6d1265dfd3b04e7fcec051a1de20e2269c6a757aa5
-generated: "2025-09-10T20:25:37.394161-05:00"
+- name: honu
+  repository: file://../honu
+  version: 0.1.0
+digest: sha256:4be17762edb751f1e0b9b704b3cfc8f5a270afbd6fa6ef8951769586cf019bc6
+generated: "2025-09-22T14:19:43.991023-04:00"
