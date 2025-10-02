@@ -72,6 +72,9 @@ endeavor:
   # Set the display name for the Endeavor API Docs
   docsName: "Endeavor API Docs"
 
+  # Set the URL for the Compass application
+  compassURL: compass.svc.local
+
   # Authentication configuration
   auth:
     # Override global.issuer (do not set unless you know what you're doing)

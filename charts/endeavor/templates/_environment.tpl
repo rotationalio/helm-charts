@@ -22,6 +22,8 @@ env:
     value: {{ include "endeavor.allowOrigins" . }}
   - name: ENDEAVOR_DOCS_NAME
     value: {{ .Values.endeavor.docsName | quote }}
+  - name: ENDEAVOR_COMPASS_URL
+    value: {{ .Values.endeavor.compassURL | quote }}
   - name: ENDEAVOR_AUTH_QUARTERDECK_URL
     value: {{ include "endeavor.quarterdeckURL" . }}
   - name: ENDEAVOR_AUTH_AUDIENCE
