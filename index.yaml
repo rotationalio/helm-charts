@@ -1,6 +1,47 @@
 apiVersion: v1
 entries:
+  compass:
+  - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2025-10-10T15:17:44.160830702Z"
+    description: Transform Business Goals into Pre-Configured Experiments.
+    digest: 868cabae5fdd38876a966521e228467ace217f52a1be5a9d70136f43bbd19d28
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.2.1/compass-0.2.1.tgz
+    version: 0.2.1
   endeavor:
+  - apiVersion: v2
+    appVersion: 0.11.0
+    created: "2025-10-10T15:17:44.364346837Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.5
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 8f1ed91981b94f35930972384f95f4ba5456a8e17f32fe8003bebe5c2bddf33c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.11.1/endeavor-0.11.1.tgz
+    version: 0.11.1
   - apiVersion: v2
     appVersion: 0.11.0
     created: "2025-10-06T15:31:03.153056609Z"
@@ -427,6 +468,24 @@ entries:
   honu:
   - apiVersion: v2
     appVersion: 0.5.0
+    created: "2025-10-10T15:17:44.530226981Z"
+    description: Adaptive consistency replication with reinforcement learning for
+      large scale globally distributed storage
+    digest: c74973500bd2a22f44b01c75de4a15933a2fedec4143f4ace92097d44bad113d
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: honu
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/honu-0.1.1/honu-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.5.0
     created: "2025-09-18T17:49:16.553224333Z"
     description: Adaptive consistency replication with reinforcement learning for
       large scale globally distributed storage
@@ -526,6 +585,24 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/parlance-0.1.0/parlance-0.1.0.tgz
     version: 0.1.0
   quarterdeck:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2025-10-10T15:17:44.716819873Z"
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: a2ec3a0c52c2859b8647be252a00901c87ca3c9c37b69f002e7226f21c9eb91d
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.5.1/quarterdeck-0.5.1.tgz
+    version: 0.5.1
   - apiVersion: v2
     appVersion: 0.5.0
     created: "2025-09-24T01:40:55.435990423Z"
@@ -724,4 +801,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-06T15:31:03.153224682Z"
+generated: "2025-10-10T15:17:44.71703249Z"
