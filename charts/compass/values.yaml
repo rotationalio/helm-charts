@@ -21,6 +21,7 @@ compass:
   django:
     debug: false
     settingsModule: "compass.settings.production"
+    mediaRoot: "/data/uploads"
 
   allowedHosts: []
 
@@ -29,12 +30,12 @@ compass:
     transcriptionModel: "google/gemini-2.5-flash"
 
   audio:
-    uploadDirectory: "/data/audio"
+    uploadDirectory: "/data/uploads/audio"
     maxAudioFiles: -1
 
   domain:
     default: "Cross-Industry Business Operations"
-    useGeneratedDomain: true
+    useGenerated: true
 
   endeavor:
     endpoint: "https://guidelight.dev"
@@ -119,7 +120,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8000
 
 ingress:
   enabled: false
