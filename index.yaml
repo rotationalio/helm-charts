@@ -3,6 +3,23 @@ entries:
   compass:
   - apiVersion: v2
     appVersion: 0.3.0
+    created: "2025-10-10T18:11:01.139344811Z"
+    description: Transform Business Goals into Pre-Configured Experiments.
+    digest: e3c45a8c3e94a89fd1ac1f67f06de0dc9cc6e6be3e6b4704f5aadc00ac4bdd29
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.3.1/compass-0.3.1.tgz
+    version: 0.3.1
+  - apiVersion: v2
+    appVersion: 0.3.0
     created: "2025-10-10T16:19:30.604465798Z"
     description: Transform Business Goals into Pre-Configured Experiments.
     digest: efe1408cbfb68079e6ffeda593c42addb56e74aeca8eba9c9339662eb381333c
@@ -36,6 +53,29 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/compass-0.2.1/compass-0.2.1.tgz
     version: 0.2.1
   endeavor:
+  - apiVersion: v2
+    appVersion: 0.12.0
+    created: "2025-10-10T18:11:01.338599388Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.5
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 3a34f88da3a9712c47103438c08c632e189b11f28a081aaedce0c4feafe07196
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.12.0/endeavor-0.12.0.tgz
+    version: 0.12.0
   - apiVersion: v2
     appVersion: 0.11.0
     created: "2025-10-10T15:17:44.364346837Z"
@@ -736,4 +776,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-10T16:19:30.604547571Z"
+generated: "2025-10-10T18:11:01.338790184Z"
