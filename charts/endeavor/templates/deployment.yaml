@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "endeavor.labels" . | nindent 4 }}
 spec:
-  serviceName: {{ include "endeavor.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
