@@ -138,6 +138,7 @@ service:
 # Currently setup for Traefik ingress routes, not nginx or k8s networking ingresses.
 ingress:
   enabled: false
+  name: ""
   apiVersion: traefik.io/v1alpha1
   className: IngressRoute
   annotations: {}
@@ -175,18 +176,9 @@ readinessProbe:
   initialDelaySeconds: 2
   periodSeconds: 10
 
-# Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
-
-# Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumes:
+  - name: tempdir
+    emptyDir: {}
 
 # Optionally specify how nodes are selected to place pods on.
 nodeSelector: {}

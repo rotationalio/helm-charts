@@ -63,6 +63,8 @@ Volume mounts for uploads and audio files
 */}}
 {{- define "compass.volumeMounts" -}}
 volumeMounts:
+  - name: tempdir
+    mountPath: /tmp
   {{- include "compass.volumeMounts.nodeData" . | nindent 2 }}
 {{- end }}
 
