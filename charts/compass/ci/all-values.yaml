@@ -7,6 +7,15 @@ compass:
     - compass.example.com
     - compass.example.dev
 
+  csrf:
+    trustedOrigins:
+      - https://example.com
+      - https://example.dev
+      - https://auth.example.com
+      - https://auth.example.dev
+      - https://compass.example.com
+      - https://compass.example.dev
+
 secrets:
   create: true
   secretKey:

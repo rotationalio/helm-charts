@@ -22,6 +22,10 @@ env:
         key: {{ .Values.secrets.databaseURL.secretKey }}
   - name: MEDIA_ROOT
     value: {{ .Values.compass.django.mediaRoot | quote }}
+  {{- if .Values.compass.csrf.trustedOrigins }}
+  - name: CSRF_TRUSTED_ORIGINS
+    value: {{ join "," .Values.compass.csrf.trustedOrigins | quote }}
+  {{- end }}
   {{- if .Values.compass.sentry.dsn }}
   - name: SENTRY_DSN
     value: {{ .Values.compass.sentry.dsn | quote }}
