@@ -21,7 +21,10 @@ rotational` to see the charts.
 
 ## Available Charts
 
-- [Parlance](charts/parlance/README.md)
+- [Endeavor](charts/endeavor/README.md)
+- [Quarterdeck](charts/quarterdeck/README.md)
+- [Honu](charts/honu/README.md)
+- [Compass](charts/compass/README.md)
 
 ## Debugging Templates
 
@@ -29,8 +32,8 @@ rotational` to see the charts.
 - Use `helm template --debug` to render chart templates locally
 - Use `helm install --dry-run --debug` to render chart locally without installing certs in the cluster, setting `--dry-run=server` will also perform any lookups on the server.
 
-For example, to debug the parlance charts; in the `charts/parlance` directory, run:
+For example, to debug the Endeavor charts; in the `charts/endeavor` directory, run:
 
 ```
-$ helm template --debug parlance . --values ci/all-values.yaml
+$ helm template --debug endeavor . --values ci/all-values.yaml
 ```

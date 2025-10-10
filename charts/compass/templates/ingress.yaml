@@ -1,0 +1,27 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: {{ .Values.ingress.apiVersion }}
+kind: {{ default "IngressRoute" .Values.ingress.className }}
+metadata:
+  name: {{ include "compass.fullname" . }}
+  labels:
+    {{- include "compass.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+    {{- toYaml .Values.ingress.entryPoints | nindent 4 }}
+  routes:
+    {{- range .Values.compass.allowedHosts }}
+    - match: Host(`{{ . }}`)
+      kind: Rule
+      services:
+        - name: {{ include "compass.fullname" $ }}
+          port: {{ $.Values.service.port }}
+    {{- end }}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
