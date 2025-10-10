@@ -1,0 +1,44 @@
+compass:
+  django:
+    debug: false
+    settingsModule: "compass.settings.testing"
+
+secrets:
+  create: true
+  secretKey:
+    value: "supersecretkey"
+  databaseURL:
+    value: "postgres://postgres:hiddenelephant@postgres-postgresql.postgres.svc.cluster.local:5432/compass"
+  adminPassword:
+    value: "theeaglefliesatdawn"
+  openRouterAPIKey:
+    value: "sk-1234567890abcdef"
+  endeavorClientID:
+    value: "client-id-1234567890abcdef"
+  endeavorClientSecret:
+    value: "client-secret-1234567890abcdef"
+
+jobs:
+  migrate:
+    create: true
+  ensureAdmin:
+    create: true
+    username: "admin"
+    email: "admin@example.com"
+
+ingress:
+  enabled: true
+  hosts:
+    - host: compass.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+    - host: compass.example.dev
+      paths:
+        - path: /
+          pathType: Prefix
+
+
+# NOTE: if readiness probes are added the tests will actually try to access a PG database.
+readinessProbe: null
+livenessProbe: null
