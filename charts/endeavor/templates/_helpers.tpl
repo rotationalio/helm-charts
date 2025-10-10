@@ -50,21 +50,13 @@ app.kubernetes.io/name: {{ include "endeavor.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Volume mounts for the database
-*/}}
-{{- define "endeavor.volumeMounts" -}}
-volumeMounts:
-  {{- include "endeavor.volumeMounts.nodeData" . | nindent 2 }}
-{{- end }}
-
-{{/*
-Volume mounts for the database
-*/}}
-{{- define "endeavor.volumeMounts.nodeData" -}}
-- name: {{ include "endeavor.name" . }}
-  mountPath: {{ .Values.storage.nodeData.mountPath }}
-{{- end }}
+{{- define "endeavor.databaseURLSecretName" -}}
+{{- if .Values.secrets.create -}}
+{{ include "endeavor.fullname" . }}
+{{- else -}}
+{{ default (include "endeavor.fullname" .) .Values.secrets.databaseURL.secretName }}
+{{- end -}}
+{{- end -}}
 
 {{- define "endeavor.inferenceAPIKeySecretName" -}}
 {{- if .Values.secrets.create -}}

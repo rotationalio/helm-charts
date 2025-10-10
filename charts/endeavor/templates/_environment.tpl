@@ -13,7 +13,10 @@ env:
   - name: ENDEAVOR_CONSOLE_LOG
     value: {{ include "endeavor.consoleLog" . }}
   - name: ENDEAVOR_DATABASE_URL
-    value: {{ .Values.endeavor.databaseURL | quote }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "endeavor.databaseURLSecretName" . }}
+        key: {{ .Values.secrets.databaseURL.secretKey }}
   - name: ENDEAVOR_BIND_ADDR
     value: ":{{ .Values.service.port }}"
   - name: ENDEAVOR_ORIGIN

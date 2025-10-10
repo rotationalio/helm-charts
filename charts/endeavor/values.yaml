@@ -57,9 +57,6 @@ endeavor:
   logLevel: null
   consoleLog: null
 
-  # DSN containing backend database configuration
-  databaseURL: "bolt:////data/db/endeavor.db"
-
   # Origin (url) of the UI server for creating endpoints and CORS access
   # Should be an absolute URL including scheme without trailing slash that matches the
   # endpoint of the ingress configured below.
@@ -73,7 +70,7 @@ endeavor:
   docsName: "Endeavor API Docs"
 
   # Set the URL for the Compass application
-  compassURL: compass.svc.local
+  compassURL: ""
 
   # Authentication configuration
   auth:
@@ -182,6 +179,10 @@ quarterdeck:
 # and specify the secrets values below.
 secrets:
   create: false
+  databaseURL:
+    secretName: ""
+    secretKey: databaseURL
+    value: ""
   inferenceAPIKey:
     secretName: ""
     secretKey: inferenceAPIKey
@@ -201,16 +202,6 @@ pod:
 # Additional container spec configuration
 containers:
   securityContext: {}
-
-storage:
-  # The node data spec will be included in volume claim templates.
-  nodeData:
-    mountPath: /data/db
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 32Gi
 
 service:
   type: ClusterIP

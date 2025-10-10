@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ include "endeavor.fullname" . }}
   labels:
@@ -42,7 +42,6 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- include "endeavor.volumeMounts" . | nindent 10 }}
           {{- include "endeavor.environment" . | nindent 10 }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -68,10 +67,3 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-  {{- with .Values.storage.nodeData.spec }}
-  volumeClaimTemplates:
-    - metadata:
-        name: {{ include "endeavor.name" $ }}
-      spec:
-        {{- toYaml . | nindent 8 }}
-  {{- end }}

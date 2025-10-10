@@ -60,7 +60,7 @@ env:
         name: {{ include "compass.secrets.endeavorClientSecretName" . }}
         key: {{ .Values.secrets.endeavorClientSecret.secretKey }}
   - name: ENDEAVOR_AUTHENTICATION_ENDPOINT
-    value: {{ .Values.compass.endeavor.authenticationEndpoint | quote }}
+    value: {{ .Values.compass.endeavor.authEndpoint | quote }}
   {{- if .Values.jobs.ensureAdmin.create }}
   - name: DJANGO_ADMIN_USERNAME
     value: {{ .Values.jobs.ensureAdmin.username | quote }}
