@@ -56,3 +56,20 @@ Create the name of the ingress to use
 {{- define "compass.ingressName" -}}
 {{- default (include "compass.fullname" .) .Values.ingress.name }}
 {{- end }}
+
+
+{{/*
+Volume mounts for uploads and audio files
+*/}}
+{{- define "compass.volumeMounts" -}}
+volumeMounts:
+  {{- include "compass.volumeMounts.nodeData" . | nindent 2 }}
+{{- end }}
+
+{{/*
+Volume mounts for tuploads and audio files
+*/}}
+{{- define "compass.volumeMounts.nodeData" -}}
+- name: {{ include "compass.name" . }}
+  mountPath: {{ .Values.storage.nodeData.mountPath }}
+{{- end }}

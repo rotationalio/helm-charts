@@ -5,6 +5,9 @@
 nameOverride: ""
 fullnameOverride: ""
 
+# Environment should be set to "demo", "development", "staging", or "production".
+environment: "production"
+
 # The number of replicas to run for the Compass deployment.
 # NOTE: this chart does not allow for autoscaling at this time.
 replicaCount: 1
@@ -109,6 +112,16 @@ pod:
   # Specify a pod security context
   securityContext: {}
 
+storage:
+  # The node data spec will be included in volume claim templates.
+  nodeData:
+    mountPath: /data/uploads
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 32Gi
+
 # Optionally specify the security context of the container.
 securityContext: {}
   # capabilities:
@@ -122,17 +135,15 @@ service:
   type: ClusterIP
   port: 8000
 
+# Currently setup for Traefik ingress routes, not nginx or k8s networking ingresses.
 ingress:
   enabled: false
-  name: ""
-  className: ""
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
   annotations: {}
-  hosts:
-    - host: compass.local
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
+  entryPoints:
+    - websecure
+  tls: {}
 
 resources: {}
   # limits:

@@ -1,10 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "compass.fullname" . }}
   labels:
     {{- include "compass.labels" . | nindent 4 }}
 spec:
+  serviceName: {{ include "compass.fullname" . }}
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -25,8 +26,10 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- with .Values.pod.securityContext }}
       securityContext:
-        {{- toYaml .Values.pod.securityContext | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- with .Values.securityContext }}
@@ -39,6 +42,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- include "compass.volumeMounts" . | nindent 10 }}
           {{- include "compass.environment" . | nindent 10 }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -50,10 +54,6 @@ spec:
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
@@ -70,3 +70,10 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  {{- with .Values.storage.nodeData.spec }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ include "compass.name" $ }}
+      spec:
+        {{- toYaml . | nindent 8 }}
+  {{- end }}

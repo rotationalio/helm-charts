@@ -72,9 +72,9 @@ env:
 
 {{- define "compass.allowedHosts" -}}
 {{- if .Values.compass.allowedHosts -}}
-{{ .Values.compass.allowedHosts }}
+{{- join "," .Values.compass.allowedHosts -}}
 {{- else -}}
-{{ default "localhost,127.0.0.1" (include "compass.ingressHostnames" .) }}
+"localhost,127.0.0.1"
 {{- end -}}
 {{- end -}}
 
