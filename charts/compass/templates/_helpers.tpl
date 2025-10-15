@@ -64,7 +64,7 @@ Volume mounts for uploads and audio files
 {{- define "compass.volumeMounts" -}}
 volumeMounts:
   - name: tempdir
-    mountPath: /tmp
+    mountPath: {{ .Values.compass.audio.uploadDirectory }}
   {{- include "compass.volumeMounts.nodeData" . | nindent 2 }}
 {{- end }}
 
@@ -73,5 +73,5 @@ Volume mounts for tuploads and audio files
 */}}
 {{- define "compass.volumeMounts.nodeData" -}}
 - name: {{ include "compass.name" . }}
-  mountPath: {{ .Values.storage.nodeData.mountPath }}
+  mountPath: {{ .Values.compass.django.mediaRoot }}
 {{- end }}

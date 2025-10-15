@@ -39,7 +39,7 @@ env:
         key: {{ .Values.secrets.openRouterAPIKey.secretKey }}
   - name: COMPASS_TRANSCRIPTION_MODEL
     value: {{ .Values.compass.inference.transcriptionModel | quote }}
-  - name: COMPASS_AUDIO_UPLOAD_DIRECTORY
+  - name: COMPASS_AUDIO_UPLOAD_TEMP_DIRECTORY
     value: {{ .Values.compass.audio.uploadDirectory | quote }}
   - name: COMPASS_AUDIO_MAX_FILES
     value: {{ .Values.compass.audio.maxAudioFiles | quote }}
