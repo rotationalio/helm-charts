@@ -39,7 +39,7 @@ env:
         key: {{ .Values.secrets.openRouterAPIKey.secretKey }}
   - name: COMPASS_TRANSCRIPTION_MODEL
     value: {{ .Values.compass.inference.transcriptionModel | quote }}
-  - name: COMPASS_AUDIO_UPLOAD_DIRECTORY
+  - name: COMPASS_AUDIO_UPLOAD_TEMP_DIRECTORY
     value: {{ .Values.compass.audio.uploadDirectory | quote }}
   - name: COMPASS_AUDIO_MAX_FILES
     value: {{ .Values.compass.audio.maxAudioFiles | quote }}
@@ -47,7 +47,7 @@ env:
     value: {{ .Values.compass.domain.default | quote }}
   - name: COMPASS_USE_GENERATED_DOMAIN
     value: {{ if .Values.compass.domain.useGenerated }}"True"{{ else }}"False"{{ end }}
-  - name: ENDEAVOR_HOST
+  - name: ENDEAVOR_URL
     value: {{ .Values.compass.endeavor.endpoint | quote }}
   - name: ENDEAVOR_CLIENT_ID
     valueFrom:
@@ -59,7 +59,7 @@ env:
       secretKeyRef:
         name: {{ include "compass.secrets.endeavorClientSecretName" . }}
         key: {{ .Values.secrets.endeavorClientSecret.secretKey }}
-  - name: ENDEAVOR_AUTHENTICATION_ENDPOINT
+  - name: ENDEAVOR_AUTH_URL
     value: {{ .Values.compass.endeavor.authEndpoint | quote }}
   {{- if .Values.jobs.ensureAdmin.create }}
   - name: DJANGO_ADMIN_USERNAME

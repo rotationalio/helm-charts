@@ -24,7 +24,7 @@ compass:
   django:
     debug: false
     settingsModule: "compass.settings.production"
-    mediaRoot: "/data/uploads"
+    mediaRoot: "/data/media"
 
   allowedHosts: []
 
@@ -36,7 +36,7 @@ compass:
     transcriptionModel: "google/gemini-2.5-flash"
 
   audio:
-    uploadDirectory: "/data/uploads/audio"
+    uploadDirectory: "/data/uploads"
     maxAudioFiles: -1
 
   domain:
@@ -118,7 +118,6 @@ pod:
 storage:
   # The node data spec will be included in volume claim templates.
   nodeData:
-    mountPath: /data/uploads
     spec:
       accessModes: ["ReadWriteOnce"]
       resources:
