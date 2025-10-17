@@ -20,7 +20,10 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["python", "manage.py", "lockedmigrate", "&&", "python", "manage.py", "createcachetable"]
+          command: [ "/bin/sh", "-c" ]
+          args:
+            - "python manage.py lockedmigrate;"
+            - "python manage.py createcachetable"
           {{- include "compass.environment" . | nindent 10 }}
       restartPolicy: Never
   backoffLimit: {{ .Values.jobs.migrate.backoffLimit | default 5 }}
