@@ -113,7 +113,10 @@ pod:
   labels: {}
 
   # Specify a pod security context
-  securityContext: {}
+  securityContext:
+    fsGroup: 1001
+    runAsUser: 1001
+    runAsGroup: 1001
 
 storage:
   # The node data spec will be included in volume claim templates.
@@ -126,7 +129,6 @@ storage:
 
 # Optionally specify the security context of the container.
 securityContext:
-  fsGroup: 1001
   runAsUser: 1001
   runAsGroup: 1001
 
