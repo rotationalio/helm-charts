@@ -125,13 +125,10 @@ storage:
           storage: 32Gi
 
 # Optionally specify the security context of the container.
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext:
+  fsGroup: 1001
+  runAsUser: 1001
+  runAsGroup: 1001
 
 service:
   type: ClusterIP
