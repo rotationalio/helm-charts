@@ -41,7 +41,7 @@ env:
     value: {{ .Values.compass.inference.transcriptionModel | quote }}
   - name: COMPASS_AUDIO_UPLOAD_TEMP_DIRECTORY
     value: {{ .Values.compass.audio.uploadDirectory | quote }}
-  - name: COMPASS_AUDIO_MAX_FILES
+  - name: COMPASS_MAX_AUDIO_FILES
     value: {{ .Values.compass.audio.maxAudioFiles | quote }}
   - name: COMPASS_DEFAULT_DOMAIN
     value: {{ .Values.compass.domain.default | quote }}
