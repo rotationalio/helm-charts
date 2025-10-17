@@ -3,6 +3,23 @@ entries:
   compass:
   - apiVersion: v2
     appVersion: 0.6.5
+    created: "2025-10-17T17:49:46.359641954Z"
+    description: Transform Business Goals into Pre-Configured Experiments.
+    digest: f79803f5608697fa8b72280eb6c3bf16900872c59b0aa811ef6077f5f514cfc9
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.6.8/compass-0.6.8.tgz
+    version: 0.6.8
+  - apiVersion: v2
+    appVersion: 0.6.5
     created: "2025-10-17T17:42:46.397405073Z"
     description: Transform Business Goals into Pre-Configured Experiments.
     digest: 9679dd943b6dedb4fd3f63c0e5fa1f5f7600126c2a2d7dc50d9f0ae0b1081c5c
@@ -1056,4 +1073,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-17T17:42:46.397610467Z"
+generated: "2025-10-17T17:49:46.359866808Z"
