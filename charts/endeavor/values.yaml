@@ -72,6 +72,9 @@ endeavor:
   # Set the URL for the Compass application
   compassURL: ""
 
+  # A string identifier for the organization that this endeavor instance serves
+  organizationID: "endeavor"
+
   # Authentication configuration
   auth:
     # Override global.issuer (do not set unless you know what you're doing)

@@ -24,8 +24,23 @@ env:
     value: {{ .Values.quarterdeck.rateLimit.burst | quote }}
   - name: QD_RATE_LIMIT_CACHE_TTL
     value: {{ .Values.quarterdeck.rateLimit.cacheTTL | quote }}
+  {{- if .Values.quarterdeck.docsName }}
+  - name: QD_DOCS_NAME
+    value: {{ .Values.quarterdeck.docsName | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.supportEmail }}
+  - name: QD_SUPPORT_EMAIL
+    value: {{ .Values.quarterdeck.supportEmail | quote }}
+  {{- end }}
   - name: QD_DATABASE_URL
-    value: {{ .Values.quarterdeck.database.URL | quote }}
+    {{- if .Values.quarterdeck.database.URL.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.database.URL.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.database.URL.secretKeyRef.key }}
+    {{- else }}
+    value: {{ .Values.quarterdeck.database.URL.value | quote }}
+    {{- end }}
   - name: QD_DATABASE_READ_ONLY
     value: {{ .Values.quarterdeck.database.readOnly | quote }}
   {{- if .Values.quarterdeck.auth.keys }}
@@ -92,6 +107,56 @@ env:
   {{- if .Values.quarterdeck.securitytxt.text }}
   - name: QD_SECURITY_TXT_PATH
     value: {{ .Values.quarterdeck.securitytxt.path | quote }}
+  {{- end }}
+  - name: QD_EMAIL_SENDER
+    value: {{ .Values.quarterdeck.email.sender.email | quote }}
+  - name: QD_EMAIL_SENDER_NAME
+    value: {{ .Values.quarterdeck.email.sender.name | quote }}
+  {{- if eq .Values.quarterdeck.email.method "smtp" }}
+  - name : QD_EMAIL_SMTP_HOST
+    value: {{ .Values.quarterdeck.email.smtp.host | quote }}
+  - name : QD_EMAIL_SMTP_PORT
+    value: {{ .Values.quarterdeck.email.smtp.port | quote }}
+  - name : QD_EMAIL_SMTP_USERNAME
+    value: {{ .Values.quarterdeck.email.smtp.username | quote }}
+  - name: QD_EMAIL_SMTP_PASSWORD
+    {{- if .Values.quarterdeck.email.smtp.password.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.email.smtp.password.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.email.smtp.password.secretKeyRef.key }}
+    {{- else }}
+    value: {{ .Values.quarterdeck.email.smtp.password.value | quote }}
+    {{- end }}
+  {{- if .Values.quarterdeck.email.smtp.useCRAMMD5 }}
+  - name : QD_EMAIL_SMTP_USE_CRAM_MD5
+    value: "true"
+  {{- end }}
+  - name : QD_EMAIL_SMTP_POOL_SIZE
+    value: {{ .Values.quarterdeck.email.smtp.poolSize | quote }}
+  {{- end }}
+  {{- if eq .Values.quarterdeck.email.method "sendgrid" }}
+  - name: QD_EMAIL_SENDGRID_API_KEY
+    {{- if .Values.quarterdeck.email.sendgrid.apiKey.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.email.sendgrid.apiKey.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.email.sendgrid.apiKey.secretKeyRef.key }}
+    {{- else }}
+    value: {{ .Values.quarterdeck.email.sendgrid.apiKey.value | quote }}
+    {{- end }}
+  {{- end }}
+  - name: QD_EMAIL_BACKOFF_TIMEOUT
+    value: {{ .Values.quarterdeck.email.backoff.timeout | quote }}
+  - name: QD_EMAIL_BACKOFF_INITIAL_INTERVAL
+    value: {{ .Values.quarterdeck.email.backoff.initialInterval | quote }}
+  - name: QD_EMAIL_BACKOFF_MAX_INTERVAL
+    value: {{ .Values.quarterdeck.email.backoff.maxInterval | quote }}
+  - name: QD_EMAIL_BACKOFF_MAX_ELAPSED_TIME
+    value: {{ .Values.quarterdeck.email.backoff.maxElapsedTime | quote }}
+  {{- if .Values.quarterdeck.usersync.webhooks }}
+  - name: QD_USER_SYNC_WEBHOOK_ENDPOINTS
+    value: {{ join "," .Values.quarterdeck.usersync.webhooks | quote }}
   {{- end }}
 {{- end -}}
 

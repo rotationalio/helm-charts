@@ -5,6 +5,17 @@ global:
     - https://endeavor.svc.cluster.local
 
 quarterdeck:
+
+  docsName: "Testing Documentation"
+  supportEmail: "testing@support.io"
+
+  database:
+    URL:
+      secretKeyRef:
+        name: quarterdeck-database-credentials
+        key: database-url
+    readOnly: true
+
   securitytxt:
     text: |
       Contact: mailto:security@example.com
@@ -14,10 +25,27 @@ quarterdeck:
       Canonical: https://example.com/.well-known/security.txt
       Policy: https://example.com/security
 
-
   auth:
     keys:
       01K3KXRFKSVV9HQ26GD6RRBEK9: /data/jwks/01K3KXRFKSVV9HQ26GD6RRBEK9.pem
+
+  email:
+    sender:
+      email: "server@testing.io"
+      name: "Admin Team"
+
+    method: "sendgrid"
+
+    sendgrid:
+      apiKey:
+        secretKeyRef:
+          name: quarterdeck-sendgrid-credentials
+          key: sendgrid-api-key
+
+  usersync:
+    webhooks:
+      - "https://example.com/webhook1"
+      - "https://example.com/webhook2"
 
 secrets:
   jwks:

@@ -73,16 +73,24 @@ quarterdeck:
   # TODO: allow per-IP rate limiting in addition to constant rate limiting.
   rateLimit:
     type: ipaddr
-    perSecond: 32
-    burst: 128
+    perSecond: 128
+    burst: 512
     cacheTTL: 10m
+
+  # The display name for the API documentation.
+  docsName: ""
+
+  # An email address that can be used for technical support.
+  supportEmail: ""
 
   # The DSN to connect to the database. If using a statefulset, this should be set to
   # a sqlite3 volume mount point, if using an external database, this should be
   # configured to allow connection to the databse server.
   # TODO: allow this to be stored in a secret if it has database credentials.
   database:
-    URL: sqlite3:////data/db/quarterdeck.db
+    URL:
+      value: sqlite3:////data/db/quarterdeck.db
+      secretKeyRef: null  # { name: "", key: "" }
     readOnly: false
 
   # Modifies how Quarterdeck handles authentication and authorization for its applications.
@@ -204,11 +212,49 @@ quarterdeck:
         trustedTypes: []
         upgradeInsecureRequests: false
 
+  # Manages how Quarterdeck sends email messages via SendGrid or SMTP.
+  email:
+    # The email address that messages are sent from
+    sender:
+      name: ""
+      email: ""
+
+    # Should be either "smtp" or "sendgrid"
+    method: "sendgrid"
+
+    # Set either SMTP Config or the SendGrid API key.
+    smtp:
+      host: ""
+      port: 587
+      username: ""
+      password:
+        value: ""
+        secretKeyRef: null  # { name: "", key: "" }
+      useCRAMMD5: false
+      poolSize: 2
+
+    sendgrid:
+      apiKey:
+        value: ""
+        secretKeyRef: null  # { name: "", key: "" }
+
+    # Configuration for timeouts and retries when sending emails.
+    backoff:
+      timeout: 30s
+      initialInterval: 5s
+      maxInterval: 1m
+      maxElapsedTime: 5m
+
   # Quarterdeck can be configured to return a security.txt file that defines security policies
   # see: https://securitytxt.org/ for more information.
   securitytxt:
     path: /data/info/security.txt
     text: ""
+
+  # Configures user syncing. Quarterdeck will attempt to post any new or modified
+  # users to the endpoints provided. See the Quarterdeck documentation for more information.
+  usersync:
+    webhooks: []
 
 # Specify the secrets to be used by Quarterdeck.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
@@ -228,6 +274,7 @@ secrets:
     secretName: ""
     secretKey: csrfSecret
     value: ""
+
 
 # Additional pod spec configuration
 pod:
