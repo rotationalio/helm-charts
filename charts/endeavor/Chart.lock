@@ -1,6 +1,6 @@
 dependencies:
 - name: quarterdeck
   repository: file://../quarterdeck
-  version: 0.7.0
-digest: sha256:728010d12027881ca3497826d18f91d9b1ccf1b06bb42395e31a5fd30cec120d
-generated: "2025-11-14T07:51:19.980026-06:00"
+  version: 0.8.0
+digest: sha256:6578a13d65cf06d22a639abfbc816eae96217b966e4ba8bcc5a2584b2d01595f
+generated: "2025-12-08T13:42:56.462858-06:00"
