@@ -241,6 +241,29 @@ entries:
     version: 0.2.1
   endeavor:
   - apiVersion: v2
+    appVersion: 0.20.0
+    created: "2025-12-19T12:44:24.766298042Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.8
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 4341291997210e8b27681e42fa21aa5d687de7e3d46cd6bac7ac633f7cb47f9a
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.20.0/endeavor-0.20.0.tgz
+    version: 0.20.0
+  - apiVersion: v2
     appVersion: 0.19.0
     created: "2025-12-08T20:04:20.727805821Z"
     dependencies:
@@ -932,6 +955,24 @@ entries:
     version: 0.1.0
   quarterdeck:
   - apiVersion: v2
+    appVersion: 0.8.1
+    created: "2025-12-19T12:44:24.932635537Z"
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: 66e1e4a7776772fa720b6b397a413af5aee49918b725f9a4becc381523f49b69
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.8.1/quarterdeck-0.8.1.tgz
+    version: 0.8.1
+  - apiVersion: v2
     appVersion: 0.8.0
     created: "2025-12-08T20:04:20.997991708Z"
     description: Distributed authentication and authorization service for Rotational
@@ -1201,4 +1242,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-08T20:04:20.998319919Z"
+generated: "2025-12-19T12:44:24.933075193Z"
