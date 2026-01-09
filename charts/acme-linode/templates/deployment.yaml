@@ -46,9 +46,9 @@ spec:
             - name: GROUP_NAME
               value: {{ .Values.groupName | quote }}
             - name: LINODE_TOKEN_SECRET_NAME
-              value: {{ .Values.secrets.token.name | quote }}
+              value: {{ .Values.secret.name | quote }}
             - name: LINODE_TOKEN_SECRET_KEY
-              value: {{ .Values.secrets.token.key | quote }}
+              value: {{ .Values.secret.key | quote }}
           ports:
             - name: https
               containerPort: {{ .Values.service.port }}
