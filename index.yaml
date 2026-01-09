@@ -1,5 +1,24 @@
 apiVersion: v1
 entries:
+  acme-linode:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-01-09T16:43:29.224384715Z"
+    description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
+      LKE
+    digest: 57cb62e078826ae4b47a1be5e2cf35601679948a0069456947c3f48951e2175d
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: acme-linode
+    sources:
+    - https://github.com/rotationalio/acme-linode
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/acme-linode-0.1.0/acme-linode-0.1.0.tgz
+    version: 0.1.0
   compass:
   - apiVersion: v2
     appVersion: 0.6.5
@@ -240,6 +259,29 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/compass-0.2.1/compass-0.2.1.tgz
     version: 0.2.1
   endeavor:
+  - apiVersion: v2
+    appVersion: 0.20.0
+    created: "2026-01-09T16:43:29.522635231Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.8
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: dd78da50746ae139ecad22bfa700dfff99bc59700610c44649da5313c5ddfcab
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.20.1/endeavor-0.20.1.tgz
+    version: 0.20.1
   - apiVersion: v2
     appVersion: 0.20.0
     created: "2025-12-19T12:44:24.766298042Z"
@@ -919,6 +961,24 @@ entries:
   honu:
   - apiVersion: v2
     appVersion: 0.5.0
+    created: "2026-01-09T16:43:29.762325591Z"
+    description: Adaptive consistency replication with reinforcement learning for
+      large scale globally distributed storage
+    digest: 94a6a55501068c887e96ed9a77819d499ca6b2e5ad9065cb6c217688e555153b
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: honu
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/honu-0.5.0/honu-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
+    appVersion: 0.5.0
     created: "2025-10-10T15:17:44.530226981Z"
     description: Adaptive consistency replication with reinforcement learning for
       large scale globally distributed storage
@@ -1242,4 +1302,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2025-12-19T12:44:24.933075193Z"
+generated: "2026-01-09T16:43:29.762672085Z"
