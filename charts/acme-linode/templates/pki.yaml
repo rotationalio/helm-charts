@@ -1,0 +1,58 @@
+---
+# Create a selfsigned Issuer, in order to create a root CA certificate for
+# signing webhook serving certificates
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "acme-linode.selfSignedIssuer" . }}
+  namespace: {{ include "acme-linode.namespace" . | quote }}
+  labels:
+    {{- include "acme-linode.labels" . | nindent 4 }}
+spec:
+  selfSigned: {}
+---
+# Generate a CA Certificate used to sign certificates for the webhook
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "acme-linode.rootCACertificate" . }}
+  namespace: {{ include "acme-linode.namespace" . | quote }}
+  labels:
+    {{- include "acme-linode.labels" . | nindent 4 }}
+spec:
+  secretName: {{ include "acme-linode.rootCACertificate" . }}
+  duration: 87600h # 10y
+  issuerRef:
+    name: {{ include "acme-linode.selfSignedIssuer" . }}
+  commonName: "ca.acme-linode.cert-manager"
+  isCA: true
+---
+# Create an Issuer that uses the above generated CA certificate to issue certs
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ include "acme-linode.rootCAIssuer" . }}
+  namespace: {{ include "acme-linode.namespace" . | quote }}
+  labels:
+    {{- include "acme-linode.labels" . | nindent 4 }}
+spec:
+  ca:
+    secretName: {{ include "acme-linode.rootCACertificate" . }}
+---
+# Finally, generate a serving certificate for the webhook to use
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "acme-linode.servingCertificate" . }}
+  namespace: {{ include "acme-linode.namespace" . | quote }}
+  labels:
+    {{- include "acme-linode.labels" . | nindent 4 }}
+spec:
+  secretName: {{ include "acme-linode.servingCertificate" . }}
+  duration: 87600h # 10y
+  issuerRef:
+    name: {{ include "acme-linode.rootCAIssuer" . }}
+  dnsNames:
+  - {{ include "acme-linode.fullname" . }}
+  - {{ include "acme-linode.fullname" . }}.{{ include "acme-linode.namespace" . }}
+  - {{ include "acme-linode.fullname" . }}.{{ include "acme-linode.namespace" . }}.svc

@@ -1,0 +1,75 @@
+# Default values for deploying acme-linode.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# The groupName avoids naming conflicts on the Kubernetes API, it should be set by the
+# author of the webhook a unique domain that the author owns. For example:
+# acme-linode.mycompany.tld, or acme-linode.mypersonalsite.tld if your webhook is a
+# personal open-source project.
+#
+# Once set to a unique domain name by the webhook author, it does not need to be further
+# adjusted by the users of a webhook chart!
+#
+# The name will need to be referenced in each Issuer's `webhook` stanza to inform
+# cert-manager of where to send ChallengePayload resources in order to solve the DNS01
+# challenge.
+groupName: acme.mycompany.com
+
+certManager:
+  namespace: cert-manager
+  serviceAccountName: cert-manager
+
+# Specify the linode API token credential to be used by the acme-linode webhook.
+secret:
+  create: false
+  name: "linode-credentials"
+  key: "token"
+  value: ""
+
+# Name overrides: by default the name for most objects will be release-acme-linode. It
+# is recommended to create a descriptive release name, but if you must override the
+# names separate from the release, you can set nameOverride. To remove the -acme-linode
+# suffix set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: rotationalio/linode-acme-webhook
+  # This sets the pull policy for images.
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+imagePullSecrets: []
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  type: ClusterIP
+  port: 443
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}

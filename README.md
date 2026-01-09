@@ -25,6 +25,7 @@ rotational` to see the charts.
 - [Quarterdeck](charts/quarterdeck/README.md)
 - [Honu](charts/honu/README.md)
 - [Compass](charts/compass/README.md)
+- [Linode ACME Webhook for cert-manager](charts/acme-linode/README.md)
 
 ## Debugging Templates
 

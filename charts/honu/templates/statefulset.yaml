@@ -5,10 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "honu.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
   serviceName: {{ include "honu.fullname" . }}
   replicas: {{ .Values.replicaCount }}
@@ -52,7 +48,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           {{- include "honu.volumeMounts" . | nindent 10 }}
-          {{- include "honu.environment" . | nindent 10 }}        
+          {{- include "honu.environment" . | nindent 10 }}
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
