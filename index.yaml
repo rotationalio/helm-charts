@@ -3,6 +3,24 @@ entries:
   acme-linode:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-01-09T19:46:44.56517153Z"
+    description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
+      LKE
+    digest: d85d57a4020cc325c5efbc188d82df2cfdf2039d448d48e90f011360e1a481b6
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: acme-linode
+    sources:
+    - https://github.com/rotationalio/acme-linode
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/acme-linode-1.0.2/acme-linode-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-01-09T19:26:37.45880786Z"
     description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
       LKE
@@ -1379,4 +1397,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-09T19:26:37.458991571Z"
+generated: "2026-01-09T19:46:44.565365552Z"
