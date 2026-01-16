@@ -75,6 +75,23 @@ entries:
     version: 0.1.0
   compass:
   - apiVersion: v2
+    appVersion: 0.6.6
+    created: "2026-01-16T18:27:17.984009622Z"
+    description: Transform Business Goals into Pre-Configured Experiments.
+    digest: 772e4edd899c7b86f59c29a6de0c9fa9b3033f80e231f24878fce4bd4ccf6e18
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.6.9/compass-0.6.9.tgz
+    version: 0.6.9
+  - apiVersion: v2
     appVersion: 0.6.5
     created: "2025-10-17T17:49:46.359641954Z"
     description: Transform Business Goals into Pre-Configured Experiments.
@@ -313,6 +330,29 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/compass-0.2.1/compass-0.2.1.tgz
     version: 0.2.1
   endeavor:
+  - apiVersion: v2
+    appVersion: 0.22.0
+    created: "2026-01-16T18:27:18.142036593Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.8
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 5963ce7b64d4689378d96597fc675d5553e730d125dc55275d542a781a9dac46
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.22.0/endeavor-0.22.0.tgz
+    version: 0.22.0
   - apiVersion: v2
     appVersion: 0.21.0
     created: "2026-01-09T19:05:49.237949487Z"
@@ -1397,4 +1437,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-09T19:46:44.565365552Z"
+generated: "2026-01-16T18:27:18.142418499Z"
