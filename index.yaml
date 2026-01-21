@@ -75,6 +75,23 @@ entries:
     version: 0.1.0
   compass:
   - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2026-01-21T20:31:01.590040383Z"
+    description: Transform Business Goals into Pre-Configured Experiments.
+    digest: 4b654342ffa5d12902a3e87d7caecb4b23319ce23b686a39f840e296745fb4a8
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.7.0/compass-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v2
     appVersion: 0.6.6
     created: "2026-01-16T18:27:17.984009622Z"
     description: Transform Business Goals into Pre-Configured Experiments.
@@ -330,6 +347,29 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/compass-0.2.1/compass-0.2.1.tgz
     version: 0.2.1
   endeavor:
+  - apiVersion: v2
+    appVersion: 0.23.0
+    created: "2026-01-21T20:31:01.756917405Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.9
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 218199fd73349209084e237bf3473e6f473f9b458ec6fb81d6042122bfc7a438
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.23.0/endeavor-0.23.0.tgz
+    version: 0.23.0
   - apiVersion: v2
     appVersion: 0.22.0
     created: "2026-01-16T18:27:18.142036593Z"
@@ -1132,6 +1172,24 @@ entries:
     version: 0.1.0
   quarterdeck:
   - apiVersion: v2
+    appVersion: 0.9.0
+    created: "2026-01-21T20:31:01.908857958Z"
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: 53f8c40bd6dbd3600c799e42b629151c1e413396a6b8910040e9436f0df0b06c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.9.0/quarterdeck-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
     appVersion: 0.8.2
     created: "2026-01-09T19:05:49.407932897Z"
     description: Distributed authentication and authorization service for Rotational
@@ -1437,4 +1495,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-16T18:27:18.142418499Z"
+generated: "2026-01-21T20:31:01.909311366Z"
