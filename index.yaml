@@ -348,6 +348,29 @@ entries:
     version: 0.2.1
   endeavor:
   - apiVersion: v2
+    appVersion: 0.24.0
+    created: "2026-02-03T20:18:04.149392257Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.9
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: f9ec52e45a30223c88249692d645559a5a401a4d794bef499a6fa9e70b0bb06b
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.24.0/endeavor-0.24.0.tgz
+    version: 0.24.0
+  - apiVersion: v2
     appVersion: 0.23.0
     created: "2026-01-22T02:28:46.863875339Z"
     dependencies:
@@ -1536,4 +1559,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2026-01-22T02:28:47.103782894Z"
+generated: "2026-02-03T20:18:04.14980252Z"
