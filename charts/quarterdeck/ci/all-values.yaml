@@ -29,6 +29,19 @@ quarterdeck:
     keys:
       01K3KXRFKSVV9HQ26GD6RRBEK9: /data/jwks/01K3KXRFKSVV9HQ26GD6RRBEK9.pem
 
+  app:
+    name: Endeavor
+    logoURI: https://endeavor.co/static/img/logo.png
+    baseURI: https://endeavor.co
+
+    welcomeEmail: {}
+
+  org:
+    name: Acme, Inc.
+    streetAddress: 12 Center Lane; Barnaby CT 44120
+    homepage: https://acme.com
+    supportEmail: support@acme.com
+
   email:
     sender:
       email: "server@testing.io"
@@ -41,11 +54,6 @@ quarterdeck:
         secretKeyRef:
           name: quarterdeck-sendgrid-credentials
           key: sendgrid-api-key
-
-  usersync:
-    webhooks:
-      - "https://example.com/webhook1"
-      - "https://example.com/webhook2"
 
 secrets:
   jwks:

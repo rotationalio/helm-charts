@@ -80,8 +80,18 @@ quarterdeck:
   # The display name for the API documentation.
   docsName: ""
 
-  # An email address that can be used for technical support.
-  supportEmail: ""
+  app:
+    name: null
+    logoURI: null
+    baseURI: null
+
+    welcomeEmail: {}
+
+  org:
+    name: null
+    streetAddres: null
+    homepage: null
+    supportEmail: null
 
   # The DSN to connect to the database. If using a statefulset, this should be set to
   # a sqlite3 volume mount point, if using an external database, this should be
@@ -104,7 +114,7 @@ quarterdeck:
     # The audience is a list of domains that are allowed to authenticate with Quarterdeck.
     # including the Quarterdeck domain itself. This is used to verify the JWT tokens
     # issued by Quarterdeck.
-    audience: null
+    audience: []
 
     # Override global.issuer (do not set unless you know what you're doing)
     issuer: null
@@ -250,11 +260,6 @@ quarterdeck:
   securitytxt:
     path: /data/info/security.txt
     text: ""
-
-  # Configures user syncing. Quarterdeck will attempt to post any new or modified
-  # users to the endpoints provided. See the Quarterdeck documentation for more information.
-  usersync:
-    webhooks: []
 
 # Specify the secrets to be used by Quarterdeck.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced

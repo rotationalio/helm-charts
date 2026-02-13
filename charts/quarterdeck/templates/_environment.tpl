@@ -16,21 +16,41 @@ env:
     value: {{ include "quarterdeck.consoleLog" . }}
   - name: QD_ALLOW_ORIGINS
     value: {{ include "quarterdeck.allowOrigins" . }}
-  - name: QD_RATE_LIMIT_TYPE
-    value: {{ .Values.quarterdeck.rateLimit.type | quote }}
-  - name: QD_RATE_LIMIT_PER_SECOND
-    value: {{ .Values.quarterdeck.rateLimit.perSecond | quote }}
-  - name: QD_RATE_LIMIT_BURST
-    value: {{ .Values.quarterdeck.rateLimit.burst | quote }}
-  - name: QD_RATE_LIMIT_CACHE_TTL
-    value: {{ .Values.quarterdeck.rateLimit.cacheTTL | quote }}
   {{- if .Values.quarterdeck.docsName }}
   - name: QD_DOCS_NAME
     value: {{ .Values.quarterdeck.docsName | quote }}
   {{- end }}
-  {{- if .Values.quarterdeck.supportEmail }}
-  - name: QD_SUPPORT_EMAIL
-    value: {{ .Values.quarterdeck.supportEmail | quote }}
+  {{- if .Values.quarterdeck.app.name }}
+  - name: QD_APP_NAME
+    value: {{ .Values.quarterdeck.app.name | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.app.logoURI }}
+  - name: QD_APP_LOGO_URI
+    value: {{ .Values.quarterdeck.app.logoURI | quote }}
+  {{- end }}
+  - name: QD_APP_BASE_URI
+    value: {{ include "quarterdeck.app.baseURI" . }}
+  {{- if .Values.quarterdeck.app.welcomeEmail }}
+  - name: QD_APP_WELCOME_EMAIL_HTML_PATH
+    value: {{ .Values.quarterdeck.app.welcomeEmail.htmlPath | quote }}
+  - name: QD_APP_WELCOME_EMAIL_TEXT_PATH
+    value: {{ .Values.quarterdeck.app.welcomeEmail.textPath | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.org.name }}
+  - name: QD_ORG_NAME
+    value: {{ .Values.quarterdeck.org.name | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.org.streetAddress }}
+  - name: QD_ORG_STREET_ADDRESS
+    value: {{ .Values.quarterdeck.org.streetAddress | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.org.homepage }}
+  - name: QD_ORG_HOMEPAGE_URI
+    value: {{ .Values.quarterdeck.org.homepage | quote }}
+  {{- end }}
+  {{- if .Values.quarterdeck.org.supportEmail }}
+  - name: QD_ORG_SUPPORT_EMAIL
+    value: {{ .Values.quarterdeck.org.supportEmail | quote }}
   {{- end }}
   - name: QD_DATABASE_URL
     {{- if .Values.quarterdeck.database.URL.secretKeyRef }}
@@ -154,10 +174,14 @@ env:
     value: {{ .Values.quarterdeck.email.backoff.maxInterval | quote }}
   - name: QD_EMAIL_BACKOFF_MAX_ELAPSED_TIME
     value: {{ .Values.quarterdeck.email.backoff.maxElapsedTime | quote }}
-  {{- if .Values.quarterdeck.usersync.webhooks }}
-  - name: QD_USER_SYNC_WEBHOOK_ENDPOINTS
-    value: {{ join "," .Values.quarterdeck.usersync.webhooks | quote }}
-  {{- end }}
+  - name: QD_RATE_LIMIT_TYPE
+    value: {{ .Values.quarterdeck.rateLimit.type | quote }}
+  - name: QD_RATE_LIMIT_PER_SECOND
+    value: {{ .Values.quarterdeck.rateLimit.perSecond | quote }}
+  - name: QD_RATE_LIMIT_BURST
+    value: {{ .Values.quarterdeck.rateLimit.burst | quote }}
+  - name: QD_RATE_LIMIT_CACHE_TTL
+    value: {{ .Values.quarterdeck.rateLimit.cacheTTL | quote }}
 {{- end -}}
 
 {{- define "quarterdeck.logLevel" -}}
@@ -195,8 +219,8 @@ env:
 {{- end -}}
 
 {{- define "quarterdeck.audience" -}}
-{{- if .Values.quarterdeck.audience }}
-{{- join "," .Values.quarterdeck.audience | quote -}}
+{{- if .Values.quarterdeck.auth.audience }}
+{{- join "," .Values.quarterdeck.auth.audience | quote -}}
 {{- else if .Values.global.origins -}}
 {{- join "," .Values.global.origins | quote -}}
 {{- else -}}
@@ -211,6 +235,17 @@ env:
 {{ .Values.global.issuer | quote }}
 {{- end -}}
 {{- end -}}
+
+{{- define "quarterdeck.app.baseURI" }}
+{{- if .Values.quarterdeck.app.baseURI -}}
+{{- .Values.quarterdeck.app.baseURI | quote -}}
+{{- else if .Values.quarterdeck.auth.audience -}}
+{{- index .Values.quarterdeck.auth.audience 0 | quote -}}
+{{- else -}}
+{{- .Values.global.issuer | quote -}}
+{{- end -}}
+{{- end -}}
+
 
 {{- define "authKeys" -}}
 {{- $parts := list -}}
