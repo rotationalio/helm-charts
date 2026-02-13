@@ -182,6 +182,7 @@ env:
     value: {{ .Values.quarterdeck.rateLimit.burst | quote }}
   - name: QD_RATE_LIMIT_CACHE_TTL
     value: {{ .Values.quarterdeck.rateLimit.cacheTTL | quote }}
+  {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 
 {{- define "quarterdeck.logLevel" -}}

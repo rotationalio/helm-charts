@@ -64,19 +64,6 @@ quarterdeck:
   # origins for use across multiple micro-services.
   allowOrigins: null
 
-  # Enable rate limiting to prevent spam and abuse.
-  # Rate limiting is implemented as a token bucket algorithm; perSecond is the number of
-  # tokens added to the bucket every second, and burst is the maximum number of tokens
-  # that can be in the bucket at any time. E.g. perSecond: 32 and burst: 128 means
-  # that the service can handle up to 128 requests per second, but will only reset after
-  # 4 seconds of no requests.
-  # TODO: allow per-IP rate limiting in addition to constant rate limiting.
-  rateLimit:
-    type: ipaddr
-    perSecond: 128
-    burst: 512
-    cacheTTL: 10m
-
   # The display name for the API documentation.
   docsName: ""
 
@@ -278,6 +265,19 @@ quarterdeck:
   securitytxt:
     path: /data/info/security.txt
     text: ""
+
+  # Enable rate limiting to prevent spam and abuse.
+  # Rate limiting is implemented as a token bucket algorithm; perSecond is the number of
+  # tokens added to the bucket every second, and burst is the maximum number of tokens
+  # that can be in the bucket at any time. E.g. perSecond: 32 and burst: 128 means
+  # that the service can handle up to 128 requests per second, but will only reset after
+  # 4 seconds of no requests.
+  # TODO: allow per-IP rate limiting in addition to constant rate limiting.
+  rateLimit:
+    type: ipaddr
+    perSecond: 128
+    burst: 512
+    cacheTTL: 10m
 
 # Specify the secrets to be used by Quarterdeck.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced

@@ -28,6 +28,9 @@ dependencies:
     condition: quarterdeck.enabled
     version: ~0.10
     repository: file://../quarterdeck
+  - name: opentelemetry
+    version: ~1.0
+    repository: file://../opentelemetry
 
 # Project Information
 home: https://rotational.io

@@ -23,6 +23,11 @@ version: 0.10.0
 # It is recommended to use it with quotes.
 appVersion: "0.10.0"
 
+dependencies:
+  - name: opentelemetry
+    version: ~1.0
+    repository: file://../opentelemetry
+
 # Project Information
 home: https://rotational.io
 icon: https://rotational.io/img/favicon.png
