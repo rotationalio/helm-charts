@@ -85,7 +85,25 @@ quarterdeck:
     logoURI: null
     baseURI: null
 
-    welcomeEmail: {}
+    # To specify a custom welcome email body template; you can either set create to true
+    # for the helm chart to create a config map with the specified template values
+    # inline or you can create a configmap with the specified name, which will be
+    # mounted into the Quarterdeck pod and loaded as a template file. The configmap
+    # needs to have two keys: ``welcome_email_body.txt`` and ``welcome_email_body.html``
+    # for the email template renderer to work effectively. For available template
+    # variables, please see the quarterdeck documentation.
+    #
+    # TODO: in the future do we want organize this for all email templates?
+    welcomeEmail:
+      create: false
+      configMap: ""
+      mountPath: /data/app/emails
+      textTemplate:
+        key: "welcome.txt"
+        value: ""
+      htmlTemplate:
+        key: "welcome.html"
+        value: ""
 
   org:
     name: null
