@@ -64,24 +64,39 @@ quarterdeck:
   # origins for use across multiple micro-services.
   allowOrigins: null
 
-  # Enable rate limiting to prevent spam and abuse.
-  # Rate limiting is implemented as a token bucket algorithm; perSecond is the number of
-  # tokens added to the bucket every second, and burst is the maximum number of tokens
-  # that can be in the bucket at any time. E.g. perSecond: 32 and burst: 128 means
-  # that the service can handle up to 128 requests per second, but will only reset after
-  # 4 seconds of no requests.
-  # TODO: allow per-IP rate limiting in addition to constant rate limiting.
-  rateLimit:
-    type: ipaddr
-    perSecond: 128
-    burst: 512
-    cacheTTL: 10m
-
   # The display name for the API documentation.
   docsName: ""
 
-  # An email address that can be used for technical support.
-  supportEmail: ""
+  app:
+    name: null
+    logoURI: null
+    baseURI: null
+
+    # To specify a custom welcome email body template; you can either set create to true
+    # for the helm chart to create a config map with the specified template values
+    # inline or you can create a configmap with the specified name, which will be
+    # mounted into the Quarterdeck pod and loaded as a template file. The configmap
+    # needs to have two keys: ``welcome_email_body.txt`` and ``welcome_email_body.html``
+    # for the email template renderer to work effectively. For available template
+    # variables, please see the quarterdeck documentation.
+    #
+    # TODO: in the future do we want organize this for all email templates?
+    welcomeEmail:
+      create: false
+      configMap: ""
+      mountPath: /data/app/emails
+      textTemplate:
+        key: "welcome.txt"
+        value: ""
+      htmlTemplate:
+        key: "welcome.html"
+        value: ""
+
+  org:
+    name: null
+    streetAddres: null
+    homepage: null
+    supportEmail: null
 
   # The DSN to connect to the database. If using a statefulset, this should be set to
   # a sqlite3 volume mount point, if using an external database, this should be
@@ -104,7 +119,7 @@ quarterdeck:
     # The audience is a list of domains that are allowed to authenticate with Quarterdeck.
     # including the Quarterdeck domain itself. This is used to verify the JWT tokens
     # issued by Quarterdeck.
-    audience: null
+    audience: []
 
     # Override global.issuer (do not set unless you know what you're doing)
     issuer: null
@@ -251,10 +266,18 @@ quarterdeck:
     path: /data/info/security.txt
     text: ""
 
-  # Configures user syncing. Quarterdeck will attempt to post any new or modified
-  # users to the endpoints provided. See the Quarterdeck documentation for more information.
-  usersync:
-    webhooks: []
+  # Enable rate limiting to prevent spam and abuse.
+  # Rate limiting is implemented as a token bucket algorithm; perSecond is the number of
+  # tokens added to the bucket every second, and burst is the maximum number of tokens
+  # that can be in the bucket at any time. E.g. perSecond: 32 and burst: 128 means
+  # that the service can handle up to 128 requests per second, but will only reset after
+  # 4 seconds of no requests.
+  # TODO: allow per-IP rate limiting in addition to constant rate limiting.
+  rateLimit:
+    type: ipaddr
+    perSecond: 128
+    burst: 512
+    cacheTTL: 10m
 
 # Specify the secrets to be used by Quarterdeck.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced

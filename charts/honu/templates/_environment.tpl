@@ -26,4 +26,5 @@ env:
     value: {{ .Values.honu.store.dataPath | quote }}
   - name: HONU_STORE_CONCURRENCY
     value: {{ .Values.honu.store.concurrency | quote }}
+  {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}

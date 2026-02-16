@@ -72,6 +72,7 @@ env:
   - name: DJANGO_ADMIN_EMAIL
     value: {{ .Values.jobs.ensureAdmin.email | quote }}
   {{- end }}
+  {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 
 {{- define "compass.allowedHosts" -}}

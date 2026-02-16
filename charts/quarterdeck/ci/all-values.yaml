@@ -29,6 +29,45 @@ quarterdeck:
     keys:
       01K3KXRFKSVV9HQ26GD6RRBEK9: /data/jwks/01K3KXRFKSVV9HQ26GD6RRBEK9.pem
 
+  app:
+    name: Endeavor
+    logoURI: https://endeavor.co/static/img/logo.png
+    baseURI: https://endeavor.co
+
+    # welcomeEmail:
+    #   create: false
+    #   configMap: "endeavor-welcome-email-templates"
+
+    welcomeEmail:
+      create: true
+      textTemplate:
+        value: |-
+          - What is {{ .AppName }}?
+
+          {{ .AppName }} is a shared workspace where teams collaborate to prototype, evaluate, and deploy AI agents into real business workflows with full visibility and control.
+
+          - Why You’re Invited
+
+          Your expertise is needed. {{ .OrgName }} is using {{ .AppName }} to work across technical and business teams to implement AI responsibly and transparently, and joining gives you access to the workflows, evaluations, and decisions that make that possible.
+
+          - Your role: {{ if .Role }}{{ .Role }}{{ else }}Team Member{{ end }}
+
+      htmlTemplate:
+        value: |-
+          <h3 style="padding: 12px 0; margin: 0;">What is {{ .AppName }}?</h3>
+          <p style="padding: 12px 0; margin: 0;">{{ .AppName }} is a shared workspace where teams collaborate to prototype, evaluate, and deploy AI agents into real business workflows with full visibility and control.</p>
+
+          <h3 style="padding: 12px 0; margin: 0;">Why You’re Invited</h3>
+          <p style="padding: 12px 0; margin: 0;">Your expertise is needed. {{ .OrgName }} is using {{ .AppName }} to work across technical and business teams to implement AI responsibly and transparently, and joining gives you access to the workflows, evaluations, and decisions that make that possible.</p>
+
+          <h3 style="padding: 12px 0; margin: 0;">Your role: {{ if .Role }}{{ .Role }}{{ else }}Team Member{{ end }}</h3>
+
+  org:
+    name: Acme, Inc.
+    streetAddress: 12 Center Lane; Barnaby CT 44120
+    homepage: https://acme.com
+    supportEmail: support@acme.com
+
   email:
     sender:
       email: "server@testing.io"
@@ -42,11 +81,23 @@ quarterdeck:
           name: quarterdeck-sendgrid-credentials
           key: sendgrid-api-key
 
-  usersync:
-    webhooks:
-      - "https://example.com/webhook1"
-      - "https://example.com/webhook2"
-
 secrets:
   jwks:
     secretName: rotational-jwks
+
+
+opentelemetry:
+  serviceName: guidelight
+  resourceAttributes:
+    service.namespace: rotational
+    service.version: 0.1.0
+    service.environment: development
+
+  exporter:
+    otlp:
+      endpoint: opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+      headers:
+        "x-api-key": "1234567890"
+        "Authorization": "Bearer $JWT_TOKEN"
+      timeout: 10000
+      protocol: grpc

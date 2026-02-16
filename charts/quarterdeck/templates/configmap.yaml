@@ -9,6 +9,24 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 data:
-  securitytxt.txt: {{ .Values.quarterdeck.securitytxt.text | b64enc }}
-{{- end }}
-
+  security.txt: {{ .Values.quarterdeck.securitytxt.text | b64enc }}
+{{- end -}}
+{{- if and .Values.quarterdeck.securitytxt.text .Values.quarterdeck.app.welcomeEmail.create }}
+---
+{{ end -}}
+{{- if .Values.quarterdeck.app.welcomeEmail.create -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.key }}: |+
+    {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.value | nindent 4 }}
+  {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.key }}: |+
+    {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.value | nindent 4 }}
+{{- end -}}

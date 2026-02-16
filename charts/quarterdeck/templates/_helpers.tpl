@@ -79,6 +79,7 @@ volumeMounts:
   {{- include "quarterdeck.volumeMounts.database" . | nindent 2 -}}
   {{- include "quarterdeck.volumeMounts.jwks" . | nindent 2  -}}
   {{- include "quarterdeck.volumeMounts.securitytxt" . | nindent 2 -}}
+  {{- include "quarterdeck.volumeMounts.welcomeEmail" . | nindent 2 -}}
 {{- end }}
 
 {{/*
@@ -105,6 +106,14 @@ Volume mounts for database storage if using sqlite3.
 {{- end -}}
 {{- end -}}
 
+{{- define "quarterdeck.volumeMounts.welcomeEmail" -}}
+{{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap -}}
+- name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
+  mountPath: {{ .Values.quarterdeck.app.welcomeEmail.mountPath }}
+  readOnly: true
+{{- end -}}
+{{- end -}}
+
 {{/*
 All volumes for the Quarterdeck pods.
 - jwks secret mount if jwks keys are provided.
@@ -121,6 +130,7 @@ volumes:
 {{- define "quarterdeck.volumes.all" -}}
   {{- include "quarterdeck.volumes.jwks" . | nindent 2 -}}
   {{- include "quarterdeck.volumes.securitytxt" . | nindent 2 -}}
+  {{- include "quarterdeck.volumes.welcomeEmail" . | nindent 2 -}}
 {{- end -}}
 
 {{- define "quarterdeck.volumes.jwks" -}}
@@ -139,6 +149,14 @@ volumes:
 {{- end -}}
 {{- end -}}
 
+{{- define "quarterdeck.volumes.welcomeEmail" -}}
+{{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap -}}
+- name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
+  configMap:
+    name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
+{{- end -}}
+{{- end -}}
+
 {{- define "quarterdeck.hostname" -}}
 {{- if hasPrefix "https://" .Values.global.issuer  -}}
 {{ trimPrefix "https://" .Values.global.issuer }}
@@ -148,5 +166,13 @@ volumes:
 {{ trimPrefix "//" .Values.global.issuer }}
 {{- else -}}
 {{ .Values.global.issuer }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.app.welcomeEmail.configMap.name" -}}
+{{- if .Values.quarterdeck.app.welcomeEmail.configMap -}}
+{{ .Values.quarterdeck.app.welcomeEmail.configMap }}
+{{- else -}}
+{{ include "quarterdeck.name" . }}-welcome-emails
 {{- end -}}
 {{- end -}}
