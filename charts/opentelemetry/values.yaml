@@ -1,159 +1,249 @@
 # General configuration
+opentelemetry:
 
-# OTEL_SDK_DISABLED
-# If “true”, a no-op SDK implementation will be used for all telemetry signals.
-# Any other value or absence of the variable will have no effect and the SDK will
-# remain enabled. This setting has no effect on propagators configured through the
-# OTEL_PROPAGATORS variable.
-disabled: false
+  # OTEL_SDK_DISABLED
+  # If “true”, a no-op SDK implementation will be used for all telemetry signals.
+  # Any other value or absence of the variable will have no effect and the SDK will
+  # remain enabled. This setting has no effect on propagators configured through the
+  # OTEL_PROPAGATORS variable.
+  disabled: false
 
-# OTEL_ENTITIES
-# See: https://opentelemetry.io/docs/specs/otel/entities/entity-propagation/#specifying-entity-information-via-an-environment-variable
-entities: []
+  # OTEL_ENTITIES
+  # See: https://opentelemetry.io/docs/specs/otel/entities/entity-propagation/#specifying-entity-information-via-an-environment-variable
+  entities: []
 
-# OTEL_RESOURCE_ATTRIBUTES
-# See: https://opentelemetry.io/docs/specs/otel/resource/sdk/#specifying-resource-information-via-an-environment-variable
-resourceAttributes: {}
+  # OTEL_RESOURCE_ATTRIBUTES
+  # See: https://opentelemetry.io/docs/specs/otel/resource/sdk/#specifying-resource-information-via-an-environment-variable
+  resourceAttributes: {}
 
-# OTEL_SERVICE_NAME
-# If service.name is also provided in OTEL_RESOURCE_ATTRIBUTES, then OTEL_SERVICE_NAME
-# takes precedence.
-serviceName: ""
+  # OTEL_SERVICE_NAME
+  # If service.name is also provided in OTEL_RESOURCE_ATTRIBUTES, then OTEL_SERVICE_NAME
+  # takes precedence.
+  serviceName: ""
 
-# OTEL_LOG_LEVEL
-# Log level used by the SDK internal logger
-logLevel: "info"
+  # OTEL_LOG_LEVEL
+  # Log level used by the SDK internal logger
+  logLevel: "info"
 
-# OTEL_PROPAGATORS
-# Propagators to be used as a comma-separated list
-# Values MUST be deduplicated in order to register a Propagator only once.
-propagators: []
+  # OTEL_PROPAGATORS
+  # Propagators to be used as a comma-separated list
+  # Values MUST be deduplicated in order to register a Propagator only once.
+  propagators: []
 
-# OTEL_TRACES_SAMPLER
-# Sampler to be used for traces
-# See: https://opentelemetry.io/docs/specs/otel/trace/sdk/#sampling
-tracesSampler: ""
+  # OTEL_TRACES_SAMPLER
+  # Sampler to be used for traces
+  # See: https://opentelemetry.io/docs/specs/otel/trace/sdk/#sampling
+  tracesSampler: ""
 
-# OTEL_TRACES_SAMPLER_ARG
-# The specified value will only be used if OTEL_TRACES_SAMPLER is set. Each Sampler
-# type defines its own expected input, if any. Invalid or unrecognized input MUST be
-# logged and MUST be otherwise ignored, i.e. the implementation MUST behave as if
-# OTEL_TRACES_SAMPLER_ARG is not set.
-tracesSamplerArg: ""
+  # OTEL_TRACES_SAMPLER_ARG
+  # The specified value will only be used if OTEL_TRACES_SAMPLER is set. Each Sampler
+  # type defines its own expected input, if any. Invalid or unrecognized input MUST be
+  # logged and MUST be otherwise ignored, i.e. the implementation MUST behave as if
+  # OTEL_TRACES_SAMPLER_ARG is not set.
+  tracesSamplerArg: ""
 
-# Batch Span Processor Configuration
-bsp:
-  # OTEL_BSP_SCHEDULE_DELAY
-  # Delay interval (in milliseconds) between two consecutive exports
-  scheduleDelay: 0
+  # Batch Span Processor Configuration
+  bsp:
+    # OTEL_BSP_SCHEDULE_DELAY
+    # Delay interval (in milliseconds) between two consecutive exports
+    scheduleDelay: 0
 
-  # OTEL_BSP_EXPORT_TIMEOUT
-  # Maximum allowed time (in milliseconds) to export data
-  exportTimeout: 0
+    # OTEL_BSP_EXPORT_TIMEOUT
+    # Maximum allowed time (in milliseconds) to export data
+    exportTimeout: 0
 
-  # OTEL_BSP_MAX_QUEUE_SIZE
-  # Maximum queue size
-  maxQueueSize: 0
+    # OTEL_BSP_MAX_QUEUE_SIZE
+    # Maximum queue size
+    maxQueueSize: 0
 
-  # OTEL_BSP_MAX_EXPORT_BATCH_SIZE
-  # Maximum export batch size
-  maxExportBatchSize: 0
+    # OTEL_BSP_MAX_EXPORT_BATCH_SIZE
+    # Maximum export batch size
+    maxExportBatchSize: 0
 
-# Batch LogRecord Processor Configuration
-blrp:
-  # OTEL_BLP_SCHEDULE_DELAY
-  # Delay interval (in milliseconds) between two consecutive exports
-  scheduleDelay: 0
+  # Batch LogRecord Processor Configuration
+  blrp:
+    # OTEL_BLRP_SCHEDULE_DELAY
+    # Delay interval (in milliseconds) between two consecutive exports
+    scheduleDelay: 0
 
-  # OTEL_BLP_EXPORT_TIMEOUT
-  # Maximum allowed time (in milliseconds) to export data
-  exportTimeout: 0
+    # OTEL_BLRP_EXPORT_TIMEOUT
+    # Maximum allowed time (in milliseconds) to export data
+    exportTimeout: 0
 
-  # OTEL_BLP_MAX_QUEUE_SIZE
-  # Maximum queue size
-  maxQueueSize: 0
+    # OTEL_BLRP_MAX_QUEUE_SIZE
+    # Maximum queue size
+    maxQueueSize: 0
 
-  # OTEL_BLP_MAX_EXPORT_BATCH_SIZE
-  # Maximum export batch size
-  maxExportBatchSize: 0
+    # OTEL_BLRP_MAX_EXPORT_BATCH_SIZE
+    # Maximum export batch size
+    maxExportBatchSize: 0
 
-# Attribute Limit Configuration
-attribute:
-  # OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT
-  # Maximum length of an attribute value size
-  valueLengthLimit: 0
+  # Attribute Limit Configuration
+  attribute:
+    # OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT
+    # Maximum length of an attribute value size
+    valueLengthLimit: 0
 
-  # OTEL_ATTRIBUTE_COUNT_LIMIT
-  # Maximum allowed attribute count
-  countLimit: 0
+    # OTEL_ATTRIBUTE_COUNT_LIMIT
+    # Maximum allowed attribute count
+    countLimit: 0
 
-# Span Limits Configuration
-span:
-  # OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT
-  # Maximum allowed span attribute value size
-  attributeValueLengthLimit: 0
+  # Span Limits Configuration
+  span:
+    # OTEL_SPAN_ATTRIBUTE_VALUE_LENGTH_LIMIT
+    # Maximum allowed span attribute value size
+    attributeValueLengthLimit: 0
 
-  # OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT
-  # Maximum allowed span attribute count
-  attributeCountLimit: 0
+    # OTEL_SPAN_ATTRIBUTE_COUNT_LIMIT
+    # Maximum allowed span attribute count
+    attributeCountLimit: 0
 
-  # OTEL_SPAN_EVENT_COUNT_LIMIT
-  # Maximum allowed spanevent count
-  eventCountLimit: 0
+    # OTEL_SPAN_EVENT_COUNT_LIMIT
+    # Maximum allowed spanevent count
+    eventCountLimit: 0
 
-  # OTEL_SPAN_LINK_COUNT_LIMIT
-  # Maximum allowed span link count
-  linkCountLimit: 0
+    # OTEL_SPAN_LINK_COUNT_LIMIT
+    # Maximum allowed span link count
+    linkCountLimit: 0
 
-  # OTEL_EVENT_ATTRIBUTE_COUNT_LIMIT
-  # Maximum allowed attribute per span event count
-  eventAttributeCountLimit: 0
+    # OTEL_EVENT_ATTRIBUTE_COUNT_LIMIT
+    # Maximum allowed attribute per span event count
+    eventAttributeCountLimit: 0
 
-  # OTEL_LINK_ATTRIBUTE_COUNT_LIMIT
-  # Maximum allowed attribute per span link count
-  linkAttributeCountLimit: 0
+    # OTEL_LINK_ATTRIBUTE_COUNT_LIMIT
+    # Maximum allowed attribute per span link count
+    linkAttributeCountLimit: 0
 
-# LogRecord Limits Configuration
-log:
-  # OTEL_LOGRECORD_ATTRIBUTE_VALUE_LENGTH_LIMIT
-  # Maximum allowed log record attribute value size
-  attributeValueLengthLimit: 0
+  # LogRecord Limits Configuration
+  log:
+    # OTEL_LOGRECORD_ATTRIBUTE_VALUE_LENGTH_LIMIT
+    # Maximum allowed log record attribute value size
+    attributeValueLengthLimit: 0
 
-  # OTEL_LOGRECORD_ATTRIBUTE_COUNT_LIMIT
-  # Maximum allowed log record attribute count
-  attributeCountLimit: 0
+    # OTEL_LOGRECORD_ATTRIBUTE_COUNT_LIMIT
+    # Maximum allowed log record attribute count
+    attributeCountLimit: 0
 
-# OTLP Export Configuration
-exporter:
+  # OTLP Export Configuration
+  exporter:
 
-  # OTEL_TRACES_EXPORTER
-  # Traces exporter to be used
-  traces: ""
+    # OTEL_TRACES_EXPORTER
+    # Traces exporter to be used
+    traces: ""
 
-  # OTEL_METRICS_EXPORTER
-  # Metrics exporter to be used
-  metrics: ""
+    # OTEL_METRICS_EXPORTER
+    # Metrics exporter to be used
+    metrics: ""
 
-  # OTEL_LOGS_EXPORTER
-  # Logs exporter to be used
-  logs: ""
+    # OTEL_LOGS_EXPORTER
+    # Logs exporter to be used
+    logs: ""
 
-  # Zipkin Exporter Configuration
-  zipkin:
-    # OTEL_EXPORTER_ZIPKIN_ENDPOINT
-    # Endpoint for Zipkin traces
-    endpoint: ""
+    # OTLP Exporter Configuration
+    # See: https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/
+    otlp:
+      # OTEL_EXPORTER_OTLP_ENDPOINT
+      # A base endpoint URL for any signal type, with an optionally-specified port number.
+      # Helpful for when you’re sending more than one signal to the same endpoint and want
+      # one environment variable to control the endpoint.
+      endpoint: ""
 
-    # OTEL_EXPORTER_ZIPKIN_TIMEOUT
-    # Maximum time (in milliseconds) the Zipkin exporter will wait for each batch export
-    timeout: 0
+      # OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      # Endpoint URL for trace data only, with an optionally-specified port number.
+      # Typically ends with v1/traces when using OTLP/HTTP.
+      tracesEndpoint: ""
 
-  # Prometheus Exporter Configuration
-  prometheus:
-    # OTEL_EXPORTER_PROMETHEUS_HOST
-    # Host used by the Prometheus exporter
-    host: ""
+      # OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+      # Endpoint URL for metric data only, with an optionally-specified port number.
+      # Typically ends with v1/metrics when using OTLP/HTTP.
+      metricsEndpoint: ""
 
-    # OTEL_EXPORTER_PROMETHEUS_PORT
-    # Port used by the Prometheus exporter
-    port: 0
+      # OTEL_EXPORTER_OTLP_LOGS_ENDPOINT
+      # Endpoint URL for log data only, with an optionally-specified port number.
+      # Typically ends with v1/logs when using OTLP/HTTP.
+      logsEndpoint: ""
+
+      # OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT
+      # Endpoint URL for profiles data only, with an optional port number.
+      # Typically ends with v1/profiles when using OTLP/HTTP.
+      profilesEndpoint: ""
+
+      # OTEL_EXPORTER_OTLP_HEADERS
+      # A list of headers to apply to all outgoing data (traces, metrics, and logs).
+      headers: {}
+
+      # OTEL_EXPORTER_OTLP_TRACES_HEADERS
+      # A list of headers to apply to all outgoing traces.
+      tracesHeaders: {}
+
+      # OTEL_EXPORTER_OTLP_METRICS_HEADERS
+      # A list of headers to apply to all outgoing metrics.
+      metricsHeaders: {}
+
+      # OTEL_EXPORTER_OTLP_LOGS_HEADERS
+      # A list of headers to apply to all outgoing logs.
+      logsHeaders: {}
+
+      # OTEL_EXPORTER_OTLP_PROFILES_HEADERS
+      # A list of headers to apply to all outgoing profiles.
+      profilesHeaders: {}
+
+      # OTEL_EXPORTER_OTLP_TIMEOUT
+      # The timeout value for all outgoing data (traces, metrics, and logs) in milliseconds.
+      timeout: 0
+
+      # OTEL_EXPORTER_OTLP_TRACES_TIMEOUT
+      # The timeout value for outgoing traces in milliseconds.
+      tracesTimeout: 0
+
+      # OTEL_EXPORTER_OTLP_METRICS_TIMEOUT
+      # The timeout value for outgoing metrics in milliseconds.
+      metricsTimeout: 0
+
+      # OTEL_EXPORTER_OTLP_LOGS_TIMEOUT
+      # The timeout value for outgoing logs in milliseconds.
+      logsTimeout: 0
+
+      # OTEL_EXPORTER_OTLP_PROFILES_TIMEOUT
+      # The timeout value for outgoing profiles in milliseconds.
+      profilesTimeout: 0
+
+      # OTEL_EXPORTER_OTLP_PROTOCOL
+      # Specifies the OTLP transport protocol to be used for all telemetry data.
+      protocol: ""
+
+      # OTEL_EXPORTER_OTLP_TRACES_PROTOCOL
+      # Specifies the OTLP transport protocol to be used for trace data.
+      tracesProtocol: ""
+
+      # OTEL_EXPORTER_OTLP_METRICS_PROTOCOL
+      # Specifies the OTLP transport protocol to be used for metric data.
+      metricsProtocol: ""
+
+      # OTEL_EXPORTER_OTLP_LOGS_PROTOCOL
+      # Specifies the OTLP transport protocol to be used for log data.
+      logsProtocol: ""
+
+      # OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL
+      # Specifies the OTLP transport protocol to be used for profile data.
+      profilesProtocol: ""
+
+    # Zipkin Exporter Configuration
+    zipkin:
+      # OTEL_EXPORTER_ZIPKIN_ENDPOINT
+      # Endpoint for Zipkin traces
+      endpoint: ""
+
+      # OTEL_EXPORTER_ZIPKIN_TIMEOUT
+      # Maximum time (in milliseconds) the Zipkin exporter will wait for each batch export
+      timeout: 0
+
+    # Prometheus Exporter Configuration
+    prometheus:
+      # OTEL_EXPORTER_PROMETHEUS_HOST
+      # Host used by the Prometheus exporter
+      host: ""
+
+      # OTEL_EXPORTER_PROMETHEUS_PORT
+      # Port used by the Prometheus exporter
+      port: 0

@@ -92,3 +92,12 @@ opentelemetry:
     service.namespace: rotational
     service.version: 0.1.0
     service.environment: development
+
+  exporter:
+    otlp:
+      endpoint: opentelemetry-collector.opentelemetry.svc.cluster.local:4317
+      headers:
+        "x-api-key": "1234567890"
+        "Authorization": "Bearer $JWT_TOKEN"
+      timeout: 10000
+      protocol: grpc
