@@ -73,6 +73,7 @@ env:
     value: {{ .Values.endeavor.radish.workers | quote }}
   - name: ENDEAVOR_RADISH_QUEUE_SIZE
     value: {{ .Values.endeavor.radish.queueSize | quote }}
+  {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 
 {{- define "endeavor.logLevel" -}}
