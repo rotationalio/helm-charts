@@ -107,9 +107,11 @@ Volume mounts for database storage if using sqlite3.
 {{- end -}}
 
 {{- define "quarterdeck.volumeMounts.welcomeEmail" -}}
+{{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap -}}
 - name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
   mountPath: {{ .Values.quarterdeck.app.welcomeEmail.mountPath }}
   readOnly: true
+{{- end -}}
 {{- end -}}
 
 {{/*

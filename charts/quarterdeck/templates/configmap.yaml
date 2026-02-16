@@ -25,6 +25,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 data:
-  {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.key }}: {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.value | b64enc }}
-  {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.key }}: {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.value | b64enc }}
+  {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.key }}: |+
+    {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.value | nindent 4 }}
+  {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.key }}: |+
+    {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.value | nindent 4 }}
 {{- end -}}
