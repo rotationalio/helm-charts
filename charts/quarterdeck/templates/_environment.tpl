@@ -30,6 +30,10 @@ env:
   {{- end }}
   - name: QD_APP_BASE_URI
     value: {{ include "quarterdeck.app.baseURI" . }}
+  {{- if .Values.quarterdeck.app.webhookURI }}
+  - name: QD_APP_WEBHOOK_URI
+    value: {{ .Values.quarterdeck.app.webhookURI | quote }}
+  {{- end }}
   {{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap }}
   - name: QD_APP_WELCOME_EMAIL_HTML_PATH
     value: "{{ .Values.quarterdeck.app.welcomeEmail.mountPath }}/{{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.key }}"

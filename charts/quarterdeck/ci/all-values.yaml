@@ -33,6 +33,7 @@ quarterdeck:
     name: Endeavor
     logoURI: https://endeavor.co/static/img/logo.png
     baseURI: https://endeavor.co
+    webhookURI: https://endeavor.co/callback
 
     # welcomeEmail:
     #   create: false
