@@ -71,6 +71,7 @@ quarterdeck:
     name: null
     logoURI: null
     baseURI: null
+    webhookURI: null
 
     # To specify a custom welcome email body template; you can either set create to true
     # for the helm chart to create a config map with the specified template values
