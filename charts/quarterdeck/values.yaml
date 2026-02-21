@@ -320,7 +320,7 @@ storage:
       accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 32Gi
+          storage: 2Gi
 
 # Configuration for the Quarterdeck service.
 service:
