@@ -391,6 +391,32 @@ entries:
   endeavor:
   - apiVersion: v2
     appVersion: 0.26.0
+    created: "2026-02-23T19:43:48.039966486Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.10
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: ba2db745e132b609099d35dc767daa542ac8c4e88013b0c6e6909e28c667f780
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.26.2/endeavor-0.26.2.tgz
+    version: 0.26.2
+  - apiVersion: v2
+    appVersion: 0.26.0
     created: "2026-02-21T23:31:10.398513688Z"
     dependencies:
     - condition: quarterdeck.enabled
@@ -1378,6 +1404,28 @@ entries:
   quarterdeck:
   - apiVersion: v2
     appVersion: 0.10.0
+    created: "2026-02-23T19:43:48.168292156Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: f8a5dd87928f53a4cefc3943f0dfa9be7cf0f112bdbed237ad11dc11ab3e7e28
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.10.3/quarterdeck-0.10.3.tgz
+    version: 0.10.3
+  - apiVersion: v2
+    appVersion: 0.10.0
     created: "2026-02-21T23:31:10.584197707Z"
     dependencies:
     - name: opentelemetry
@@ -1784,4 +1832,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-21T23:31:10.584725862Z"
+generated: "2026-02-23T19:43:48.168779812Z"
