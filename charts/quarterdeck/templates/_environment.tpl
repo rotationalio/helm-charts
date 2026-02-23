@@ -246,6 +246,8 @@ env:
 {{- .Values.quarterdeck.app.baseURI | quote -}}
 {{- else if .Values.quarterdeck.auth.audience -}}
 {{- index .Values.quarterdeck.auth.audience 0 | quote -}}
+{{- else if .Values.global.origins -}}
+{{- index .Values.global.origins 0 | quote -}}
 {{- else -}}
 {{- .Values.global.issuer | quote -}}
 {{- end -}}
