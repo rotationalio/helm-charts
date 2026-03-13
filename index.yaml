@@ -3,6 +3,24 @@ entries:
   acme-linode:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-03-13T21:11:16.087826468Z"
+    description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
+      LKE
+    digest: 43825a4fa8892977ef019376cf3da9c5298d8d9eb57e4718de828a4b973f6ffe
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: acme-linode
+    sources:
+    - https://github.com/rotationalio/acme-linode
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/acme-linode-1.0.3/acme-linode-1.0.3.tgz
+    version: 1.0.3
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-01-09T19:46:44.56517153Z"
     description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
       LKE
@@ -1453,6 +1471,22 @@ entries:
     version: 0.1.0
   opentelemetry:
   - apiVersion: v2
+    created: "2026-03-13T21:11:16.236297083Z"
+    description: Configure OpenTelemetry environment variables for your application.
+    digest: 4f23908a2e75dc9353b09d0a4775d18f229edac34d966194f1a9f5fd44ff462c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: opentelemetry
+    sources:
+    - https://github.com/rotationalio/helm-charts
+    type: library
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/opentelemetry-1.0.1/opentelemetry-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
     created: "2026-02-16T17:49:11.474673076Z"
     description: Configure OpenTelemetry environment variables for your application.
     digest: 08d2e4d4c4261af4c7032b6c1fe0099bf8679a881eab79b5b22d5a9ec66f4807
@@ -1918,6 +1952,22 @@ entries:
     version: 1.0.0
   regioninfo:
   - apiVersion: v2
+    created: "2026-03-13T21:11:16.366929153Z"
+    description: Adds region information to the cluster for geographic debugging
+    digest: 9187dc5e03cf3d7f84a92be1c13567d6c2f43ffce4c88837b60072182afb9417
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: regioninfo
+    sources:
+    - https://github.com/rotationalio/helm-charts
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/regioninfo-1.1.2/regioninfo-1.1.2.tgz
+    version: 1.1.2
+  - apiVersion: v2
     created: "2026-03-13T15:17:53.636744672Z"
     description: Adds region information to the cluster for geographic debugging
     digest: 150efe5923f25f5fa1ce2122e89485e23050dd13e3d63d7dacdc5a447512f398
@@ -1933,7 +1983,43 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/regioninfo-1.1.1/regioninfo-1.1.1.tgz
     version: 1.1.1
+  rotational-api:
+  - apiVersion: v2
+    appVersion: 1.3.0
+    created: "2026-03-13T21:11:16.514865372Z"
+    description: Implements a simple backend for the Rotational Home Page
+    digest: 6536f034b589ed36fc8af0ca2649ab640f0df97cd6848a4edc058b5970313425
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: rotational-api
+    sources:
+    - https://github.com/rotationalio/api.rotational.io
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/rotational-api-1.3.0/rotational-api-1.3.0.tgz
+    version: 1.3.0
   vanity:
+  - apiVersion: v2
+    appVersion: 1.2.0
+    created: "2026-03-13T21:11:16.656150588Z"
+    description: Implements the Golang remote import paths protocol to act as a vanity
+      URL server for Go import paths
+    digest: 0fb75ecdc96b85dd7e4064ea2a900cd8c18ee9b511243650c817c95242162fb0
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: vanity
+    sources:
+    - https://github.com/rotationalio/vanity
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.1/vanity-1.2.1.tgz
+    version: 1.2.1
   - apiVersion: v2
     appVersion: 1.2.0
     created: "2026-03-13T16:36:59.754658227Z"
@@ -1952,4 +2038,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-03-13T16:36:59.754981662Z"
+generated: "2026-03-13T21:11:16.656523176Z"
