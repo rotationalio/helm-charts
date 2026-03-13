@@ -26,6 +26,10 @@ rotational` to see the charts.
 - [Honu](charts/honu/README.md)
 - [Compass](charts/compass/README.md)
 - [Linode ACME Webhook for cert-manager](charts/acme-linode/README.md)
+- [Geoping](charts/geoping/README.md)
+- [Vanity](charts/vanity/README.md)
+- [Region Info](charts/regioninfo/README.md)
+- [OpenTelemetry](charts/opentelemetry/README.md)
 
 ## Debugging Templates
 

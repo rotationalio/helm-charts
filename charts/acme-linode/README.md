@@ -7,13 +7,13 @@ An ACME DNS01 Webhook Solver for the Linode (now Akamai) [DNS Manager](https://t
 ```sh
 $ helm repo add rotational https://helm.rotational.dev
 $ helm install acme-linode rotational/acme-linode \
-    --namespace cert-manager --values myvalues.yaml
+    --namespace cert-manager --values values.yaml
 ```
 
-A minimal `myvalues.yaml` file is as follows:
+A minimal `values.yaml` file is as follows:
 
 ```yaml
-groupName: acme.mycompany.com
+groupName: acme.company.com
 
 certManager:
   namespace: cert-manager
@@ -40,7 +40,7 @@ $ kubectl create secret generic linode-credentials \
 Or you can specify it in the values (e.g. if you're injecting the token from an environment variable or using kustomize):
 
 ```yaml
-groupName: acme.mycompany.com
+groupName: acme.company.com
 
 certManager:
   namespace: cert-manager
@@ -73,7 +73,7 @@ spec:
     - dns01:
       webhook:
         solverName: linode
-        groupName: acme.mycompany.com
+        groupName: acme.company.com
 ```
 
 By default, the Linode API token will be obtained from the linode-credentials Secret in the same namespace as the solver defined above.
@@ -96,7 +96,7 @@ spec:
     - dns01:
       webhook:
         solverName: linode
-        groupName: acme.mycompany.com
+        groupName: acme.company.com
         config:
           apiKeySecretRef:
             name: linode-credentials
