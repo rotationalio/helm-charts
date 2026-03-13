@@ -1,0 +1,27 @@
+# Declare region information for access by Rotational services.
+# Disable region info from being installed
+install: true
+
+# Override the default name of the configmap (region-info)
+configMap: ""
+
+# Specify the region information to include in the configmap
+info:
+  # The ID and name of the region which encodes cloud, region, and zone information
+  # See: https://github.com/rotationalio/x/blob/main/region/regions.data.go
+  id: ""
+  name: ""
+
+  # The Alpha-2 country code for the country the node is deployed in
+  country: ""
+
+  # GCP, AWS, Azure, Linode, etc.
+  cloud: ""
+
+  # The name of the cluster in the case of multi-cluster environments
+  cluster: ""
+
+# Add additional annotations to the configmap, reflector annotations in particular.
+annotations: {}
+  # reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+  # reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: ""

@@ -1,0 +1,16 @@
+You have installed region information as {{ .Chart.Name | title }}.
+
+{{- with .Values.annotations }}
+
+The region configuration has been annotated as:
+
+{{- toYaml . | nindent 2 }}
+{{- end }}
+
+Region Information:
+
+- REGION_INFO_ID: {{ .Values.info.id | quote }}
+- REGION_INFO_NAME: {{ .Values.info.name | quote }}
+- REGION_INFO_COUNTRY: {{ .Values.info.country | quote }}
+- REGION_INFO_CLOUD: {{ .Values.info.cloud | quote }}
+- REGION_INFO_CLUSTER: {{ .Values.info.cluster | quote }}

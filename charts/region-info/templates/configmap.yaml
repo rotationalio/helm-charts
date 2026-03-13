@@ -1,0 +1,19 @@
+{{- $name := default "region-info" .Values.configMap -}}
+{{- $exists := lookup "v1" "ConfigMap" .Release.Namespace $name -}}
+{{- if and .Values.install (not $exists) -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $name }}
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  REGION_INFO_ID: {{ .Values.info.id | quote }}
+  REGION_INFO_NAME: {{ .Values.info.name | quote }}
+  REGION_INFO_COUNTRY: {{ .Values.info.country | quote }}
+  REGION_INFO_CLOUD: {{ .Values.info.cloud | quote }}
+  REGION_INFO_CLUSTER: {{ .Values.info.cluster | quote }}
+{{- end }}
