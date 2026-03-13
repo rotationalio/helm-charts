@@ -1310,6 +1310,28 @@ entries:
   honu:
   - apiVersion: v2
     appVersion: 0.5.0
+    created: "2026-03-13T14:23:17.811976049Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Adaptive consistency replication with reinforcement learning for
+      large scale globally distributed storage
+    digest: 323166dd7c523f724ac0531089b48eca533f8ceae058655f1ba224b9e9c2b197
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: honu
+    sources:
+    - https://github.com/rotationalio/honu
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/honu-0.5.2/honu-0.5.2.tgz
+    version: 0.5.2
+  - apiVersion: v2
+    appVersion: 0.5.0
     created: "2026-02-16T17:49:11.284094518Z"
     dependencies:
     - name: opentelemetry
@@ -1832,4 +1854,21 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-23T19:43:48.168779812Z"
+  region-info:
+  - apiVersion: v2
+    created: "2026-03-13T14:23:17.969816041Z"
+    description: Adds region information to the cluster for geographic debugging
+    digest: 619d675dc5732add553d1a746bc91d83e86f3faab4616abbb78b7a1e8f348e8e
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: region-info
+    sources:
+    - https://github.com/rotationalio/helm-charts
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/region-info-1.0.0/region-info-1.0.0.tgz
+    version: 1.0.0
+generated: "2026-03-13T14:23:17.970046571Z"
