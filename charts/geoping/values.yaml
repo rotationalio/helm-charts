@@ -85,23 +85,23 @@ regioninfo:
 livenessProbe:
   httpGet:
     path: /livez
-    port: 8000
+    port: 8200
     httpHeaders:
     - name: X-Kubernetes-Probe
       value: liveness
   initialDelaySeconds: 2
-  periodSeconds: 10
+  periodSeconds: 15
 
 # The readiness probe requires geoping to be running.
 readinessProbe:
   httpGet:
     path: /readyz
-    port: 8000
+    port: 8200
     httpHeaders:
     - name: X-Kubernetes-Probe
       value: readiness
   initialDelaySeconds: 2
-  periodSeconds: 10
+  periodSeconds: 15
 
 # Pod requested resources and limits.
 resources: {}

@@ -1,0 +1,25 @@
+fullnameOverride: vanity
+
+vanity:
+  domain: go.rtnl.ai
+  repositories:
+    - repository: https://github.com/rotationalio/x
+    - repository: https://github.com/rotationalio/confire
+    - repository: https://github.com/rotationalio/go-ensign
+    - repository: https://github.com/rotationalio/vanity
+    - repository: https://github.com/rotationalio/radish
+    - repository: https://github.com/rotationalio/ulid
+    - repository: https://github.com/rotationalio/honu
+    - repository: https://github.com/rotationalio/endeavor
+    - repository: https://github.com/rotationalio/quarterdeck
+    - repository: https://github.com/rotationalio/gimlet
+    - repository: https://github.com/rotationalio/nlp
+    - repository: https://github.com/rotationalio/commo
+    - repository: https://github.com/rotationalio/httpcache
+    - repository: https://github.com/rotationalio/acme-linode
+    - repository: https://github.com/rotationalio/pglock
+
+
+ingress:
+  tls:
+    secretName: tls-certs

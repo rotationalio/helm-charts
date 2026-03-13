@@ -1,0 +1,94 @@
+# Default values for vanity.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Name overrides: by default the name for most objects will be release-vanity. It is
+# recommended to create a descriptive release name, but if you must override the names
+# separate from the release, you can set nameOverride. To remove the -vanity suffix
+# set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+
+image:
+  repository: rotationalio/vanity
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+
+vanity:
+  maintenance: false
+  domain: ""
+  defaultBranch: "main"
+  logLevel: info
+  consoleLog: false
+
+  configMap:
+    name: gopkgs
+    mountPath: /data/vanity
+    key: gopkgs.yaml
+
+  # Should be a list of repository: githubURL dicts
+  repositories: []
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8000
+
+# Note that the hostname is set from vanity.domain
+ingress:
+  enabled: true
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  annotations: {}
+  entryPoints:
+    - websecure
+  tls: {}
+
+# The liveness probe requires geoping to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 15
+
+# The readiness probe requires geoping to be running.
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 15
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}

@@ -1,0 +1,25 @@
+Thank you for installing {{ .Chart.Name | title }} for custom go package domains!
+
+{{ if .Values.ingress.enabled -}}
+You can reach the vanity endpoint via the following endpoints:
+
+- URL: https://{{ .Values.vanity.domain }}
+{{- end }}
+
+{{ if .Values.vanity.repositories -}}
+{{ .Values.vanity.repositories }}
+{{- end }}
+
+Your release is named {{ .Release.Name }} and your application is defined as:
+
+- application name: {{ include "vanity.name" . }}
+- service name: {{ include "vanity.fullname" . }}
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+Labels added to all elements of the release are as follows:
+
+{{ include "vanity.labels" . | nindent 4 }}

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ default "gopkgs" .Values.vanity.configMap.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "vanity.labels" . | nindent 4 }}
+data:
+  gopkgs.yaml: |-
+    {{- .Values.vanity.repositories | toYaml | nindent 4 }}
