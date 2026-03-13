@@ -1933,23 +1933,6 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.1.0/quarterdeck-0.1.0.tgz
     version: 0.1.0
-  region-info:
-  - apiVersion: v2
-    created: "2026-03-13T14:23:17.969816041Z"
-    description: Adds region information to the cluster for geographic debugging
-    digest: 619d675dc5732add553d1a746bc91d83e86f3faab4616abbb78b7a1e8f348e8e
-    home: https://rotational.io
-    icon: https://rotational.io/img/favicon.png
-    maintainers:
-    - email: support@rotational.io
-      name: rotationalio
-    name: region-info
-    sources:
-    - https://github.com/rotationalio/helm-charts
-    type: application
-    urls:
-    - https://github.com/rotationalio/helm-charts/releases/download/region-info-1.0.0/region-info-1.0.0.tgz
-    version: 1.0.0
   regioninfo:
   - apiVersion: v2
     created: "2026-03-13T21:11:16.366929153Z"
