@@ -1307,6 +1307,29 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.1.0/endeavor-0.1.0.tgz
     version: 0.1.0
+  geoping:
+  - apiVersion: v2
+    appVersion: 1.3.0
+    created: "2026-03-13T15:17:53.408401188Z"
+    dependencies:
+    - name: regioninfo
+      repository: file://../regioninfo
+      version: ~1.1
+    description: A service that echos back client information including the geographic
+      information of a server.
+    digest: d0419548be5f090d57c057436ced471cacc8bf5493df40296569b16c996d002c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: geoping
+    sources:
+    - https://github.com/rotationalio/geoping
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/geoping-1.3.0/geoping-1.3.0.tgz
+    version: 1.3.0
   honu:
   - apiVersion: v2
     appVersion: 0.5.0
@@ -1871,4 +1894,21 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/region-info-1.0.0/region-info-1.0.0.tgz
     version: 1.0.0
-generated: "2026-03-13T14:23:17.970046571Z"
+  regioninfo:
+  - apiVersion: v2
+    created: "2026-03-13T15:17:53.636744672Z"
+    description: Adds region information to the cluster for geographic debugging
+    digest: 150efe5923f25f5fa1ce2122e89485e23050dd13e3d63d7dacdc5a447512f398
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: regioninfo
+    sources:
+    - https://github.com/rotationalio/helm-charts
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/regioninfo-1.1.1/regioninfo-1.1.1.tgz
+    version: 1.1.1
+generated: "2026-03-13T15:17:53.636992235Z"
