@@ -1,0 +1,116 @@
+# Default values for deploying geoping.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+# Name overrides: by default the name for most objects will be release-geoping. It is
+# recommended to create a descriptive release name, but if you must override the names
+# separate from the release, you can set nameOverride. To remove the -geoping suffix
+# set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: rotationalio/geoping
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+
+# Set the Geoping specific configuration.
+geoping:
+  maintenance: false
+  logLevel: info
+  consoleLog: false
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+
+services:
+  grpc:
+    type: ClusterIP
+    port: 8100
+    protocol: TCP
+  web:
+    type: ClusterIP
+    port: 8200
+    protocol: TCP
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  enabled: false
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  grpc:
+    hostname: ""
+  web:
+    hostname: ""
+  annotations: {}
+  entryPoints:
+    - websecure
+  tls: {}
+
+# Because geoping is a globally distributed system, region deployment information is
+# useful information on the node. This information can be provided via config map or
+# manually specified in the values.yaml -- behavior is not defined for when both are
+# specified.
+regioninfo:
+  # If enabled is true, will load the region info into the environment from the
+  # specified config map
+  enabled: true
+  configMap: ""
+
+  # If install is true, the config map will be installed using the specified info
+  # values. Note that if a config with the name already exists, it won't be overwritten.
+  install: false
+  info:
+    id: ""
+    name: ""
+    country: ""
+    cloud: ""
+    cluster: ""
+  annotations: {}
+
+# The liveness probe requires geoping to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# The readiness probe requires geoping to be running.
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8000
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}

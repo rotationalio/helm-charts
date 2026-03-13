@@ -1,0 +1,32 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: {{ .Values.ingress.apiVersion }}
+kind: {{ default "IngressRoute" .Values.ingress.className }}
+metadata:
+  name: {{ include "geoping.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "geoping.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+    {{- toYaml .Values.ingress.entryPoints | nindent 4 }}
+  routes:
+    - match: Host(`{{ .Values.ingress.grpc.hostname }}`)
+      kind: Rule
+      services:
+        - name: {{ include "geoping.fullname" . }}-grpc
+          port: {{ .Values.services.grpc.port }}
+          scheme: h2c
+    - match: Host(`{{ .Values.ingress.web.hostname }}`)
+      kind: Rule
+      services:
+        - name: {{ include "geoping.fullname" . }}-web
+          port: {{ .Values.services.web.port }}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

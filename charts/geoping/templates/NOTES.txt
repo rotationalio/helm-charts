@@ -1,0 +1,23 @@
+Thank you for installing {{ .Chart.Name | title }} to help us debug cluster connections.
+
+{{ if .Values.ingress.enabled -}}
+You can reach the geoping endpoint via the following endpoints:
+
+- GRPC Endpoint: {{ .Values.ingress.grpc.hostname }}
+- Web Endpoint: https://{{ .Values.ingress.web.hostname }}
+{{- end }}
+
+Your release is named {{ .Release.Name }} and your application is defined as:
+
+- application name: {{ include "geoping.name" . }}
+- grpc service name: {{ include "geoping.fullname" . }}-grpc
+- web service name: {{ include "geoping.fullname" . }}-web
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+Labels added to all elements of the release are as follows:
+
+{{ include "geoping.labels" . | nindent 4 }}

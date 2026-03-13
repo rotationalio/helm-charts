@@ -17,6 +17,7 @@ info:
 
   # GCP, AWS, Azure, Linode, etc.
   cloud: ""
+  zone: ""
 
   # The name of the cluster in the case of multi-cluster environments
   cluster: ""

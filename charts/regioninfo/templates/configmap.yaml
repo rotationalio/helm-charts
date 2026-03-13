@@ -15,5 +15,6 @@ data:
   REGION_INFO_NAME: {{ .Values.info.name | quote }}
   REGION_INFO_COUNTRY: {{ .Values.info.country | quote }}
   REGION_INFO_CLOUD: {{ .Values.info.cloud | quote }}
+  REGION_INFO_ZONE: {{ .Values.info.zone | quote }}
   REGION_INFO_CLUSTER: {{ .Values.info.cluster | quote }}
 {{- end }}

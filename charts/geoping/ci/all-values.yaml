@@ -1,0 +1,12 @@
+ingress:
+  enabled: true
+  grpc:
+    hostname: "geoping.example.com"
+  web:
+    hostname: "myip.example.com"
+
+regioninfo:
+  install: true
+  info:
+    id: "1840030"
+    cluster: "rotational-lke-usa-1"
