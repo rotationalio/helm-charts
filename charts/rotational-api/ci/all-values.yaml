@@ -1,0 +1,16 @@
+fullnameOverride: rotational-api
+replicaCount: 1
+
+rotational:
+  maintenance: false
+  mode: release
+  logLevel: info
+  consoleLog: false
+
+secrets:
+  googleApplicationCredentials:
+    secretName: google-service-credentials
+
+ingress:
+  enabled: true
+  hostname: api.rotational.io

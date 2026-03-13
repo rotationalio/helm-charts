@@ -1,0 +1,147 @@
+# Default values for rotational-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Name overrides: by default the name for most objects will be release-rotational-api.
+# It is recommended to create a descriptive release name, but if you must override the
+# names separate from the release, you can set nameOverride. To remove the suffix
+# set the fullnameOverride to the name you want.
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: rotationalio/rotational-api
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+
+rotational:
+  maintenance: false
+  mode: release
+
+  logLevel: info
+  consoleLog: false
+
+  allowOrigins:
+    - https://rotational.io
+    - https://rotational.ai
+
+  sendgrid:
+    infoEmail: "Rotational Admins <info@rotational.io>"
+    fromEmail: "Rotational Labs <support@rotational.io>"
+
+# Specify the secrets to be used by Rotational API.
+# Rotational API expects these secrets are already pre-installed in the cluster and
+# referenced by the name and keys below. If you want Helm to create the secrets, set
+# create to true and specify the secrets values below.
+secrets:
+  create: false
+  adminUsername:
+    secretName: ""
+    secretKey: adminUsername
+    value: ""
+  adminPassword:
+    secretName: ""
+    secretKey: adminPassword
+    value: ""
+  sendgridAPIKey:
+    secretName: ""
+    secretKey: sendgridAPIKey
+    value: ""
+  hubspotAccessToken:
+    secretName: ""
+    secretKey: hubspotAccessToken
+    value: ""
+  hubspotPortalID:
+    secretName: ""
+    secretKey: hubspotPortalID
+    value: ""
+  hubspotContactFormID:
+    secretName: ""
+    secretKey: hubspotContactFormID
+    value: ""
+  hubspotEndeavorFormID:
+    secretName: ""
+    secretKey: hubspotEndeavorFormID
+    value: ""
+  hubspotNewsletterFormID:
+    secretName: ""
+    secretKey: hubspotNewsletterFormID
+    value: ""
+  recaptchaProjectID:
+    secretName: ""
+    secretKey: recaptchaProjectID
+    value: ""
+  recaptchaSecretKey:
+    secretName: ""
+    secretKey: recaptchaSecretKey
+    value: ""
+
+  # Helm will not create this secret, it is expected to be pre-installed in the cluster
+  # from a JSON file with the specified file name and will be mounted on the pod.
+  googleApplicationCredentials:
+    secretName: ""
+    secretKey: rotational-service-credentials.json
+    mountPath: "/etc/rotationalio"
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8888
+
+ingress:
+  enabled: true
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  annotations: {}
+  hostname: api.rotational.io
+  entryPoints:
+    - websecure
+  tls: {}
+
+# The liveness probe requires geoping to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8888
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 15
+
+# The readiness probe requires geoping to be running.
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8888
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 15
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}
