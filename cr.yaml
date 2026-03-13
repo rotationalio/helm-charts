@@ -1,2 +1,4 @@
+owner: rotationalio
+git-repo: helm-charts
 sign: true
 key: benjamin@rotational.io
