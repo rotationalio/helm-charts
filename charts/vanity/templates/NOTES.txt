@@ -1,7 +1,7 @@
 Thank you for installing {{ .Chart.Name | title }} for custom go package domains!
 
 {{ if .Values.ingress.enabled -}}
-You can reach the vanity endpoint via the following endpoints:
+You can reach the vanity service via the following endpoint:
 
 - URL: https://{{ .Values.vanity.domain }}
 {{- end }}

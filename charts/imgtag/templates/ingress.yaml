@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: {{ .Values.ingress.apiVersion }}
+kind: {{ default "IngressRoute" .Values.ingress.className }}
+metadata:
+  name: {{ include "imgtag.fullname" . }}
+  namespace: {{ .Release.namespace }}
+  labels:
+    {{- include "imgtag.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  entryPoints:
+    {{- toYaml .Values.ingress.entryPoints | nindent 4 }}
+  routes:
+    - match: Host(`{{ .Values.ingress.hostname }}`)
+      kind: Rule
+      services:
+        - name: {{ include "imgtag.fullname" . }}
+          port: {{ .Values.service.port }}
+  {{- with .Values.ingress.tls }}
+  tls:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}

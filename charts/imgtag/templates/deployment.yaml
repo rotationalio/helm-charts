@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "imgtag.fullname" . }}
+  namespace: {{ .Release.namespace }}
+  labels:
+    {{- include "imgtag.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "imgtag.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.pod.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "imgtag.selectorLabels" . | nindent 8 }}
+        {{- with .Values.pod.labels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.pod.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.containers.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          volumeMounts:
+            {{- if .Values.secrets.googleApplicationCredentials.secretName }}
+            - name: {{ .Values.secrets.googleApplicationCredentials.secretName }}
+              mountPath: {{ .Values.secrets.googleApplicationCredentials.mountPath }}
+              readOnly: true
+            {{- end }}
+            - name: {{ default (include "imgtag.fullname" .) .Values.persistence.name }}
+              mountPath: {{ .Values.persistence.mountPath }}
+          {{- include "imgtag.environment" . | nindent 10 }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: {{ default (include "imgtag.fullname" .) .Values.persistence.name }}
+          persistentVolumeClaim:
+            claimName: {{ default (include "imgtag.fullname" .) .Values.persistence.name }}
+        {{- if .Values.secrets.googleApplicationCredentials.secretName }}
+        - name: {{ .Values.secrets.googleApplicationCredentials.secretName }}
+          secret:
+            secretName: {{ .Values.secrets.googleApplicationCredentials.secretName }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

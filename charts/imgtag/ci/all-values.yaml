@@ -1,0 +1,35 @@
+fullnameOverride: imgtag
+
+imgtag:
+  dataDir: "/data"
+  project: "weapons-labeling"
+  labels:
+    - "PERSON"
+    - "FIREARM"
+    - "KNIFE"
+    - "GRENADE"
+  tasks:
+    - "extracted-images/batch_17/batch_17.jsonl"
+    - "extracted-images/batch_18/batch_18.jsonl"
+  width: 3840
+
+prodigy:
+  oidc:
+    enabled: true
+    discoveryURL: "https://accounts.google.com/.well-known/openid-configuration"
+    clientID: "254058766267-5kv85airj2fui0u8h6a17mqp9b92ivtn.apps.googleusercontent.com"
+
+  deployedURL: "https://prodigy.rotational.dev"
+
+gcs:
+  bucket: "weapons-detection"
+
+secrets:
+  create: false
+  googleApplicationCredentials:
+    secretName: google-service-credentials
+    secretKey: google-service-credentials.json
+
+ingress:
+  enabled: true
+  hostname: prodigy.rotational.dev

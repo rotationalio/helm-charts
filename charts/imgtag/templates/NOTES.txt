@@ -1,15 +1,15 @@
 Thank you for installing {{ .Chart.Name | title }}.
 
 {{ if .Values.ingress.enabled -}}
-You can reach the Rotational API service via the following endpoint:
+You can reach the imgtag/prodigy service via the following endpoint:
 
 - URL: https://{{ .Values.ingress.hostname }}
 {{- end }}
 
 Your release is named {{ .Release.Name }} and your application is defined as:
 
-- application name: {{ include "r8lapi.name" . }}
-- service name: {{ include "r8lapi.fullname" . }}
+- application name: {{ include "imgtag.name" . }}
+- service name: {{ include "imgtag.fullname" . }}
 
 To learn more about the release, try:
 
@@ -18,4 +18,4 @@ To learn more about the release, try:
 
 Labels added to all elements of the release are as follows:
 
-{{ include "r8lapi.labels" . | nindent 4 }}
+{{ include "imgtag.labels" . | nindent 4 }}
