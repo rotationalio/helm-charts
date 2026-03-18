@@ -3,6 +3,24 @@ entries:
   acme-linode:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2026-03-18T23:43:09.248942981Z"
+    description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
+      LKE
+    digest: c577c7bb9540d9840896ff606404e9d5ff91e2804008e471f1a306a9a3e7936c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: acme-linode
+    sources:
+    - https://github.com/rotationalio/acme-linode
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/acme-linode-1.0.4/acme-linode-1.0.4.tgz
+    version: 1.0.4
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2026-03-13T21:11:16.087826468Z"
     description: A DNS01 Webhook Resolver for Linode/Akamai DNS Provider when using
       LKE
@@ -92,6 +110,27 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/acme-linode-0.1.0/acme-linode-0.1.0.tgz
     version: 0.1.0
   compass:
+  - apiVersion: v2
+    appVersion: 0.7.0
+    created: "2026-03-18T23:43:09.374393188Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Transform Business Goals into Pre-Configured Experiments.
+    digest: 4334b44ca922805601a5b5c3987aca4ab6f4121710c7333333c511a50bdab72f
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.7.3/compass-0.7.3.tgz
+    version: 0.7.3
   - apiVersion: v2
     appVersion: 0.7.0
     created: "2026-02-21T23:31:10.200396243Z"
@@ -407,6 +446,32 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/compass-0.2.1/compass-0.2.1.tgz
     version: 0.2.1
   endeavor:
+  - apiVersion: v2
+    appVersion: 0.26.0
+    created: "2026-03-18T23:43:09.519898102Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.10
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: e931e00ffe05870cc4ff0de5f6cf43b809b888ab88e61525f5eefae06fea9020
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.26.3/endeavor-0.26.3.tgz
+    version: 0.26.3
   - apiVersion: v2
     appVersion: 0.26.0
     created: "2026-02-23T19:43:48.039966486Z"
@@ -1328,6 +1393,28 @@ entries:
   geoping:
   - apiVersion: v2
     appVersion: 1.3.0
+    created: "2026-03-18T23:43:09.643106092Z"
+    dependencies:
+    - name: regioninfo
+      repository: file://../regioninfo
+      version: ~1.1
+    description: A service that echos back client information including the geographic
+      information of a server.
+    digest: c0b0447fc2726181d007a568fab1e58bd1a0a79b9e77b76a8a6bd1f8688a0884
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: geoping
+    sources:
+    - https://github.com/rotationalio/geoping
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/geoping-1.3.2/geoping-1.3.2.tgz
+    version: 1.3.2
+  - apiVersion: v2
+    appVersion: 1.3.0
     created: "2026-03-13T16:36:59.596267437Z"
     dependencies:
     - name: regioninfo
@@ -1371,6 +1458,28 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/geoping-1.3.0/geoping-1.3.0.tgz
     version: 1.3.0
   honu:
+  - apiVersion: v2
+    appVersion: 0.5.0
+    created: "2026-03-18T23:43:09.78267552Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Adaptive consistency replication with reinforcement learning for
+      large scale globally distributed storage
+    digest: 79cf0dc5822dc73b8c548daab0c7c085597ea7a50cf583714d2a40c3f467180e
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: honu
+    sources:
+    - https://github.com/rotationalio/honu
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/honu-0.5.3/honu-0.5.3.tgz
+    version: 0.5.3
   - apiVersion: v2
     appVersion: 0.5.0
     created: "2026-03-13T14:23:17.811976049Z"
@@ -1469,6 +1578,23 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/honu-0.1.0/honu-0.1.0.tgz
     version: 0.1.0
+  imgtag:
+  - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2026-03-18T23:43:09.937169283Z"
+    description: Annotate images (video stills) with bounding boxes and labels using
+      prodigy
+    digest: fde664bd4bba874d0c882e7054702055bfa8b6d4f2df63bf888ea86076e4e8bf
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: imgtag
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/imgtag-0.2.0/imgtag-0.2.0.tgz
+    version: 0.2.0
   opentelemetry:
   - apiVersion: v2
     created: "2026-03-13T21:11:16.236297083Z"
@@ -1503,6 +1629,28 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/opentelemetry-1.0.0/opentelemetry-1.0.0.tgz
     version: 1.0.0
   quarterdeck:
+  - apiVersion: v2
+    appVersion: 0.10.0
+    created: "2026-03-18T23:43:10.084426044Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: f1425d0774cad70b9b94a8c44f254a0d1a3deffdc09a2310a3366ba2f451cd4e
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.10.4/quarterdeck-0.10.4.tgz
+    version: 0.10.4
   - apiVersion: v2
     appVersion: 0.10.0
     created: "2026-02-23T19:43:48.168292156Z"
@@ -1969,6 +2117,23 @@ entries:
   rotational-api:
   - apiVersion: v2
     appVersion: 1.3.0
+    created: "2026-03-18T23:43:10.212902473Z"
+    description: Implements a simple backend for the Rotational Home Page
+    digest: e25973901316ed474fef00dad8baeb433577262b2d23b7b172585a4ca142b793
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: rotational-api
+    sources:
+    - https://github.com/rotationalio/api.rotational.io
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/rotational-api-1.3.1/rotational-api-1.3.1.tgz
+    version: 1.3.1
+  - apiVersion: v2
+    appVersion: 1.3.0
     created: "2026-03-13T21:11:16.514865372Z"
     description: Implements a simple backend for the Rotational Home Page
     digest: 6536f034b589ed36fc8af0ca2649ab640f0df97cd6848a4edc058b5970313425
@@ -1985,6 +2150,24 @@ entries:
     - https://github.com/rotationalio/helm-charts/releases/download/rotational-api-1.3.0/rotational-api-1.3.0.tgz
     version: 1.3.0
   vanity:
+  - apiVersion: v2
+    appVersion: 1.2.0
+    created: "2026-03-18T23:43:10.40303129Z"
+    description: Implements the Golang remote import paths protocol to act as a vanity
+      URL server for Go import paths
+    digest: 9675194e0175e25c53edd2e5423fe38914e6ac20ffe7fc04a03d899bddf0729f
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: vanity
+    sources:
+    - https://github.com/rotationalio/vanity
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.2/vanity-1.2.2.tgz
+    version: 1.2.2
   - apiVersion: v2
     appVersion: 1.2.0
     created: "2026-03-13T21:11:16.656150588Z"
@@ -2021,4 +2204,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-03-13T21:11:16.656523176Z"
+generated: "2026-03-18T23:43:10.403818249Z"
