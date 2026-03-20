@@ -184,10 +184,12 @@ endeavor:
   # Telemetry is primarily configured via the open telemetry sdk environment variables. As such there is no need to
   # specify OTel specific configuration here. This config is used primarily to enable/disable telemetry and to set
   # values for custom telemetry.
+  # 'endeavor.telemetry.serviceName' uses env var: OTEL_SERVICE_NAME
+  # 'endeavor.telemetry.serviceAddr' uses env var: GIMLET_OTEL_SERVICE_ADDR
   telemetry:
     enabled: true
-    serviceName: null # uses env var: OTEL_SERVICE_NAME
-    serviceAddr: null # uses env var: GIMLET_OTEL_SERVICE_ADDR
+    serviceName: null
+    serviceAddr: null
 
   # Blobs specifies the configuration for the 'blobs' blob storage module.
   # - Empty or unset uri: no ENDEAVOR_BLOBS_URI and no volume mount.

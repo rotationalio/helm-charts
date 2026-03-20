@@ -55,7 +55,8 @@ compass:
 # Otherwise, specify the secretName and secretKey rather than a value for each secret
 # item and create the secret(s) manually before helm installing the chart.
 secrets:
-  create: true # set to false to use a pre-installed secret instead
+  # Set create to false to use a pre-installed secret instead.
+  create: true
 
   # This is the Django secret key used for cryptographic signing.
   secretKey:
