@@ -188,7 +188,7 @@ endeavor:
 
   # Blobs specifies the configuration for the 'blobs' blob storage module
   blobs:
-    uri: null
+    uri: file:///blobs
 
 quarterdeck:
   enabled: true
