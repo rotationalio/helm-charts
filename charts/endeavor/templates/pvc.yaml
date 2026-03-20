@@ -1,0 +1,13 @@
+{{- if and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) (not .Values.storage.blobs.existingClaim) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "endeavor.blobs.pvcName" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "endeavor.labels" . | nindent 4 }}
+spec:
+  {{- with .Values.storage.blobs.spec }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}

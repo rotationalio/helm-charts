@@ -12,6 +12,9 @@ fullnameOverride: ""
 # Environment should be set to "demo", "development", "staging", or "production".
 environment: "production"
 
+# replicaCount should stay 1 when using the default blobs PVC (ReadWriteOnce). Scale only
+# with ReadWriteMany storage or non-file blob backends (e.g. s3://), similar to Quarterdeck’s
+# guidance for scaling with external databases.
 replicaCount: 1
 
 image:
@@ -172,6 +175,41 @@ endeavor:
   radish:
     workers: 8
     queueSize: 128
+
+  # MCP specifies the configuration for the MCP gateway and related systems
+  mcp:
+    refreshControllerInterval: null
+    integrationRefreshInterval: null
+
+  # Telemetry is primarily configured via the open telemetry sdk environment variables. As such there is no need to
+  # specify OTel specific configuration here. This config is used primarily to enable/disable telemetry and to set
+  # values for custom telemetry.
+  # 'endeavor.telemetry.serviceName' uses env var: OTEL_SERVICE_NAME
+  # 'endeavor.telemetry.serviceAddr' uses env var: GIMLET_OTEL_SERVICE_ADDR
+  telemetry:
+    enabled: true
+    serviceName: null
+    serviceAddr: null
+
+  # Blobs specifies the configuration for the 'blobs' blob storage module.
+  # - Empty or unset uri: no ENDEAVOR_BLOBS_URI and no volume mount.
+  # - file:// URIs: ENDEAVOR_BLOBS_URI is set; the path after file:// is the container mount
+  #   path, backed by storage.blobs (PVC) unless storage.blobs.existingClaim is set.
+  # - Other schemes (e.g. s3://): ENDEAVOR_BLOBS_URI only, no PVC or mount.
+  blobs:
+    uri: file:///blobs
+
+# PVC for local blob storage when endeavor.blobs.uri uses the file:// scheme. Ignored for
+# non-file URIs. If existingClaim is set, the chart does not create a PVC and mounts that claim.
+storage:
+  blobs:
+    existingClaim: ""
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 2Gi
 
 quarterdeck:
   enabled: true
