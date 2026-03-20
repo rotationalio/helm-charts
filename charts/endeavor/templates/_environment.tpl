@@ -79,9 +79,9 @@ env:
     value: {{ .Values.endeavor.mcp.integrationRefreshInterval | quote }}
   - name: ENDEAVOR_TELEMETRY_ENABLED
     value: {{ .Values.endeavor.telemetry.enabled | quote }}
+  {{- include "opentelemetry.environment" . | nindent 2 -}}
   - name: ENDEAVOR_BLOBS_URI
     value: {{ .Values.endeavor.blobs.uri | quote }}
-  {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 
 {{- define "endeavor.logLevel" -}}
