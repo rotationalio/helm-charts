@@ -73,6 +73,14 @@ env:
     value: {{ .Values.endeavor.radish.workers | quote }}
   - name: ENDEAVOR_RADISH_QUEUE_SIZE
     value: {{ .Values.endeavor.radish.queueSize | quote }}
+  - name: ENDEAVOR_MCP_REFRESH_CONTROLLER_INTERVAL
+    value: {{ .Values.endeavor.mcp.refreshControllerInterval | quote }}
+  - name: ENDEAVOR_MCP_INTEGRATION_REFRESH_INTERVAL
+    value: {{ .Values.endeavor.mcp.integrationRefreshInterval | quote }}
+  - name: ENDEAVOR_TELEMETRY_ENABLED
+    value: {{ .Values.endeavor.telemetry.enabled | quote }}
+  - name: ENDEAVOR_BLOBS_URI
+    value: {{ .Values.endeavor.blobs.uri | quote }}
   {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 

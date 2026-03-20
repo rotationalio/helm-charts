@@ -173,6 +173,23 @@ endeavor:
     workers: 8
     queueSize: 128
 
+  # MCP specifies the configuration for the MCP gateway and related systems
+  mcp:
+    refreshControllerInterval: null
+    integrationRefreshInterval: null
+
+  # Telemetry is primarily configured via the open telemetry sdk environment variables. As such there is no need to
+  # specify OTel specific configuration here. This config is used primarily to enable/disable telemetry and to set
+  # values for custom telemetry.
+  telemetry:
+    enabled: true
+    serviceName: null # uses env var: OTEL_SERVICE_NAME
+    serviceAddr: null # uses env var: GIMLET_OTEL_SERVICE_ADDR
+
+  # Blobs specifies the configuration for the 'blobs' blob storage module
+  blobs:
+    uri: null
+
 quarterdeck:
   enabled: true
 
