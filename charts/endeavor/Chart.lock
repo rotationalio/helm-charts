@@ -1,9 +1,9 @@
 dependencies:
 - name: quarterdeck
   repository: file://../quarterdeck
-  version: 0.11.1
+  version: 0.12.0
 - name: opentelemetry
   repository: file://../opentelemetry
   version: 1.0.1
-digest: sha256:e8286a72bfaa66f0e5f03ecf07fa55c104f1016410af62ccee365a0904fbc806
-generated: "2026-03-20T09:55:30.014269-10:00"
+digest: sha256:60cc7f630ab3f98a645bb63ddc4366c17f14b2380e9b96fbdb0123e28591c684
+generated: "2026-03-31T17:54:36.425146-10:00"
