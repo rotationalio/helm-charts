@@ -1,0 +1,312 @@
+# Values for `helm template` to exercise every key in charts/endeavor/values.yaml plus
+# opentelemetry (library subchart) and ingress.hostname (used by NOTES.txt). For local review only.
+#
+# Usage (from helm-charts repo root, after `helm dependency build ./charts/endeavor`):
+#   helm template myrelease ./charts/endeavor -f ./charts/endeavor/ci/full-template-values.yaml
+
+nameOverride: "endeavor"
+fullnameOverride: ""
+
+environment: "staging"
+
+replicaCount: 2
+
+image:
+  repository: rotationalio/endeavor
+  pullPolicy: IfNotPresent
+  tag: "0.30.0"
+
+imagePullSecrets:
+  - name: registry-credentials
+
+global:
+  origins:
+    - https://endeavor.example.com
+    - https://quarterdeck.example.com
+  issuer: "https://quarterdeck.example.com"
+  logging:
+    level: debug
+    console: true
+  mode: release
+
+endeavor:
+  maintenance: false
+  mode: debug
+  logLevel: debug
+  consoleLog: true
+  origin: "https://endeavor.example.com"
+  allowOrigins:
+    - https://endeavor.example.com
+    - https://quarterdeck.example.com
+  docsName: "Endeavor API (full template)"
+  compassURL: "https://endeavor.example.com/compass/workflow/"
+  compass:
+    base: "https://compass-api.example.com"
+    timeout: "300s"
+  organizationID: "org-example"
+  auth:
+    quarterdeckURL: "https://quarterdeck.example.com"
+    audience: "https://endeavor.example.com"
+  csrf:
+    cookieTTL: 20m
+  secure:
+    contentTypeNosniff: true
+    crossOriginOpenerPolicy: same-origin
+    referrerPolicy: strict-origin-when-cross-origin
+    hsts:
+      seconds: 63072000
+      includeSubdomains: true
+      preload: true
+    contentSecurity:
+      policy:
+        childSrc: ["'self'"]
+        connectSrc: ["'self'", "https://api.example.com"]
+        defaultSrc: ["'self'"]
+        fencedFrameSrc: []
+        fontSrc: ["'self'"]
+        frameSrc: []
+        imgSrc: ["'self'", "data:"]
+        manifestSrc: []
+        mediaSrc: []
+        objectSrc: ["'none'"]
+        prefetchSrc: []
+        scriptSrc: ["'self'"]
+        scriptSrcElem: []
+        scriptSrcAttr: []
+        styleSrc: ["'self'"]
+        styleSrcElem: []
+        styleSrcAttr: []
+        workerSrc: []
+        baseUri: ["'self'"]
+        sandbox: []
+        formAction: ["'self'"]
+        frameAncestors: ["'none'"]
+        reportTo: ""
+        requireTrustedTypesFor: []
+        trustedTypes: []
+        upgradeInsecureRequests: true
+      reportOnly:
+        childSrc: []
+        connectSrc: []
+        defaultSrc: []
+        fencedFrameSrc: []
+        fontSrc: []
+        frameSrc: []
+        imgSrc: []
+        manifestSrc: []
+        mediaSrc: []
+        objectSrc: []
+        prefetchSrc: []
+        scriptSrc: []
+        scriptSrcElem: []
+        scriptSrcAttr: []
+        styleSrc: []
+        styleSrcElem: []
+        styleSrcAttr: []
+        workerSrc: []
+        baseUri: []
+        sandbox: []
+        formAction: []
+        frameAncestors: []
+        reportTo: ""
+        requireTrustedTypesFor: []
+        trustedTypes: []
+        upgradeInsecureRequests: false
+  inference:
+    endpointURL: "https://inference.example.com/v1"
+  radish:
+    workers: 4
+    queueSize: 64
+  mcp:
+    refreshControllerInterval: 5m
+    integrationRefreshInterval: 60m
+  telemetry:
+    enabled: true
+    serviceName: "endeavor-api"
+    serviceAddr: "endeavor.example.com:443"
+  blobs:
+    uri: "s3://my-bucket/endeavor-blobs"
+
+storage:
+  blobs:
+    existingClaim: ""
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 5Gi
+
+quarterdeck:
+  enabled: true
+
+secrets:
+  create: true
+  databaseURL:
+    secretName: ""
+    secretKey: databaseURL
+    value: "postgres://user:pass@db.example.com:5432/endeavor"
+  inferenceAPIKey:
+    secretName: ""
+    secretKey: inferenceAPIKey
+    value: "sk-inference-example"
+  csrfSecret:
+    secretName: ""
+    secretKey: csrfSecret
+    value: "00112233445566778899aabbccddeeff"
+
+pod:
+  annotations:
+    example.com/review: "full-template"
+  labels:
+    app.kubernetes.io/part-of: "example"
+  securityContext:
+    fsGroup: 1000
+  resources: {}
+
+# Used by templates/deployment.yaml (root `securityContext` for the container)
+securityContext:
+  runAsUser: 1000
+  runAsNonRoot: true
+  readOnlyRootFilesystem: true
+
+containers:
+  securityContext:
+    allowPrivilegeEscalation: false
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  hostname: "endeavor.example.com"
+  annotations:
+    kubernetes.io/ingress.class: traefik
+  entryPoints:
+    - websecure
+  tls:
+    certResolver: le
+
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8000
+    httpHeaders:
+      - name: X-Kubernetes-Probe
+        value: liveness
+  initialDelaySeconds: 5
+  periodSeconds: 15
+
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8000
+    httpHeaders:
+      - name: X-Kubernetes-Probe
+        value: readiness
+  initialDelaySeconds: 5
+  periodSeconds: 15
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+nodeSelector:
+  kubernetes.io/os: linux
+
+tolerations:
+  - key: "workload"
+    operator: "Equal"
+    value: "endeavor"
+    effect: "NoSchedule"
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: endeavor
+          topologyKey: topology.kubernetes.io/zone
+
+# OpenTelemetry library chart (not in charts/endeavor/values.yaml; merged with subchart defaults)
+opentelemetry:
+  disabled: false
+  entities:
+    - "k8s.pod"
+  resourceAttributes:
+    service.instance.id: "full-template"
+  serviceName: "endeavor-otel"
+  logLevel: "info"
+  propagators:
+    - tracecontext
+    - baggage
+  tracesSampler: "parentbased_traceidratio"
+  tracesSamplerArg: "0.5"
+  bsp:
+    scheduleDelay: 5000
+    exportTimeout: 30000
+    maxQueueSize: 2048
+    maxExportBatchSize: 512
+  blrp:
+    scheduleDelay: 2000
+    exportTimeout: 10000
+    maxQueueSize: 1024
+    maxExportBatchSize: 256
+  attribute:
+    valueLengthLimit: 4096
+    countLimit: 128
+  span:
+    attributeValueLengthLimit: 1024
+    attributeCountLimit: 32
+    eventCountLimit: 32
+    linkCountLimit: 32
+    eventAttributeCountLimit: 32
+    linkAttributeCountLimit: 32
+  log:
+    attributeValueLengthLimit: 1024
+    attributeCountLimit: 32
+  exporter:
+    traces: "otlp"
+    metrics: "otlp"
+    logs: "otlp"
+    otlp:
+      endpoint: "http://otel-collector:4317"
+      tracesEndpoint: "http://otel-collector:4317/v1/traces"
+      metricsEndpoint: "http://otel-collector:4317/v1/metrics"
+      logsEndpoint: "http://otel-collector:4317/v1/logs"
+      profilesEndpoint: "http://otel-collector:4317/v1/profiles"
+      headers:
+        x-otlp-header: "value"
+      tracesHeaders:
+        x-traces-header: "a"
+      metricsHeaders:
+        x-metrics-header: "b"
+      logsHeaders:
+        x-logs-header: "c"
+      profilesHeaders:
+        x-profiles-header: "d"
+      timeout: 10000
+      tracesTimeout: 10000
+      metricsTimeout: 10000
+      logsTimeout: 10000
+      profilesTimeout: 10000
+      protocol: "grpc"
+      tracesProtocol: "grpc"
+      metricsProtocol: "grpc"
+      logsProtocol: "grpc"
+      profilesProtocol: "grpc"
+    zipkin:
+      endpoint: "http://zipkin:9411/api/v2/spans"
+      timeout: 5000
+    prometheus:
+      host: "0.0.0.0"
+      port: 9464

@@ -75,6 +75,14 @@ endeavor:
   # Set the URL for the Compass application
   compassURL: ""
 
+  # Compass configuration
+  compass:
+    # Base URL for the Compass HTTP client. If null then the base URL is derived
+    # from endeavor.origin. If origin is empty, use the application default.
+    base: null
+    # Client request timeout (Go duration string)
+    timeout: null
+
   # A string identifier for the organization that this endeavor instance serves
   organizationID: "endeavor"
 

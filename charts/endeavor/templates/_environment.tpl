@@ -27,6 +27,15 @@ env:
     value: {{ .Values.endeavor.docsName | quote }}
   - name: ENDEAVOR_COMPASS_URL
     value: {{ .Values.endeavor.compassURL | quote }}
+  {{- $compassBase := include "endeavor.compassBase" . | trim }}
+  {{- if $compassBase }}
+  - name: ENDEAVOR_COMPASS_BASE
+    value: {{ $compassBase | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.compass.timeout }}
+  - name: ENDEAVOR_COMPASS_TIMEOUT
+    value: {{ .Values.endeavor.compass.timeout | quote }}
+  {{- end }}
   - name: ENDEAVOR_ORGANIZATION_ID
     value: {{ .Values.endeavor.organizationID | quote }}
   - name: ENDEAVOR_AUTH_QUARTERDECK_URL
