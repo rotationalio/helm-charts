@@ -183,6 +183,13 @@ endeavor:
     workers: 8
     queueSize: 128
 
+  # Tasks: load horizon task routes from a zip at startup when enableLoader is true.
+  # LoaderPath must be an absolute path inside the container and the file must exist
+  # before the process starts.
+  tasks:
+    enableLoader: false
+    loaderPath: ""
+
   # MCP specifies the configuration for the MCP gateway and related systems
   mcp:
     refreshControllerInterval: null

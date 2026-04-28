@@ -96,6 +96,12 @@ env:
   - name: ENDEAVOR_BLOBS_URI
     value: {{ .Values.endeavor.blobs.uri | quote }}
   {{- end }}
+  {{- if .Values.endeavor.tasks.enableLoader }}
+  - name: ENDEAVOR_TASKS_ENABLE_LOADER
+    value: "true"
+  - name: ENDEAVOR_TASKS_LOADER_PATH
+    value: {{ .Values.endeavor.tasks.loaderPath | quote }}
+  {{- end }}
 {{- end -}}
 
 {{- define "endeavor.logLevel" -}}
