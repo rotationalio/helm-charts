@@ -77,8 +77,7 @@ endeavor:
 
   # Compass configuration
   compass:
-    # Base URL for the Compass HTTP client. If null then the base URL is derived
-    # from endeavor.origin. If origin is empty, use the application default.
+    # Base URL for the Compass HTTP client
     base: null
     # Client request timeout (Go duration string)
     timeout: null

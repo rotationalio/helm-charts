@@ -85,25 +85,3 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{ .Values.endeavor.origin }}
 {{- end -}}
 {{- end -}}
-
-{{/*
-Compass HTTP client base URL (ENDEAVOR_COMPASS_BASE). If endeavor.compass.base is set, that
-value is used. When it is null, the base URL is derived from endeavor.origin: same scheme as
-origin, host:port from include "endeavor.hostname". If origin is empty, returns empty (omit
-env and use the application default).
-*/}}
-{{- define "endeavor.compassBase" -}}
-{{- if .Values.endeavor.compass.base -}}
-{{- .Values.endeavor.compass.base -}}
-{{- else if .Values.endeavor.origin -}}
-{{- if hasPrefix "https://" .Values.endeavor.origin -}}
-https://{{ include "endeavor.hostname" . }}
-{{- else if hasPrefix "http://" .Values.endeavor.origin -}}
-http://{{ include "endeavor.hostname" . }}
-{{- else if hasPrefix "//" .Values.endeavor.origin -}}
-https://{{ include "endeavor.hostname" . }}
-{{- else -}}
-http://{{ include "endeavor.hostname" . }}
-{{- end -}}
-{{- end -}}
-{{- end -}}

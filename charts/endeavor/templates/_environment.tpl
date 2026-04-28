@@ -27,10 +27,9 @@ env:
     value: {{ .Values.endeavor.docsName | quote }}
   - name: ENDEAVOR_COMPASS_URL
     value: {{ .Values.endeavor.compassURL | quote }}
-  {{- $compassBase := include "endeavor.compassBase" . | trim }}
-  {{- if $compassBase }}
+  {{- if .Values.endeavor.compass.base }}
   - name: ENDEAVOR_COMPASS_BASE
-    value: {{ $compassBase | quote }}
+    value: {{ .Values.endeavor.compass.base | quote }}
   {{- end }}
   {{- if .Values.endeavor.compass.timeout }}
   - name: ENDEAVOR_COMPASS_TIMEOUT
