@@ -176,7 +176,7 @@ endeavor:
 
   # Inference specifies the configuration for the inference client
   inference:
-    endpointURL: https://openrouter.ai
+    endpointURL: https://openrouter.ai/api/v1
 
   # Radish specifies the configuration for the async task client
   radish:
