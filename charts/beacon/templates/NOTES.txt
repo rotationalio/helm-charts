@@ -1,0 +1,30 @@
+Thank you for installing {{ .Chart.Name | title }}.
+
+{{- if .Values.ingress.enabled }}
+Beacon is available at:
+
+  https://{{ .Values.ingress.hostname }}
+{{- else if contains "ClusterIP" .Values.service.type }}
+Beacon is available inside the cluster as service {{ include "beacon.fullname" . }}.
+To connect from your workstation:
+
+  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "beacon.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8800:{{ .Values.service.port }}
+  echo "Visit http://127.0.0.1:8800"
+{{- else if contains "NodePort" .Values.service.type }}
+Beacon is exposed as a NodePort service:
+
+  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "beacon.fullname" . }})
+  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+  echo http://$NODE_IP:$NODE_PORT
+{{- else if contains "LoadBalancer" .Values.service.type }}
+Beacon is exposed as a LoadBalancer service. It may take a few minutes for the IP to be available:
+
+  kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "beacon.fullname" . }}
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "beacon.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+  echo http://$SERVICE_IP:{{ .Values.service.port }}
+{{- end }}
+
+To upload Compass fixtures, run from the devops repository:
+
+  python3 scripts/compass_to_beacon.py --release {{ .Release.Name }} --fixtures /path/to/beacon/fixtures -n {{ .Release.Namespace }}

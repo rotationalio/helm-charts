@@ -1,0 +1,95 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: rotationalio/beacon
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+
+global:
+  origins: []
+  logging:
+    level: info
+    console: false
+  mode: release
+
+beacon:
+  maintenance: false
+  mode: null
+  logLevel: null
+  consoleLog: null
+  allowOrigins: null
+
+  compass:
+    enabled: true
+
+  auth:
+    authorizedUsers:
+      value: ""
+      secretKeyRef: null
+
+  telemetry:
+    enabled: true
+    serviceAddr: ""
+
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+containers:
+  securityContext: {}
+
+storage:
+  fixtures:
+    mountPath: /data/fixtures
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 2Gi
+
+service:
+  type: ClusterIP
+  port: 8800
+
+ingress:
+  enabled: false
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  hostname: ""
+  annotations: {}
+  entryPoints:
+    - websecure
+  tls: {}
+
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8800
+    httpHeaders:
+      - name: X-Kubernetes-Probe
+        value: liveness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8800
+    httpHeaders:
+      - name: X-Kubernetes-Probe
+        value: readiness
+  initialDelaySeconds: 2
+  periodSeconds: 10
+
+resources: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+annotations: {}

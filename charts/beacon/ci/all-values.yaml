@@ -1,0 +1,20 @@
+global:
+  origins:
+    - https://beacon.example.com
+
+fullnameOverride: beacon-ci
+
+ingress:
+  enabled: true
+  hostname: beacon.example.com
+  tls:
+    secretName: tls-certs
+
+beacon:
+  auth:
+    authorizedUsers:
+      value: "ciuser:cipass"
+
+opentelemetry:
+  disabled: true
+  serviceName: beacon-ci
