@@ -1,0 +1,20 @@
+apiVersion: v2
+name: beacon
+description: Rotational Beacon — billing, licenses, and deployment management (includes Compass API).
+
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+dependencies:
+  - name: opentelemetry
+    version: ~1.0
+    repository: file://../opentelemetry
+
+home: https://rotational.io
+icon: https://rotational.io/img/favicon.png
+sources:
+  - https://github.com/rotationalio/beacon
+maintainers:
+  - name: rotationalio
+    email: support@rotational.io
