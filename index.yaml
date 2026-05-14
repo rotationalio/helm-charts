@@ -109,6 +109,29 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/acme-linode-0.1.0/acme-linode-0.1.0.tgz
     version: 0.1.0
+  beacon:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2026-05-14T16:28:28.636059563Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Rotational Beacon — billing, licenses, and deployment management
+      (includes Compass API).
+    digest: c8ccd886a55cd4e998a571456c7fb766f1ee86431924b45ab00744af457dd5fd
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: beacon
+    sources:
+    - https://github.com/rotationalio/beacon
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/beacon-0.1.0/beacon-0.1.0.tgz
+    version: 0.1.0
   compass:
   - apiVersion: v2
     appVersion: 0.7.1
@@ -2499,4 +2522,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-05-08T15:14:30.682090945Z"
+generated: "2026-05-14T16:28:28.636261109Z"
