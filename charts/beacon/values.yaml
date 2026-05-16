@@ -37,7 +37,10 @@ beacon:
 pod:
   annotations: {}
   labels: {}
-  securityContext: {}
+  # Default image user is nonroot (65532:65532); fsGroup makes PVC mounts group-writable.
+  securityContext:
+    fsGroup: 65532
+    fsGroupChangePolicy: OnRootMismatch
   resources: {}
 
 containers:
