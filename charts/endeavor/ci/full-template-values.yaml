@@ -14,7 +14,7 @@ replicaCount: 2
 image:
   repository: rotationalio/endeavor
   pullPolicy: IfNotPresent
-  tag: "0.30.0"
+  tag: "0.32.0"
 
 imagePullSecrets:
   - name: registry-credentials
@@ -117,6 +117,14 @@ endeavor:
   radish:
     workers: 4
     queueSize: 64
+  tasks:
+    enableLoader: true
+    loaderPath: "/data/endeavor/tasks.zip"
+    beacon:
+      beaconUrl: "https://beacon.example.com"
+      beaconTTL: "5m"
+      basicAuthUsername: "beacon-user"
+      basicAuthPassword: "beacon-pass-example"
   mcp:
     refreshControllerInterval: 5m
     integrationRefreshInterval: 60m

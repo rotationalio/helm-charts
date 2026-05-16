@@ -102,6 +102,22 @@ env:
   - name: ENDEAVOR_TASKS_LOADER_PATH
     value: {{ .Values.endeavor.tasks.loaderPath | quote }}
   {{- end }}
+  {{- if .Values.endeavor.tasks.beacon.beaconUrl }}
+  - name: ENDEAVOR_TASKS_BEACON_BEACON_URL
+    value: {{ .Values.endeavor.tasks.beacon.beaconUrl | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.tasks.beacon.beaconTTL }}
+  - name: ENDEAVOR_TASKS_BEACON_BEACON_TTL
+    value: {{ .Values.endeavor.tasks.beacon.beaconTTL | quote }}
+  {{- end }}
+  {{- if and .Values.endeavor.tasks.beacon.beaconUrl (and .Values.endeavor.tasks.beacon.basicAuthUsername .Values.endeavor.tasks.beacon.basicAuthPassword) }}
+  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
+    value: "basic"
+  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_USERNAME
+    value: {{ .Values.endeavor.tasks.beacon.basicAuthUsername | quote }}
+  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_PASSWORD
+    value: {{ .Values.endeavor.tasks.beacon.basicAuthPassword | quote }}
+  {{- end }}
 {{- end -}}
 
 {{- define "endeavor.logLevel" -}}

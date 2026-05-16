@@ -184,11 +184,20 @@ endeavor:
     queueSize: 128
 
   # Tasks: load horizon task routes from a zip at startup when enableLoader is true.
-  # LoaderPath must be an absolute path inside the container and the file must exist
-  # before the process starts.
+  # LoaderPath must be an absolute path inside the container and must point to a ZIP that
+  # contains the Horizon tasks archive (v0.32+).
   tasks:
     enableLoader: false
     loaderPath: ""
+    # Optional Beacon fixture API (see endeavor BeaconConfig). When beaconUrl is set,
+    # ENDEAVOR_TASKS_BEACON_BEACON_URL is exported. Set beaconTTL (e.g. 5m) for periodic refresh.
+    # Basic auth is optional cleartext env (temporary); omit username/password to skip cred env vars.
+    # TODO: basic auth is temporary; replace this when licence key API is supported.
+    beacon:
+      beaconUrl: ""
+      beaconTTL: ""
+      basicAuthUsername: ""
+      basicAuthPassword: ""
 
   # MCP specifies the configuration for the MCP gateway and related systems
   mcp:
