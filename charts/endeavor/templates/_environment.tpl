@@ -93,7 +93,7 @@ env:
     value: {{ .Values.endeavor.telemetry.enabled | quote }}
   - name: ENDEAVOR_COFFER_ENABLED
     value: {{ .Values.endeavor.coffer.enabled | quote }}
-  {{- if and .Values.endeavor.coffer.enabled (or .Values.secrets.cofferKeys.secretName (and .Values.secrets.cofferKeys.create .Values.secrets.cofferKeys.value)) }}
+  {{- if and .Values.endeavor.coffer.enabled (or .Values.secrets.cofferKeys.secretName (and .Values.secrets.create .Values.secrets.cofferKeys.value)) }}
   - name: ENDEAVOR_COFFER_KEYS
     valueFrom:
       secretKeyRef:

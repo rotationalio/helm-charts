@@ -277,10 +277,9 @@ secrets:
     secretName: ""
     secretKey: csrfSecret
     value: ""
-  # Dedicated coffer Secret (see templates/coffer-secret.yaml). Key material is the
-  # ENDEAVOR_COFFER_KEYS string (e.g. ":<base64-pkcs8>" for the default namespace).
+  # Coffer key material (ENDEAVOR_COFFER_KEYS string, e.g. ":<base64-pkcs8>").
+  # Defaults to the same Secret as databaseURL when secretName is unset.
   cofferKeys:
-    create: false
     secretName: ""
     secretKey: cofferKeys
     value: ""

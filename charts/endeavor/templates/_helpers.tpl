@@ -90,6 +90,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- if .Values.secrets.cofferKeys.secretName -}}
 {{ .Values.secrets.cofferKeys.secretName }}
 {{- else -}}
-{{ printf "%s-coffer" (include "endeavor.fullname" .) }}
+{{ include "endeavor.databaseURLSecretName" . }}
 {{- end -}}
 {{- end -}}
