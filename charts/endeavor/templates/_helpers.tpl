@@ -85,3 +85,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{ .Values.endeavor.origin }}
 {{- end -}}
 {{- end -}}
+
+{{- define "endeavor.cofferKeysSecretName" -}}
+{{- if .Values.secrets.cofferKeys.secretName -}}
+{{ .Values.secrets.cofferKeys.secretName }}
+{{- else -}}
+{{ printf "%s-coffer" (include "endeavor.fullname" .) }}
+{{- end -}}
+{{- end -}}

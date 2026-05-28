@@ -213,6 +213,11 @@ endeavor:
     refreshControllerInterval: null
     integrationRefreshInterval: null
 
+  # Coffer encrypts application secrets at rest. When enabled, set secrets.cofferKeys
+  # to a dedicated Secret containing ENDEAVOR_COFFER_KEYS (see endeavor README).
+  coffer:
+    enabled: false
+
   # Telemetry is primarily configured via the open telemetry sdk environment variables. As such there is no need to
   # specify OTel specific configuration here. This config is used primarily to enable/disable telemetry and to set
   # values for custom telemetry.
@@ -271,6 +276,13 @@ secrets:
   csrfSecret:
     secretName: ""
     secretKey: csrfSecret
+    value: ""
+  # Dedicated coffer Secret (see templates/coffer-secret.yaml). Key material is the
+  # ENDEAVOR_COFFER_KEYS string (e.g. ":<base64-pkcs8>" for the default namespace).
+  cofferKeys:
+    create: false
+    secretName: ""
+    secretKey: cofferKeys
     value: ""
   # GCS interop: store HMAC access id/secret as AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY in this secret.
   # Omit secretName when credentials come from another AWS SDK source.

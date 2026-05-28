@@ -91,6 +91,15 @@ env:
   {{- end }}
   - name: ENDEAVOR_TELEMETRY_ENABLED
     value: {{ .Values.endeavor.telemetry.enabled | quote }}
+  - name: ENDEAVOR_COFFER_ENABLED
+    value: {{ .Values.endeavor.coffer.enabled | quote }}
+  {{- if and .Values.endeavor.coffer.enabled (or .Values.secrets.cofferKeys.secretName (and .Values.secrets.cofferKeys.create .Values.secrets.cofferKeys.value)) }}
+  - name: ENDEAVOR_COFFER_KEYS
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "endeavor.cofferKeysSecretName" . }}
+        key: {{ .Values.secrets.cofferKeys.secretKey }}
+  {{- end }}
   {{- include "opentelemetry.environment" . | nindent 2 -}}
   {{- if .Values.endeavor.blobs.uri }}
   - name: ENDEAVOR_BLOBS_URI
