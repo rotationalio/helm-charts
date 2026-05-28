@@ -1,3 +1,5 @@
+*** WARNING: This chart is deprecated. Use embedded Compass in the Endeavor chart instead. ***
+
 Thank you for installing {{ .Chart.Name | title }}.
 
 {{ if .Values.ingress.enabled -}}
