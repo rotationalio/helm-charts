@@ -157,6 +157,29 @@ entries:
   compass:
   - apiVersion: v2
     appVersion: 0.7.1
+    created: "2026-05-28T00:40:06.482995344Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    deprecated: true
+    description: '[DEPRECATED] Django Compass — use embedded Compass in the Endeavor
+      chart instead.'
+    digest: 06ad04450a3645e11b391faba887ee709ccb2e4a3f1ecfc276c9eef68e11b426
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: compass
+    sources:
+    - https://github.com/rotationalio/compass
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/compass-0.7.5/compass-0.7.5.tgz
+    version: 0.7.5
+  - apiVersion: v2
+    appVersion: 0.7.1
     created: "2026-03-20T16:27:38.468737095Z"
     dependencies:
     - name: opentelemetry
@@ -2648,4 +2671,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-05-27T07:59:04.002057466Z"
+generated: "2026-05-28T00:40:06.483336928Z"
