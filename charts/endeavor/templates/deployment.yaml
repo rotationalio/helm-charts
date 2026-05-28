@@ -7,6 +7,13 @@ metadata:
     {{- include "endeavor.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  {{- if and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
+  strategy:
+    type: Recreate
+  {{- else if not (empty .Values.strategy) }}
+  strategy:
+    {{- toYaml .Values.strategy | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "endeavor.selectorLabels" . | nindent 6 }}

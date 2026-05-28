@@ -24,24 +24,45 @@ Resolved PersistentVolumeClaim name for the blob volume (existing or chart-creat
 {{- end }}
 
 {{/*
-Volume mounts for file:// blob storage (PVC-backed).
+Volume mounts for file:// blob PVC and/or ephemeral task archive storage.
 */}}
 {{- define "endeavor.volumeMounts" -}}
-{{- if and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
+{{- $fileBlobs := and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
+{{- $tasksVol := or .Values.endeavor.tasks.enableLoader .Values.endeavor.tasks.beacon.beaconUrl }}
+{{- if or $fileBlobs $tasksVol }}
 volumeMounts:
+{{- if $fileBlobs }}
   - name: {{ include "endeavor.name" . }}-blobs
     mountPath: {{ include "endeavor.blobs.mountPath" . }}
+{{- end }}
+{{- if $tasksVol }}
+  - name: {{ include "endeavor.name" . }}-tasks
+    mountPath: {{ .Values.storage.tasks.mountPath }}
+{{- end }}
 {{- end }}
 {{- end }}
 
 {{/*
-Pod volumes for file:// blob storage.
+Pod volumes for file:// blob PVC and/or ephemeral task archive storage.
 */}}
 {{- define "endeavor.volumes" -}}
-{{- if and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
+{{- $fileBlobs := and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
+{{- $tasksVol := or .Values.endeavor.tasks.enableLoader .Values.endeavor.tasks.beacon.beaconUrl }}
+{{- if or $fileBlobs $tasksVol }}
 volumes:
+{{- if $fileBlobs }}
   - name: {{ include "endeavor.name" . }}-blobs
     persistentVolumeClaim:
       claimName: {{ include "endeavor.blobs.claimName" . }}
+{{- end }}
+{{- if $tasksVol }}
+  - name: {{ include "endeavor.name" . }}-tasks
+    emptyDir:
+      {{- with .Values.storage.tasks.emptyDir }}
+      {{- toYaml . | nindent 6 }}
+      {{- else }}
+      {}
+      {{- end }}
+{{- end }}
 {{- end }}
 {{- end }}

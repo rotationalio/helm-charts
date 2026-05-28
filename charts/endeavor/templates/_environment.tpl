@@ -96,6 +96,18 @@ env:
   - name: ENDEAVOR_BLOBS_URI
     value: {{ .Values.endeavor.blobs.uri | quote }}
   {{- end }}
+  {{- if .Values.secrets.aws.secretName }}
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.secrets.aws.secretName }}
+        key: {{ .Values.secrets.aws.accessKeyIDKey }}
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.secrets.aws.secretName }}
+        key: {{ .Values.secrets.aws.secretAccessKeyKey }}
+  {{- end }}
   {{- if .Values.endeavor.tasks.enableLoader }}
   - name: ENDEAVOR_TASKS_ENABLE_LOADER
     value: "true"

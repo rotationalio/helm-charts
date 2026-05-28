@@ -17,6 +17,14 @@ environment: "production"
 # guidance for scaling with external databases.
 replicaCount: 1
 
+# Deployment rollout strategy. Used for s3:// blobs (e.g. GCS interop) and other non-file backends.
+# When endeavor.blobs.uri uses file:// (RWO PVC), the chart overrides this with Recreate.
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 25%
+    maxUnavailable: 25%
+
 image:
   repository: rotationalio/endeavor
   pullPolicy: Always                 # Specify image pull policy (Always, IfNotPresent, Never).
@@ -188,14 +196,15 @@ endeavor:
   # contains the Horizon tasks archive (v0.32+).
   tasks:
     enableLoader: false
-    loaderPath: ""
+    # Absolute path to the Horizon tasks zip; use with storage.tasks mount (emptyDir) when not on a blobs PVC.
+    loaderPath: /var/run/endeavor/horizontasks/compass.zip
     # Optional Beacon fixture API (see endeavor BeaconConfig). When beaconUrl is set,
     # ENDEAVOR_TASKS_BEACON_BEACON_URL is exported. Set beaconTTL (e.g. 5m) for periodic refresh.
     # Basic auth is optional cleartext env (temporary); omit username/password to skip cred env vars.
-    # TODO: basic auth is temporary; replace this when licence key API is supported.
     beacon:
       beaconUrl: ""
       beaconTTL: ""
+      # TODO: basic auth is temporary; replace this when licence key API is supported.
       basicAuthUsername: ""
       basicAuthPassword: ""
 
@@ -218,7 +227,11 @@ endeavor:
   # - Empty or unset uri: no ENDEAVOR_BLOBS_URI and no volume mount.
   # - file:// URIs: ENDEAVOR_BLOBS_URI is set; the path after file:// is the container mount
   #   path, backed by storage.blobs (PVC) unless storage.blobs.existingClaim is set.
-  # - Other schemes (e.g. s3://): ENDEAVOR_BLOBS_URI only, no PVC or mount.
+  # - s3:// URIs: remote object storage (no PVC). Production on GKE typically uses GCS via the
+  #   S3-compatible API, e.g.:
+  #     s3://BUCKET/TENANT_PREFIX?endpoint=https://storage.googleapis.com&region=auto
+  #   Use GCS HMAC keys as AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY (secrets.aws), or another
+  #   AWS SDK credential source. See endeavor pkg/blobs/config.go for query parameters.
   blobs:
     uri: file:///blobs
 
@@ -233,6 +246,10 @@ storage:
       resources:
         requests:
           storage: 2Gi
+  # Ephemeral volume for Beacon task zip bootstrap/refresh (enableLoader and/or beacon URL).
+  tasks:
+    mountPath: /var/run/endeavor/horizontasks
+    emptyDir: {}
 
 quarterdeck:
   enabled: true
@@ -255,6 +272,12 @@ secrets:
     secretName: ""
     secretKey: csrfSecret
     value: ""
+  # GCS interop: store HMAC access id/secret as AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY in this secret.
+  # Omit secretName when credentials come from another AWS SDK source.
+  aws:
+    secretName: ""
+    accessKeyIDKey: AWS_ACCESS_KEY_ID
+    secretAccessKeyKey: AWS_SECRET_ACCESS_KEY
 
 # Additional pod spec configuration
 pod:
