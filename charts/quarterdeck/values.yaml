@@ -73,25 +73,35 @@ quarterdeck:
     baseURI: null
     webhookURI: null
 
-    # To specify a custom welcome email body template; you can either set create to true
-    # for the helm chart to create a config map with the specified template values
-    # inline or you can create a configmap with the specified name, which will be
-    # mounted into the Quarterdeck pod and loaded as a template file. The configmap
-    # needs to have two keys: ``welcome_email_body.txt`` and ``welcome_email_body.html``
-    # for the email template renderer to work effectively. For available template
-    # variables, please see the quarterdeck documentation.
-    #
-    # TODO: in the future do we want organize this for all email templates?
+    # Welcome email body templates (nested go templates; see quarterdeck welcome_user email).
+    # create: true — chart renders a ConfigMap from textTemplate/htmlTemplate (default).
+    # create: false + configMap — mount an existing ConfigMap (keys welcome.txt / welcome.html).
     welcomeEmail:
-      create: false
+      create: true
       configMap: ""
       mountPath: /data/app/emails
       textTemplate:
         key: "welcome.txt"
-        value: ""
+        value: |-
+          - What is {{ .AppName }}?
+
+          {{ .AppName }} is a shared workspace where teams collaborate to prototype, evaluate, and deploy AI agents into real business workflows with full visibility and control.
+
+          - Why You're Invited
+
+          Your expertise is needed. {{ .OrgName }} is using {{ .AppName }} to work across technical and business teams to implement AI responsibly and transparently, and joining gives you access to the workflows, evaluations, and decisions that make that possible.
+
+          - Your role: {{ if .Role }}{{ .Role }}{{ else }}Team Member{{ end }}
       htmlTemplate:
         key: "welcome.html"
-        value: ""
+        value: |-
+          <h3 style="padding: 12px 0; margin: 0;">What is {{ .AppName }}?</h3>
+          <p style="padding: 12px 0; margin: 0;">{{ .AppName }} is a shared workspace where teams collaborate to prototype, evaluate, and deploy AI agents into real business workflows with full visibility and control.</p>
+
+          <h3 style="padding: 12px 0; margin: 0;">Why You're Invited</h3>
+          <p style="padding: 12px 0; margin: 0;">Your expertise is needed. {{ .OrgName }} is using {{ .AppName }} to work across technical and business teams to implement AI responsibly and transparently, and joining gives you access to the workflows, evaluations, and decisions that make that possible.</p>
+
+          <h3 style="padding: 12px 0; margin: 0;">Your role: {{ if .Role }}{{ .Role }}{{ else }}Team Member{{ end }}</h3>
 
   org:
     name: null
