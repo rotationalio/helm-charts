@@ -73,35 +73,12 @@ quarterdeck:
     baseURI: null
     webhookURI: null
 
-    # Welcome email body templates (nested go templates; see quarterdeck welcome_user email).
-    # create: true — chart renders a ConfigMap from textTemplate/htmlTemplate (default).
-    # create: false + configMap — mount an existing ConfigMap (keys welcome.txt / welcome.html).
+    # Welcome email: bodies live in welcome-email.defaults.yaml (merged in templates).
+    # Override flags/paths here; set create: false and configMap to use an external ConfigMap.
     welcomeEmail:
       create: true
       configMap: ""
       mountPath: /data/app/emails
-      textTemplate:
-        key: "welcome.txt"
-        value: |-
-          - What is {{ .AppName }}?
-
-          {{ .AppName }} is a shared workspace where teams collaborate to prototype, evaluate, and deploy AI agents into real business workflows with full visibility and control.
-
-          - Why You're Invited
-
-          Your expertise is needed. {{ .OrgName }} is using {{ .AppName }} to work across technical and business teams to implement AI responsibly and transparently, and joining gives you access to the workflows, evaluations, and decisions that make that possible.
-
-          - Your role: {{ if .Role }}{{ .Role }}{{ else }}Team Member{{ end }}
-      htmlTemplate:
-        key: "welcome.html"
-        value: |-
-          <h3 style="padding: 12px 0; margin: 0;">What is {{ .AppName }}?</h3>
-          <p style="padding: 12px 0; margin: 0;">{{ .AppName }} is a shared workspace where teams collaborate to prototype, evaluate, and deploy AI agents into real business workflows with full visibility and control.</p>
-
-          <h3 style="padding: 12px 0; margin: 0;">Why You're Invited</h3>
-          <p style="padding: 12px 0; margin: 0;">Your expertise is needed. {{ .OrgName }} is using {{ .AppName }} to work across technical and business teams to implement AI responsibly and transparently, and joining gives you access to the workflows, evaluations, and decisions that make that possible.</p>
-
-          <h3 style="padding: 12px 0; margin: 0;">Your role: {{ if .Role }}{{ .Role }}{{ else }}Team Member{{ end }}</h3>
 
   org:
     name: null

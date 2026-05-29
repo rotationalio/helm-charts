@@ -34,11 +34,12 @@ env:
   - name: QD_APP_WEBHOOK_URI
     value: {{ .Values.quarterdeck.app.webhookURI | quote }}
   {{- end }}
-  {{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap }}
+  {{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
+  {{- if or $we.create $we.configMap }}
   - name: QD_APP_WELCOME_EMAIL_HTML_PATH
-    value: "{{ .Values.quarterdeck.app.welcomeEmail.mountPath }}/{{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.key }}"
+    value: "{{ $we.mountPath }}/{{ $we.htmlTemplate.key }}"
   - name: QD_APP_WELCOME_EMAIL_TEXT_PATH
-    value: "{{ .Values.quarterdeck.app.welcomeEmail.mountPath }}/{{ .Values.quarterdeck.app.welcomeEmail.textTemplate.key }}"
+    value: "{{ $we.mountPath }}/{{ $we.textTemplate.key }}"
   {{- end }}
   {{- if .Values.quarterdeck.org.name }}
   - name: QD_ORG_NAME

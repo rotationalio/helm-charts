@@ -11,10 +11,11 @@ metadata:
 data:
   security.txt: {{ .Values.quarterdeck.securitytxt.text | b64enc }}
 {{- end -}}
-{{- if and .Values.quarterdeck.securitytxt.text .Values.quarterdeck.app.welcomeEmail.create }}
+{{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
+{{- if and .Values.quarterdeck.securitytxt.text $we.create }}
 ---
 {{ end -}}
-{{- if .Values.quarterdeck.app.welcomeEmail.create -}}
+{{- if $we.create -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -25,8 +26,8 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 data:
-  {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.key }}: |+
-    {{ .Values.quarterdeck.app.welcomeEmail.textTemplate.value | nindent 4 }}
-  {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.key }}: |+
-    {{ .Values.quarterdeck.app.welcomeEmail.htmlTemplate.value | nindent 4 }}
+  {{ $we.textTemplate.key }}: |+
+    {{ $we.textTemplate.value | nindent 4 }}
+  {{ $we.htmlTemplate.key }}: |+
+    {{ $we.htmlTemplate.value | nindent 4 }}
 {{- end -}}

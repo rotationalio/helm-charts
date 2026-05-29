@@ -106,10 +106,17 @@ Volume mounts for database storage if using sqlite3.
 {{- end -}}
 {{- end -}}
 
+{{- define "quarterdeck.welcomeEmail" -}}
+{{- $base := .Files.Get "welcome-email.defaults.yaml" | fromYaml -}}
+{{- $over := .Values.quarterdeck.app.welcomeEmail | default dict -}}
+{{- toYaml (merge $base $over) -}}
+{{- end -}}
+
 {{- define "quarterdeck.volumeMounts.welcomeEmail" -}}
-{{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap -}}
+{{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
+{{- if or $we.create $we.configMap -}}
 - name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
-  mountPath: {{ .Values.quarterdeck.app.welcomeEmail.mountPath }}
+  mountPath: {{ $we.mountPath }}
   readOnly: true
 {{- end -}}
 {{- end -}}
@@ -150,7 +157,8 @@ volumes:
 {{- end -}}
 
 {{- define "quarterdeck.volumes.welcomeEmail" -}}
-{{- if or .Values.quarterdeck.app.welcomeEmail.create .Values.quarterdeck.app.welcomeEmail.configMap -}}
+{{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
+{{- if or $we.create $we.configMap -}}
 - name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
   configMap:
     name: {{ include "quarterdeck.app.welcomeEmail.configMap.name" . }}
@@ -170,8 +178,9 @@ volumes:
 {{- end -}}
 
 {{- define "quarterdeck.app.welcomeEmail.configMap.name" -}}
-{{- if .Values.quarterdeck.app.welcomeEmail.configMap -}}
-{{ .Values.quarterdeck.app.welcomeEmail.configMap }}
+{{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
+{{- if $we.configMap -}}
+{{ $we.configMap }}
 {{- else -}}
 {{ include "quarterdeck.name" . }}-welcome-emails
 {{- end -}}

@@ -35,7 +35,7 @@ quarterdeck:
     baseURI: https://endeavor.co
     webhookURI: https://endeavor.co/callback
 
-    # welcomeEmail: chart defaults (values.yaml)
+    # welcomeEmail: chart defaults (welcome-email.defaults.yaml)
 
   org:
     name: Acme, Inc.
