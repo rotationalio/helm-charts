@@ -17,6 +17,14 @@ env:
       secretKeyRef:
         name: {{ include "endeavor.databaseURLSecretName" . }}
         key: {{ .Values.secrets.databaseURL.secretKey }}
+  - name: ENDEAVOR_READ_HEADER_TIMEOUT
+    value: {{ .Values.endeavor.readHeaderTimeout | quote }}
+  - name: ENDEAVOR_WRITE_TIMEOUT
+    value: {{ .Values.endeavor.writeTimeout | quote }}
+  - name: ENDEAVOR_IDLE_TIMEOUT
+    value: {{ .Values.endeavor.idleTimeout | quote }}
+  - name: ENDEAVOR_SHUTDOWN_TIMEOUT
+    value: {{ .Values.endeavor.shutdownTimeout | quote }}
   - name: ENDEAVOR_BIND_ADDR
     value: ":{{ .Values.service.port }}"
   - name: ENDEAVOR_ORIGIN
@@ -72,11 +80,15 @@ env:
   - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
     value: {{ .Values.endeavor.inference.endpointURL | quote }}
   {{- end }}
+  - name: ENDEAVOR_BACKUP_ENABLE_API
+    value: {{ .Values.endeavor.backup.enableAPI | quote }}
   - name: ENDEAVOR_INFERENCE_API_KEY
     valueFrom:
       secretKeyRef:
         name: {{ include "endeavor.inferenceAPIKeySecretName" . }}
         key: {{ .Values.secrets.inferenceAPIKey.secretKey }}
+  - name: ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
+    value: {{ .Values.endeavor.horizon.rendererCacheSize | quote }}
   - name: ENDEAVOR_RADISH_WORKERS
     value: {{ .Values.endeavor.radish.workers | quote }}
   - name: ENDEAVOR_RADISH_QUEUE_SIZE
@@ -91,6 +103,10 @@ env:
   {{- end }}
   - name: ENDEAVOR_TELEMETRY_ENABLED
     value: {{ .Values.endeavor.telemetry.enabled | quote }}
+  {{- if .Values.endeavor.telemetry.serviceAddr }}
+  - name: GIMLET_OTEL_SERVICE_ADDR
+    value: {{ .Values.endeavor.telemetry.serviceAddr | quote }}
+  {{- end }}
   - name: ENDEAVOR_COFFER_ENABLED
     value: {{ .Values.endeavor.coffer.enabled | quote }}
   {{- if and .Values.endeavor.coffer.enabled (or .Values.secrets.cofferKeys.secretName (and .Values.secrets.create .Values.secrets.cofferKeys.value)) }}

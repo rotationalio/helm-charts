@@ -44,6 +44,10 @@ endeavor:
     base: "https://compass-api.example.com"
     timeout: "300s"
   organizationID: "org-example"
+  readHeaderTimeout: 181s
+  writeTimeout: 182s
+  idleTimeout: 361s
+  shutdownTimeout: 183s
   auth:
     quarterdeckURL: "https://quarterdeck.example.com"
     audience: "https://endeavor.example.com"
@@ -114,6 +118,10 @@ endeavor:
         upgradeInsecureRequests: false
   inference:
     endpointURL: "https://inference.example.com/v1"
+  backup:
+    enableAPI: true
+  horizon:
+    rendererCacheSize: 256
   radish:
     workers: 4
     queueSize: 64

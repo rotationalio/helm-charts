@@ -27,14 +27,13 @@ strategy:
 
 image:
   repository: rotationalio/endeavor
-  pullPolicy: Always                 # Specify image pull policy (Always, IfNotPresent, Never).
-  tag: ""                            # Overrides the image tag whose default is the chart appVersion.
+  pullPolicy: Always # Specify image pull policy (Always, IfNotPresent, Never).
+  tag: "" # Overrides the image tag whose default is the chart appVersion.
 
 imagePullSecrets: []
 
 # Global variables are available to both Endeavor and Quarterdeck charts
 global:
-
   # Origins specifies all hosts that are in the Endeavor ecosystem and is used for the
   # allowed origins setting in CORS and the audience value in Quarterdeck.
   # Should be a full URLs with scheme (e.g. https://) and no trailing slashes.
@@ -54,7 +53,6 @@ global:
   # Specify a global mode for all microservices (release, debug, testing)
   # Only specify debug mode if you know what you're doing.
   mode: release
-
 
 # Set the Endeavor specific configuration.
 endeavor:
@@ -92,6 +90,12 @@ endeavor:
 
   # A string identifier for the organization that this endeavor instance serves
   organizationID: "endeavor"
+
+  # HTTP server timeouts (Go duration strings)
+  readHeaderTimeout: 180s
+  writeTimeout: 180s
+  idleTimeout: 360s
+  shutdownTimeout: 180s
 
   # Authentication configuration
   auth:
@@ -185,6 +189,14 @@ endeavor:
   # Inference specifies the configuration for the inference client
   inference:
     endpointURL: https://openrouter.ai/api/v1
+
+  # Backup API configuration
+  backup:
+    enableAPI: false
+
+  # Horizon runtime configuration
+  horizon:
+    rendererCacheSize: 128
 
   # Radish specifies the configuration for the async task client
   radish:
@@ -321,8 +333,8 @@ livenessProbe:
     path: /livez
     port: 8000
     httpHeaders:
-    - name: X-Kubernetes-Probe
-      value: liveness
+      - name: X-Kubernetes-Probe
+        value: liveness
   initialDelaySeconds: 2
   periodSeconds: 10
 
@@ -332,8 +344,8 @@ readinessProbe:
     path: /readyz
     port: 8000
     httpHeaders:
-    - name: X-Kubernetes-Probe
-      value: readiness
+      - name: X-Kubernetes-Probe
+        value: readiness
   initialDelaySeconds: 2
   periodSeconds: 10
 
