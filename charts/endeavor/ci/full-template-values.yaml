@@ -131,8 +131,12 @@ endeavor:
     beacon:
       beaconUrl: "https://beacon.example.com"
       beaconTTL: "5m"
-      basicAuthUsername: "beacon-user"
-      basicAuthPassword: "beacon-pass-example"
+      authSecret:
+        secretName: "endeavor-secrets"
+        usernameKey: "beaconBasicAuthUsername"
+        passwordKey: "beaconBasicAuthPassword"
+      basicAuthUsername: "beacon-user-fallback"
+      basicAuthPassword: "beacon-pass-fallback"
   mcp:
     refreshControllerInterval: 5m
     integrationRefreshInterval: 60m

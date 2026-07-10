@@ -216,7 +216,12 @@ endeavor:
     beacon:
       beaconUrl: ""
       beaconTTL: ""
-      # TODO: basic auth is temporary; replace this when licence key API is supported.
+      # Preferred: read basic auth credentials from a Secret.
+      authSecret:
+        secretName: ""
+        usernameKey: beaconBasicAuthUsername
+        passwordKey: beaconBasicAuthPassword
+      # Backwards-compatible fallback (used when authSecret.secretName is empty).
       basicAuthUsername: ""
       basicAuthPassword: ""
 

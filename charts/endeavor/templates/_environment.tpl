@@ -147,7 +147,20 @@ env:
   - name: ENDEAVOR_TASKS_BEACON_BEACON_TTL
     value: {{ .Values.endeavor.tasks.beacon.beaconTTL | quote }}
   {{- end }}
-  {{- if and .Values.endeavor.tasks.beacon.beaconUrl (and .Values.endeavor.tasks.beacon.basicAuthUsername .Values.endeavor.tasks.beacon.basicAuthPassword) }}
+  {{- if and .Values.endeavor.tasks.beacon.beaconUrl .Values.endeavor.tasks.beacon.authSecret.secretName }}
+  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
+    value: "basic"
+  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.endeavor.tasks.beacon.authSecret.secretName }}
+        key: {{ .Values.endeavor.tasks.beacon.authSecret.usernameKey }}
+  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.endeavor.tasks.beacon.authSecret.secretName }}
+        key: {{ .Values.endeavor.tasks.beacon.authSecret.passwordKey }}
+  {{- else if and .Values.endeavor.tasks.beacon.beaconUrl (and .Values.endeavor.tasks.beacon.basicAuthUsername .Values.endeavor.tasks.beacon.basicAuthPassword) }}
   - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
     value: "basic"
   - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_USERNAME
