@@ -12,6 +12,16 @@ env:
     value: {{ include "endeavor.logLevel" . }}
   - name: ENDEAVOR_CONSOLE_LOG
     value: {{ include "endeavor.consoleLog" . }}
+  - name: ENDEAVOR_BIND_ADDR
+    value: ":{{ .Values.service.port }}"
+  - name: ENDEAVOR_ORIGIN
+    value: {{ .Values.endeavor.origin | quote }}
+  - name: ENDEAVOR_ALLOW_ORIGINS
+    value: {{ include "endeavor.allowOrigins" . }}
+  - name: ENDEAVOR_DOCS_NAME
+    value: {{ .Values.endeavor.docsName | quote }}
+  - name: ENDEAVOR_ORGANIZATION_ID
+    value: {{ .Values.endeavor.organizationID | quote }}
   - name: ENDEAVOR_DATABASE_URL
     valueFrom:
       secretKeyRef:
@@ -25,26 +35,10 @@ env:
     value: {{ .Values.endeavor.idleTimeout | quote }}
   - name: ENDEAVOR_SHUTDOWN_TIMEOUT
     value: {{ .Values.endeavor.shutdownTimeout | quote }}
-  - name: ENDEAVOR_BIND_ADDR
-    value: ":{{ .Values.service.port }}"
-  - name: ENDEAVOR_ORIGIN
-    value: {{ .Values.endeavor.origin | quote }}
-  - name: ENDEAVOR_ALLOW_ORIGINS
-    value: {{ include "endeavor.allowOrigins" . }}
-  - name: ENDEAVOR_DOCS_NAME
-    value: {{ .Values.endeavor.docsName | quote }}
-  - name: ENDEAVOR_COMPASS_URL
-    value: {{ .Values.endeavor.compassURL | quote }}
-  {{- if .Values.endeavor.compass.base }}
-  - name: ENDEAVOR_COMPASS_BASE
-    value: {{ .Values.endeavor.compass.base | quote }}
+  {{- if .Values.endeavor.blobs.uri }}
+  - name: ENDEAVOR_BLOBS_URI
+    value: {{ .Values.endeavor.blobs.uri | quote }}
   {{- end }}
-  {{- if .Values.endeavor.compass.timeout }}
-  - name: ENDEAVOR_COMPASS_TIMEOUT
-    value: {{ .Values.endeavor.compass.timeout | quote }}
-  {{- end }}
-  - name: ENDEAVOR_ORGANIZATION_ID
-    value: {{ .Values.endeavor.organizationID | quote }}
   - name: ENDEAVOR_AUTH_QUARTERDECK_URL
     value: {{ include "endeavor.quarterdeckURL" . }}
   - name: ENDEAVOR_AUTH_AUDIENCE
@@ -80,8 +74,6 @@ env:
   - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
     value: {{ .Values.endeavor.inference.endpointURL | quote }}
   {{- end }}
-  - name: ENDEAVOR_BACKUP_ENABLE_API
-    value: {{ .Values.endeavor.backup.enableAPI | quote }}
   - name: ENDEAVOR_INFERENCE_API_KEY
     valueFrom:
       secretKeyRef:
@@ -89,10 +81,6 @@ env:
         key: {{ .Values.secrets.inferenceAPIKey.secretKey }}
   - name: ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
     value: {{ .Values.endeavor.horizon.rendererCacheSize | quote }}
-  - name: ENDEAVOR_RADISH_WORKERS
-    value: {{ .Values.endeavor.radish.workers | quote }}
-  - name: ENDEAVOR_RADISH_QUEUE_SIZE
-    value: {{ .Values.endeavor.radish.queueSize | quote }}
   {{- if .Values.endeavor.mcp.refreshControllerInterval }}
   - name: ENDEAVOR_MCP_REFRESH_CONTROLLER_INTERVAL
     value: {{ .Values.endeavor.mcp.refreshControllerInterval | quote }}
@@ -100,38 +88,6 @@ env:
   {{- if .Values.endeavor.mcp.integrationRefreshInterval }}
   - name: ENDEAVOR_MCP_INTEGRATION_REFRESH_INTERVAL
     value: {{ .Values.endeavor.mcp.integrationRefreshInterval | quote }}
-  {{- end }}
-  - name: ENDEAVOR_TELEMETRY_ENABLED
-    value: {{ .Values.endeavor.telemetry.enabled | quote }}
-  {{- if .Values.endeavor.telemetry.serviceAddr }}
-  - name: GIMLET_OTEL_SERVICE_ADDR
-    value: {{ .Values.endeavor.telemetry.serviceAddr | quote }}
-  {{- end }}
-  - name: ENDEAVOR_COFFER_ENABLED
-    value: {{ .Values.endeavor.coffer.enabled | quote }}
-  {{- if and .Values.endeavor.coffer.enabled (or .Values.secrets.cofferKeys.secretName (and .Values.secrets.create .Values.secrets.cofferKeys.value)) }}
-  - name: ENDEAVOR_COFFER_KEYS
-    valueFrom:
-      secretKeyRef:
-        name: {{ include "endeavor.cofferKeysSecretName" . }}
-        key: {{ .Values.secrets.cofferKeys.secretKey }}
-  {{- end }}
-  {{- include "opentelemetry.environment" . | nindent 2 -}}
-  {{- if .Values.endeavor.blobs.uri }}
-  - name: ENDEAVOR_BLOBS_URI
-    value: {{ .Values.endeavor.blobs.uri | quote }}
-  {{- end }}
-  {{- if .Values.secrets.aws.secretName }}
-  - name: AWS_ACCESS_KEY_ID
-    valueFrom:
-      secretKeyRef:
-        name: {{ .Values.secrets.aws.secretName }}
-        key: {{ .Values.secrets.aws.accessKeyIDKey }}
-  - name: AWS_SECRET_ACCESS_KEY
-    valueFrom:
-      secretKeyRef:
-        name: {{ .Values.secrets.aws.secretName }}
-        key: {{ .Values.secrets.aws.secretAccessKeyKey }}
   {{- end }}
   {{- if .Values.endeavor.tasks.enableLoader }}
   - name: ENDEAVOR_TASKS_ENABLE_LOADER
@@ -168,6 +124,40 @@ env:
   - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_PASSWORD
     value: {{ .Values.endeavor.tasks.beacon.basicAuthPassword | quote }}
   {{- end }}
+  - name: ENDEAVOR_RADISH_WORKERS
+    value: {{ .Values.endeavor.radish.workers | quote }}
+  - name: ENDEAVOR_RADISH_QUEUE_SIZE
+    value: {{ .Values.endeavor.radish.queueSize | quote }}
+  - name: ENDEAVOR_TELEMETRY_ENABLED
+    value: {{ .Values.endeavor.telemetry.enabled | quote }}
+  {{- if .Values.endeavor.telemetry.serviceAddr }}
+  - name: GIMLET_OTEL_SERVICE_ADDR
+    value: {{ .Values.endeavor.telemetry.serviceAddr | quote }}
+  {{- end }}
+  - name: ENDEAVOR_BACKUP_ENABLE_API
+    value: {{ .Values.endeavor.backup.enableAPI | quote }}
+  - name: ENDEAVOR_COFFER_ENABLED
+    value: {{ .Values.endeavor.coffer.enabled | quote }}
+  {{- if and .Values.endeavor.coffer.enabled (or .Values.secrets.cofferKeys.secretName (and .Values.secrets.create .Values.secrets.cofferKeys.value)) }}
+  - name: ENDEAVOR_COFFER_KEYS
+    valueFrom:
+      secretKeyRef:
+        name: {{ include "endeavor.cofferKeysSecretName" . }}
+        key: {{ .Values.secrets.cofferKeys.secretKey }}
+  {{- end }}
+  {{- if .Values.secrets.aws.secretName }}
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.secrets.aws.secretName }}
+        key: {{ .Values.secrets.aws.accessKeyIDKey }}
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.secrets.aws.secretName }}
+        key: {{ .Values.secrets.aws.secretAccessKeyKey }}
+  {{- end }}
+  {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 
 {{- define "endeavor.logLevel" -}}
