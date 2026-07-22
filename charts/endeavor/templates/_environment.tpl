@@ -96,11 +96,11 @@ env:
     value: {{ .Values.endeavor.tasks.loaderPath | quote }}
   {{- end }}
   {{- if .Values.endeavor.tasks.beacon.beaconUrl }}
-  - name: ENDEAVOR_TASKS_BEACON_BEACON_URL
+  - name: ENDEAVOR_TASKS_BEACON_URL
     value: {{ .Values.endeavor.tasks.beacon.beaconUrl | quote }}
   {{- end }}
   {{- if .Values.endeavor.tasks.beacon.beaconTTL }}
-  - name: ENDEAVOR_TASKS_BEACON_BEACON_TTL
+  - name: ENDEAVOR_TASKS_BEACON_TTL
     value: {{ .Values.endeavor.tasks.beacon.beaconTTL | quote }}
   {{- end }}
   {{- if and .Values.endeavor.tasks.beacon.beaconUrl .Values.endeavor.tasks.beacon.authSecret.secretName }}
