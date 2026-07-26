@@ -39,6 +39,12 @@ env:
   - name: ENDEAVOR_BLOBS_URI
     value: {{ .Values.endeavor.blobs.uri | quote }}
   {{- end }}
+  - name: ENDEAVOR_STATIC_SERVE
+    value: {{ .Values.endeavor.static.serve | quote }}
+  - name: ENDEAVOR_STATIC_ROOT
+    value: {{ .Values.endeavor.static.root | quote }}
+  - name: ENDEAVOR_STATIC_URL
+    value: {{ .Values.endeavor.static.url | quote }}
   - name: ENDEAVOR_AUTH_QUARTERDECK_URL
     value: {{ include "endeavor.quarterdeckURL" . }}
   - name: ENDEAVOR_AUTH_AUDIENCE
@@ -81,6 +87,10 @@ env:
         key: {{ .Values.secrets.inferenceAPIKey.secretKey }}
   - name: ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
     value: {{ .Values.endeavor.horizon.rendererCacheSize | quote }}
+  - name: ENDEAVOR_COMPASS_BASE
+    value: {{ .Values.endeavor.compass.base | quote }}
+  - name: ENDEAVOR_COMPASS_TIMEOUT
+    value: {{ .Values.endeavor.compass.timeout | quote }}
   {{- if .Values.endeavor.mcp.refreshControllerInterval }}
   - name: ENDEAVOR_MCP_REFRESH_CONTROLLER_INTERVAL
     value: {{ .Values.endeavor.mcp.refreshControllerInterval | quote }}
@@ -89,21 +99,25 @@ env:
   - name: ENDEAVOR_MCP_INTEGRATION_REFRESH_INTERVAL
     value: {{ .Values.endeavor.mcp.integrationRefreshInterval | quote }}
   {{- end }}
+  - name: ENDEAVOR_CATALOG_SYNC_CONTROLLER_INTERVAL
+    value: {{ .Values.endeavor.catalog.syncControllerInterval | quote }}
+  - name: ENDEAVOR_CATALOG_PROVIDER_SYNC_INTERVAL
+    value: {{ .Values.endeavor.catalog.providerSyncInterval | quote }}
   {{- if .Values.endeavor.tasks.enableLoader }}
   - name: ENDEAVOR_TASKS_ENABLE_LOADER
     value: "true"
   - name: ENDEAVOR_TASKS_LOADER_PATH
     value: {{ .Values.endeavor.tasks.loaderPath | quote }}
   {{- end }}
-  {{- if .Values.endeavor.tasks.beacon.beaconUrl }}
+  {{- if .Values.endeavor.tasks.beacon.url }}
   - name: ENDEAVOR_TASKS_BEACON_URL
-    value: {{ .Values.endeavor.tasks.beacon.beaconUrl | quote }}
+    value: {{ .Values.endeavor.tasks.beacon.url | quote }}
   {{- end }}
-  {{- if .Values.endeavor.tasks.beacon.beaconTTL }}
+  {{- if .Values.endeavor.tasks.beacon.ttl }}
   - name: ENDEAVOR_TASKS_BEACON_TTL
-    value: {{ .Values.endeavor.tasks.beacon.beaconTTL | quote }}
+    value: {{ .Values.endeavor.tasks.beacon.ttl | quote }}
   {{- end }}
-  {{- if and .Values.endeavor.tasks.beacon.beaconUrl .Values.endeavor.tasks.beacon.authSecret.secretName }}
+  {{- if and .Values.endeavor.tasks.beacon.url .Values.endeavor.tasks.beacon.authSecret.secretName }}
   - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
     value: "basic"
   - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_USERNAME
@@ -116,18 +130,31 @@ env:
       secretKeyRef:
         name: {{ .Values.endeavor.tasks.beacon.authSecret.secretName }}
         key: {{ .Values.endeavor.tasks.beacon.authSecret.passwordKey }}
-  {{- else if and .Values.endeavor.tasks.beacon.beaconUrl (and .Values.endeavor.tasks.beacon.basicAuthUsername .Values.endeavor.tasks.beacon.basicAuthPassword) }}
-  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
-    value: "basic"
-  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_USERNAME
-    value: {{ .Values.endeavor.tasks.beacon.basicAuthUsername | quote }}
-  - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_PASSWORD
-    value: {{ .Values.endeavor.tasks.beacon.basicAuthPassword | quote }}
   {{- end }}
-  - name: ENDEAVOR_RADISH_WORKERS
-    value: {{ .Values.endeavor.radish.workers | quote }}
-  - name: ENDEAVOR_RADISH_QUEUE_SIZE
-    value: {{ .Values.endeavor.radish.queueSize | quote }}
+  - name: RADISH_NUM_WORKERS
+    value: {{ .Values.endeavor.radish.numWorkers | quote }}
+  - name: RADISH_TASK_RETRIES
+    value: {{ .Values.endeavor.radish.taskRetries | quote }}
+  - name: RADISH_TASK_TIMEOUT
+    value: {{ .Values.endeavor.radish.taskTimeout | quote }}
+  - name: RADISH_POLL_INTERVAL
+    value: {{ .Values.endeavor.radish.pollInterval | quote }}
+  - name: RADISH_POLL_JITTER
+    value: {{ .Values.endeavor.radish.pollJitter | quote }}
+  - name: RADISH_RETENTION
+    value: {{ .Values.endeavor.radish.retention | quote }}
+  - name: RADISH_VACUUM_INTERVAL
+    value: {{ .Values.endeavor.radish.vacuumInterval | quote }}
+  - name: RADISH_BACKOFF_POLICY
+    value: {{ .Values.endeavor.radish.backoff.policy | quote }}
+  - name: RADISH_BACKOFF_DELAY
+    value: {{ .Values.endeavor.radish.backoff.delay | quote }}
+  - name: RADISH_BACKOFF_FACTOR
+    value: {{ .Values.endeavor.radish.backoff.factor | quote }}
+  - name: RADISH_BACKOFF_JITTER
+    value: {{ .Values.endeavor.radish.backoff.jitter | quote }}
+  - name: RADISH_BACKOFF_SIGMA
+    value: {{ .Values.endeavor.radish.backoff.sigma | quote }}
   - name: ENDEAVOR_TELEMETRY_ENABLED
     value: {{ .Values.endeavor.telemetry.enabled | quote }}
   {{- if .Values.endeavor.telemetry.serviceAddr }}

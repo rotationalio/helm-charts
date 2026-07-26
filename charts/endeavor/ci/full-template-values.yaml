@@ -39,7 +39,6 @@ endeavor:
     - https://endeavor.example.com
     - https://quarterdeck.example.com
   docsName: "Endeavor API (full template)"
-  compassURL: "https://endeavor.example.com/compass/workflow/"
   compass:
     base: "https://compass-api.example.com"
     timeout: "300s"
@@ -118,31 +117,46 @@ endeavor:
         upgradeInsecureRequests: false
   inference:
     endpointURL: "https://inference.example.com/v1"
+  static:
+    serve: true
+    root: "/var/www/endeavor/static"
+    url: "/static"
   backup:
     enableAPI: true
   horizon:
     rendererCacheSize: 256
   radish:
-    workers: 4
-    queueSize: 64
+    numWorkers: 4
+    taskRetries: 5
+    taskTimeout: 90s
+    pollInterval: 7s
+    pollJitter: 250ms
+    retention: 36h
+    vacuumInterval: 2h
+    backoff:
+      policy: exponential
+      delay: 15s
+      factor: 3.0
+      jitter: true
+      sigma: 1s
+  catalog:
+    syncControllerInterval: 7m
+    providerSyncInterval: 90m
   tasks:
     enableLoader: true
     loaderPath: "/data/endeavor/tasks.zip"
     beacon:
-      beaconUrl: "https://beacon.example.com"
-      beaconTTL: "5m"
+      url: "https://beacon.example.com"
+      ttl: "5m"
       authSecret:
         secretName: "endeavor-secrets"
         usernameKey: "beaconBasicAuthUsername"
         passwordKey: "beaconBasicAuthPassword"
-      basicAuthUsername: "beacon-user-fallback"
-      basicAuthPassword: "beacon-pass-fallback"
   mcp:
     refreshControllerInterval: 5m
     integrationRefreshInterval: 60m
   telemetry:
     enabled: true
-    serviceName: "endeavor-api"
     serviceAddr: "endeavor.example.com:443"
   blobs:
     uri: "s3://my-bucket/endeavor-blobs"

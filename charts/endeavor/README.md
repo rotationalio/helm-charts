@@ -34,31 +34,21 @@ Quarterdeck email is configured independently through `quarterdeck.quarterdeck.e
 
 Beacon URL/TTL are configured from values:
 
-- `endeavor.tasks.beacon.beaconUrl`
-- `endeavor.tasks.beacon.beaconTTL`
+- `endeavor.tasks.beacon.url`
+- `endeavor.tasks.beacon.ttl`
 
-Basic auth credentials now support **secret references** (preferred):
+Basic auth credentials support **secret references**:
 
 ```yaml
 endeavor:
   tasks:
     beacon:
-      beaconUrl: "https://beacon.rotational.app"
-      beaconTTL: "24h"
+      url: "https://beacon.rotational.app"
+      ttl: "24h"
       authSecret:
         secretName: "my-tenant-endeavor"
         usernameKey: "beaconBasicAuthUsername"
         passwordKey: "beaconBasicAuthPassword"
-```
-
-Backwards-compatible inline fallback still works when `authSecret.secretName` is empty:
-
-```yaml
-endeavor:
-  tasks:
-    beacon:
-      basicAuthUsername: ""
-      basicAuthPassword: ""
 ```
 
 ## Full render reference
@@ -75,7 +65,11 @@ For smaller checks, use `ci/all-values.yaml` or chart defaults only.
 
 ## Current Environment Configuration
 
-```
+Radish queue connection settings are managed by Endeavor's store. Configure task
+queue behavior with the `RADISH_*` tunables below; do not use
+`ENDEAVOR_RADISH_*` variables.
+
+```text
 This application is configured via the environment. The following environment
 variables can be used:
 
@@ -509,6 +503,16 @@ ENDEAVOR_MCP_INTEGRATION_REFRESH_INTERVAL
   [type]        Duration
   [default]     60m
   [required]
+ENDEAVOR_CATALOG_SYNC_CONTROLLER_INTERVAL
+  [description] interval between catalog sync controller runs (0 disables)
+  [type]        Duration
+  [default]     5m
+  [required]
+ENDEAVOR_CATALOG_PROVIDER_SYNC_INTERVAL
+  [description] staleness threshold before re-syncing a provider catalog
+  [type]        Duration
+  [default]     60m
+  [required]
 ENDEAVOR_TASKS_ENABLE_LOADER
   [description] if true, tasks will be loaded from the specified path
   [type]        True or False
@@ -589,15 +593,65 @@ ENDEAVOR_COMPASS_TIMEOUT
   [type]        Duration
   [default]     150s
   [required]
-ENDEAVOR_RADISH_WORKERS
+RADISH_NUM_WORKERS
   [description] the number of workers to use for the task queue
   [type]        Integer
-  [default]     4
+  [default]     8
   [required]
-ENDEAVOR_RADISH_QUEUE_SIZE
-  [description] the size of the task queue
+RADISH_TASK_RETRIES
+  [description] the number of retry attempts for failed tasks
   [type]        Integer
-  [default]     64
+  [default]     3
+  [required]
+RADISH_TASK_TIMEOUT
+  [description] the maximum duration a task may run
+  [type]        Duration
+  [default]     60s
+  [required]
+RADISH_POLL_INTERVAL
+  [description] interval between queue polling attempts
+  [type]        Duration
+  [default]     5s
+  [required]
+RADISH_POLL_JITTER
+  [description] jitter added to the queue poll interval
+  [type]        Duration
+  [default]     125ms
+  [required]
+RADISH_RETENTION
+  [description] duration completed tasks are retained
+  [type]        Duration
+  [default]     24h
+  [required]
+RADISH_VACUUM_INTERVAL
+  [description] interval between completed-task cleanup runs
+  [type]        Duration
+  [default]     3h
+  [required]
+RADISH_BACKOFF_POLICY
+  [description] retry backoff policy
+  [type]        String
+  [default]     linear
+  [required]
+RADISH_BACKOFF_DELAY
+  [description] initial delay between task retries
+  [type]        Duration
+  [default]     10s
+  [required]
+RADISH_BACKOFF_FACTOR
+  [description] multiplier applied to retry backoff delay
+  [type]        Float
+  [default]     2.0
+  [required]
+RADISH_BACKOFF_JITTER
+  [description] whether retry backoff uses jitter
+  [type]        True or False
+  [default]     false
+  [required]
+RADISH_BACKOFF_SIGMA
+  [description] standard deviation used for retry backoff jitter
+  [type]        Duration
+  [default]     750ms
   [required]
 ENDEAVOR_TELEMETRY_ENABLED
   [description] disable telemetry by setting this environment variable to false

@@ -28,7 +28,7 @@ Volume mounts for file:// blob PVC and/or ephemeral task archive storage.
 */}}
 {{- define "endeavor.volumeMounts" -}}
 {{- $fileBlobs := and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
-{{- $tasksVol := or .Values.endeavor.tasks.enableLoader .Values.endeavor.tasks.beacon.beaconUrl }}
+{{- $tasksVol := or .Values.endeavor.tasks.enableLoader .Values.endeavor.tasks.beacon.url }}
 {{- if or $fileBlobs $tasksVol }}
 volumeMounts:
 {{- if $fileBlobs }}
@@ -47,7 +47,7 @@ Pod volumes for file:// blob PVC and/or ephemeral task archive storage.
 */}}
 {{- define "endeavor.volumes" -}}
 {{- $fileBlobs := and .Values.endeavor.blobs.uri (hasPrefix "file://" .Values.endeavor.blobs.uri) }}
-{{- $tasksVol := or .Values.endeavor.tasks.enableLoader .Values.endeavor.tasks.beacon.beaconUrl }}
+{{- $tasksVol := or .Values.endeavor.tasks.enableLoader .Values.endeavor.tasks.beacon.url }}
 {{- if or $fileBlobs $tasksVol }}
 volumes:
 {{- if $fileBlobs }}

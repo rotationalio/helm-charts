@@ -180,6 +180,13 @@ endeavor:
   inference:
     endpointURL: https://openrouter.ai/api/v1
 
+  # Static file serving configuration. The default root matches the published
+  # Endeavor container image.
+  static:
+    serve: true
+    root: /var/www/endeavor/static
+    url: /static
+
   # Backup API configuration
   backup:
     enableAPI: false
@@ -188,10 +195,32 @@ endeavor:
   horizon:
     rendererCacheSize: 128
 
-  # Radish specifies the configuration for the async task client
+  # Compass specifies the configuration for the Compass client.
+  compass:
+    base: http://127.0.0.1:8000
+    timeout: 150s
+
+  # Radish specifies the configuration for the async task queue. Connection
+  # settings are managed by Endeavor's store and are intentionally omitted.
   radish:
-    workers: 8
-    queueSize: 128
+    numWorkers: 8
+    taskRetries: 3
+    taskTimeout: 60s
+    pollInterval: 5s
+    pollJitter: 125ms
+    retention: 24h
+    vacuumInterval: 3h
+    backoff:
+      policy: linear
+      delay: 10s
+      factor: 2.0
+      jitter: false
+      sigma: 750ms
+
+  # Catalog specifies the configuration for background model catalog synchronization.
+  catalog:
+    syncControllerInterval: 5m
+    providerSyncInterval: 60m
 
   # Tasks: load horizon task routes from a zip at startup when enableLoader is true.
   # LoaderPath must be an absolute path inside the container and must point to a ZIP that
@@ -200,20 +229,17 @@ endeavor:
     enableLoader: false
     # Absolute path to the Horizon tasks zip; use with storage.tasks mount (emptyDir) when not on a blobs PVC.
     loaderPath: /var/run/endeavor/horizontasks/compass.zip
-    # Optional Beacon fixture API (see endeavor BeaconConfig). When beaconUrl is set,
-    # ENDEAVOR_TASKS_BEACON_BEACON_URL is exported. Set beaconTTL (e.g. 5m) for periodic refresh.
+    # Optional Beacon fixture API (see endeavor BeaconConfig). When url is set,
+    # ENDEAVOR_TASKS_BEACON_URL is exported. Set ttl (e.g. 5m) for periodic refresh.
     # Basic auth is optional cleartext env (temporary); omit username/password to skip cred env vars.
     beacon:
-      beaconUrl: ""
-      beaconTTL: ""
+      url: ""
+      ttl: ""
       # Preferred: read basic auth credentials from a Secret.
       authSecret:
         secretName: ""
         usernameKey: beaconBasicAuthUsername
         passwordKey: beaconBasicAuthPassword
-      # Backwards-compatible fallback (used when authSecret.secretName is empty).
-      basicAuthUsername: ""
-      basicAuthPassword: ""
 
   # MCP specifies the configuration for the MCP gateway and related systems
   mcp:
@@ -227,12 +253,11 @@ endeavor:
 
   # Telemetry is primarily configured via the open telemetry sdk environment variables. As such there is no need to
   # specify OTel specific configuration here. This config is used primarily to enable/disable telemetry and to set
-  # values for custom telemetry.
-  # 'endeavor.telemetry.serviceName' uses env var: OTEL_SERVICE_NAME
+  # values for custom telemetry. Configure OTEL_SERVICE_NAME with
+  # 'opentelemetry.serviceName'.
   # 'endeavor.telemetry.serviceAddr' uses env var: GIMLET_OTEL_SERVICE_ADDR
   telemetry:
     enabled: true
-    serviceName: null
     serviceAddr: null
 
   # Blobs specifies the configuration for the 'blobs' blob storage module.
