@@ -126,6 +126,7 @@ endeavor:
   horizon:
     rendererCacheSize: 256
   radish:
+    managedDB: true
     numWorkers: 4
     taskRetries: 5
     taskTimeout: 90s

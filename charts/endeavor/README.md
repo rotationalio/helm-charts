@@ -593,6 +593,11 @@ ENDEAVOR_COMPASS_TIMEOUT
   [type]        Duration
   [default]     150s
   [required]
+RADISH_MANAGED_DB
+  [description] use the database connection managed by Endeavor's store instead of connecting to a separate DSN
+  [type]        True or False
+  [default]     true
+  [required]
 RADISH_NUM_WORKERS
   [description] the number of workers to use for the task queue
   [type]        Integer

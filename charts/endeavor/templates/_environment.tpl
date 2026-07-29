@@ -131,6 +131,8 @@ env:
         name: {{ .Values.endeavor.tasks.beacon.authSecret.secretName }}
         key: {{ .Values.endeavor.tasks.beacon.authSecret.passwordKey }}
   {{- end }}
+  - name: RADISH_MANAGED_DB
+    value: {{ .Values.endeavor.radish.managedDB | quote }}
   - name: RADISH_NUM_WORKERS
     value: {{ .Values.endeavor.radish.numWorkers | quote }}
   - name: RADISH_TASK_RETRIES

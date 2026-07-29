@@ -203,6 +203,8 @@ endeavor:
   # Radish specifies the configuration for the async task queue. Connection
   # settings are managed by Endeavor's store and are intentionally omitted.
   radish:
+    # By default, Radish will use a connection provided by Endeavor's store.
+    managedDB: true
     numWorkers: 8
     taskRetries: 3
     taskTimeout: 60s
