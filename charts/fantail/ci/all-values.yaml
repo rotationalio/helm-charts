@@ -1,0 +1,15 @@
+fantail:
+  logLevel: debug
+
+fullnameOverride: fantail-ci
+
+ingress:
+  enabled: true
+  hostname: fantail.example.com
+  tls:
+    secretName: tls-certs
+
+storage:
+  tools:
+    - secret:
+        name: http-nws-secret
