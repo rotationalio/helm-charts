@@ -4,7 +4,7 @@ fantail:
 fullnameOverride: fantail-ci
 
 ingress:
-  enabled: true
+  enabled: false
   hostname: fantail.example.com
   tls:
     secretName: tls-certs
