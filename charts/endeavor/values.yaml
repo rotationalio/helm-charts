@@ -176,10 +176,6 @@ endeavor:
         trustedTypes: []
         upgradeInsecureRequests: false
 
-  # Inference specifies the configuration for the inference client
-  inference:
-    endpointURL: https://openrouter.ai/api/v1
-
   # Static file serving configuration. The default root matches the published
   # Endeavor container image.
   static:
@@ -302,10 +298,6 @@ secrets:
   databaseURL:
     secretName: ""
     secretKey: databaseURL
-    value: ""
-  inferenceAPIKey:
-    secretName: ""
-    secretKey: inferenceAPIKey
     value: ""
   csrfSecret:
     secretName: ""
