@@ -81,6 +81,6 @@ volumes:
      sources:
      {{- toYaml . | nindent 6 }}
      {{- else }}
-     sources: {}
+     sources: []
      {{- end }}
 {{- end }}
