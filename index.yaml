@@ -2467,6 +2467,20 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/endeavor-0.1.0/endeavor-0.1.0.tgz
     version: 0.1.0
+  fantail:
+  - apiVersion: v2
+    appVersion: 1.8.0
+    created: "2026-08-07T13:55:32.461538297Z"
+    description: An MCP server for tool discovery and execution
+    digest: c979cbd3393c3fb92dfb0138acee8cecaa795d4fd3479fd6e9e92b217c17fa1b
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: fantail
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/fantail-0.1.0/fantail-0.1.0.tgz
+    version: 0.1.0
   geoping:
   - apiVersion: v2
     appVersion: 1.3.0
@@ -3369,4 +3383,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-08-07T13:37:26.789525016Z"
+generated: "2026-08-07T13:55:32.461967413Z"
