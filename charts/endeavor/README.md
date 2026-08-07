@@ -24,7 +24,6 @@ This chart expects pre-existing Kubernetes secrets by default (`secrets.create=f
 Common required secret keys:
 
 - `databaseURL` (from `secrets.databaseURL`)
-- `inferenceAPIKey` (from `secrets.inferenceAPIKey`)
 - `cofferKeys` when coffer is enabled (from `secrets.cofferKeys`)
 - `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` when S3 blobs are used (from `secrets.aws`)
 
@@ -477,16 +476,6 @@ ENDEAVOR_SECURE_HSTS_PRELOAD
   [description] If true, adds the preload directive to the HSTS header. It has no effect unless Seconds is set to a non-zero value and IncludeSubdomains is true.
   [type]        True or False
   [default]     false
-  [required]
-ENDEAVOR_INFERENCE_ENDPOINT_URL
-  [description] the url of the inference endpoint
-  [type]        String
-  [default]     http://localhost:8002
-  [required]
-ENDEAVOR_INFERENCE_API_KEY
-  [description] the api key to use for the inference client, if required
-  [type]        String
-  [default]     apikey
   [required]
 ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
   [description] the size of the renderer cache

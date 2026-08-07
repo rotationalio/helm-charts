@@ -76,15 +76,6 @@ env:
   - name: ENDEAVOR_SECURE_HSTS_PRELOAD
     value: {{ .Values.endeavor.secure.hsts.preload | quote }}
   {{- end }}
-  {{- if .Values.endeavor.inference.endpointURL }}
-  - name: ENDEAVOR_INFERENCE_ENDPOINT_URL
-    value: {{ .Values.endeavor.inference.endpointURL | quote }}
-  {{- end }}
-  - name: ENDEAVOR_INFERENCE_API_KEY
-    valueFrom:
-      secretKeyRef:
-        name: {{ include "endeavor.inferenceAPIKeySecretName" . }}
-        key: {{ .Values.secrets.inferenceAPIKey.secretKey }}
   - name: ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
     value: {{ .Values.endeavor.horizon.rendererCacheSize | quote }}
   - name: ENDEAVOR_COMPASS_BASE
