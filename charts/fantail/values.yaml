@@ -61,9 +61,6 @@ storage:
       resources:
         requests:
           storage: 64Mi
-  tools:
-    - secret:
-        name: http-nws-secret
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
