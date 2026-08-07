@@ -10,8 +10,6 @@ endeavor:
 
 secrets:
   create: true
-  inferenceAPIKey:
-    value: "inferenceapikey"
 
 quarterdeck:
   enabled: true

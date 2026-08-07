@@ -115,8 +115,6 @@ endeavor:
         requireTrustedTypesFor: []
         trustedTypes: []
         upgradeInsecureRequests: false
-  inference:
-    endpointURL: "https://inference.example.com/v1"
   static:
     serve: true
     root: "/var/www/endeavor/static"
@@ -181,10 +179,6 @@ secrets:
     secretName: ""
     secretKey: databaseURL
     value: "postgres://user:pass@db.example.com:5432/endeavor"
-  inferenceAPIKey:
-    secretName: ""
-    secretKey: inferenceAPIKey
-    value: "sk-inference-example"
   csrfSecret:
     secretName: ""
     secretKey: csrfSecret
