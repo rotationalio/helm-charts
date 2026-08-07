@@ -1,0 +1,53 @@
+# National Weather Service API
+
+sources:
+  nws-points:
+    kind: http
+    baseUrl: https://api.weather.gov/points
+
+  nws-gridpoints:
+    kind: http
+    baseUrl: https://api.weather.gov/gridpoints
+
+tools:
+  nws-points-detail:
+    kind: http
+    source: nws-points
+    method: GET
+    path: /{{.latitude}},{{.longitude}}
+    description: Retrieve details for the NWS location for a latitude/longitude point, including the office and grid points.
+    pathParams:
+      - name: latitude
+        type: float
+        description: Latitude (decimal format)
+      - name: longitude
+        type: float
+        description: Longitude (decimal format)
+
+  nws-gridpoints-forecast:
+    kind: http
+    source: nws-gridpoints
+    method: GET
+    path: /{{.office}}/{{.gridX}},{{.gridY}}/forecast
+    description: Retrieve details for an NWS office and grid X/Y points (use the 'nws-points-detail' tool to find the office and X/Y grids for a lat/lon location).
+    pathParams:
+      - name: office
+        type: string
+        description: NWS office code
+      - name: gridX
+        type: integer
+        description: NWS grid X value
+      - name: gridY
+        type: integer
+        description: NWS grid Y value
+
+prompts:
+  nws-get-weather:
+    description: "Asks the LLM to get the weather details for a lat/lon location."
+    messages:
+      - content: "Please get the weather using the NWS API tools provided. First use the 'nws-points-detail' tool with the latitude {{.lat}} and the longitude {{.lon}} to get the NWS office and X and Y grid points for that location. Second, use the 'nws-gridpoints-forecast' tool with the office and gridX and gridY you found with the first tool to get the weather details for that location and provide them to me."
+    arguments:
+      - name: "lat"
+        description: "latitude (in decimal format)"
+      - name: "lon"
+        description: "longitude (in decimal format)"

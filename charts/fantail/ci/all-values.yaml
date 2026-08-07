@@ -1,0 +1,10 @@
+fantail:
+  logLevel: debug
+
+fullnameOverride: fantail-ci
+
+ingress:
+  enabled: false
+  hostname: fantail.example.com
+  tls:
+    secretName: tls-certs
