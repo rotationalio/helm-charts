@@ -77,10 +77,10 @@ Mounted tools in the volume
 volumes:
  - name: {{ include "fantail.name" . }}-config
    projected:
-     sources:
      {{- with .Values.storage.tools }}
+     sources:
      {{- toYaml . | nindent 6 }}
      {{- else }}
-     {}
+     sources: {}
      {{- end }}
 {{- end }}
