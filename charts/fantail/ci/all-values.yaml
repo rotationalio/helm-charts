@@ -8,8 +8,3 @@ ingress:
   hostname: fantail.example.com
   tls:
     secretName: tls-certs
-
-storage:
-  tools:
-    - secret:
-        name: http-nws-secret
