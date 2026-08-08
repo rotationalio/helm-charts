@@ -15,7 +15,7 @@ env:
   - name: BEACON_COMPASS_ENABLED
     value: {{ .Values.beacon.compass.enabled | quote }}
   - name: BEACON_COMPASS_FIXTURES
-    value: {{ .Values.storage.fixtures.mountPath | quote }}
+    value: {{ printf "%s/compass" .Values.storage.fixtures.mountPath | quote }}
   - name: BEACON_TELEMETRY_ENABLED
     value: {{ .Values.beacon.telemetry.enabled | quote }}
   {{- if .Values.beacon.telemetry.serviceAddr }}
