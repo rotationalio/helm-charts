@@ -111,6 +111,28 @@ entries:
     version: 0.1.0
   beacon:
   - apiVersion: v2
+    appVersion: 0.2.0
+    created: "2026-08-08T22:18:49.142793346Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Rotational Beacon — billing, licenses, and deployment management
+      (includes Compass API).
+    digest: fd0111919ed315f600fae54cab9ceac096321b2d17bde18525f30b095411af7b
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: beacon
+    sources:
+    - https://github.com/rotationalio/beacon
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/beacon-0.2.0/beacon-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: 0.1.1
     created: "2026-05-16T01:03:14.530324212Z"
     dependencies:
@@ -3383,4 +3405,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-08-07T13:55:32.461967413Z"
+generated: "2026-08-08T22:18:49.143076506Z"
