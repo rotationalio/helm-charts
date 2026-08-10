@@ -108,6 +108,10 @@ env:
   - name: ENDEAVOR_TASKS_BEACON_TTL
     value: {{ .Values.endeavor.tasks.beacon.ttl | quote }}
   {{- end }}
+  {{- if .Values.endeavor.tasks.beacon.compassVersion }}
+  - name: ENDEAVOR_TASKS_BEACON_COMPASS_VERSION
+    value: {{ .Values.endeavor.tasks.beacon.compassVersion | quote }}
+  {{- end }}
   {{- if and .Values.endeavor.tasks.beacon.url .Values.endeavor.tasks.beacon.authSecret.secretName }}
   - name: ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
     value: "basic"
@@ -130,6 +134,8 @@ env:
     value: {{ .Values.endeavor.radish.taskRetries | quote }}
   - name: RADISH_TASK_TIMEOUT
     value: {{ .Values.endeavor.radish.taskTimeout | quote }}
+  - name: RADISH_CLEANUP_TIMEOUT
+    value: {{ .Values.endeavor.radish.cleanupTimeout | quote }}
   - name: RADISH_POLL_INTERVAL
     value: {{ .Values.endeavor.radish.pollInterval | quote }}
   - name: RADISH_POLL_JITTER

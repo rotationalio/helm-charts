@@ -128,6 +128,7 @@ endeavor:
     numWorkers: 4
     taskRetries: 5
     taskTimeout: 90s
+    cleanupTimeout: 8s
     pollInterval: 7s
     pollJitter: 250ms
     retention: 36h
@@ -147,6 +148,7 @@ endeavor:
     beacon:
       url: "https://beacon.example.com"
       ttl: "5m"
+      compassVersion: "0.37.0"
       authSecret:
         secretName: "endeavor-secrets"
         usernameKey: "beaconBasicAuthUsername"

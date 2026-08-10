@@ -203,7 +203,8 @@ endeavor:
     managedDB: true
     numWorkers: 8
     taskRetries: 3
-    taskTimeout: 60s
+    taskTimeout: 180s
+    cleanupTimeout: 5s
     pollInterval: 5s
     pollJitter: 125ms
     retention: 24h
@@ -229,10 +230,13 @@ endeavor:
     loaderPath: /var/run/endeavor/horizontasks/compass.zip
     # Optional Beacon fixture API (see endeavor BeaconConfig). When url is set,
     # ENDEAVOR_TASKS_BEACON_URL is exported. Set ttl (e.g. 5m) for periodic refresh.
+    # Set compassVersion to pin a specific semver Compass fixture; otherwise Beacon
+    # selects the fixture compatible with the running Endeavor version.
     # Basic auth is optional cleartext env (temporary); omit username/password to skip cred env vars.
     beacon:
       url: ""
       ttl: ""
+      compassVersion: ""
       # Preferred: read basic auth credentials from a Secret.
       authSecret:
         secretName: ""

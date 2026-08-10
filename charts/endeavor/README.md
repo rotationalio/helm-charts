@@ -44,6 +44,7 @@ endeavor:
     beacon:
       url: "https://beacon.rotational.app"
       ttl: "24h"
+      compassVersion: "0.37.0"
       authSecret:
         secretName: "my-tenant-endeavor"
         usernameKey: "beaconBasicAuthUsername"
@@ -522,6 +523,11 @@ ENDEAVOR_TASKS_BEACON_TTL
   [type]        Duration
   [default]     0s
   [required]
+ENDEAVOR_TASKS_BEACON_COMPASS_VERSION
+  [description] the specific semver version of the Compass fixture to use; if empty, the beacon client will retrieve the latest fixture for the Endeavor version running
+  [type]        String
+  [default]
+  [required]
 ENDEAVOR_TASKS_BEACON_CREDENTIALS_TYPE
   [description] the type of credentials being described in the environment variables
   [type]        String
@@ -601,6 +607,11 @@ RADISH_TASK_TIMEOUT
   [description] the maximum duration a task may run
   [type]        Duration
   [default]     60s
+  [required]
+RADISH_CLEANUP_TIMEOUT
+  [description] the amount of time to allow task cleanup operations to complete after worker execution
+  [type]        Duration
+  [default]     5s
   [required]
 RADISH_POLL_INTERVAL
   [description] interval between queue polling attempts
