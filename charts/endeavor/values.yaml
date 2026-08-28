@@ -27,8 +27,8 @@ strategy:
 
 image:
   repository: rotationalio/endeavor
-  pullPolicy: Always # Specify image pull policy (Always, IfNotPresent, Never).
-  tag: "" # Overrides the image tag whose default is the chart appVersion.
+  pullPolicy: Always   # Specify image pull policy (Always, IfNotPresent, Never).
+  tag: ""              # Overrides the image tag whose default is the chart appVersion.
 
 imagePullSecrets: []
 
