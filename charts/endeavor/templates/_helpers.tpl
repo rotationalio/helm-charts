@@ -5,6 +5,10 @@ Expand the name of the chart.
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
+{{- define "genoa.name" -}}
+{{- printf "genoa-%s" (include "endeavor.name" .) | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
 {{/*
 Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
@@ -42,6 +46,15 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
 
+{{- define "genoa.labels" -}}
+helm.sh/chart: {{ include "endeavor.chart" . }}
+{{ include "genoa.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Values.genoa.image.tag | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
 {{/*
 Selector labels
 */}}
@@ -49,6 +62,12 @@ Selector labels
 app.kubernetes.io/name: {{ include "endeavor.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{- define "genoa.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "endeavor.name" . }}-genoa
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
 
 {{- define "endeavor.databaseURLSecretName" -}}
 {{- if .Values.secrets.create -}}

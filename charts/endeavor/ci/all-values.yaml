@@ -8,6 +8,11 @@ global:
 endeavor:
   origin: http://endeavor.svc.cluster.local
 
+genoa:
+  enabled: true
+  serviceAccount:
+    create: true
+
 secrets:
   create: true
 
