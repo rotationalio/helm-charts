@@ -1,0 +1,46 @@
+{{- if .Values.genoa.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "genoa.name" . }}
+  labels:
+    {{- include "genoa.labels" . | nindent 4 }}
+  annotations:
+    {{- if eq .Values.genoa.lifecycle "helm" }}
+    helm.sh/hook: pre-upgrade,pre-install
+    helm.sh/hook-weight: "1"
+    helm.sh/hook-delete-policy: before-hook-creation
+    {{- end }}
+    {{- if eq .Values.genoa.lifecycle "argocd" }}
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    {{- end }}
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "genoa.labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ .Values.genoa.serviceAccount.name }}
+      restartPolicy: Never
+      containers:
+      - name: genoa
+        image: {{ .Values.genoa.image.repository }}:{{ .Values.genoa.image.tag }}
+        imagePullPolicy: {{ .Values.genoa.image.pullPolicy }}
+        {{- with .Values.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- include "genoa.environment" . | nindent 8 }}
+        {{- with .Values.genoa.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 300
+{{- end -}}
