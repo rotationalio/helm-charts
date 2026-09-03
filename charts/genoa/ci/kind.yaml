@@ -1,0 +1,15 @@
+genoa:
+  release: demo-endeavor
+  adminDatabaseURL:
+    secretName: admin-database-credentials
+  commands:
+  - kind: EnsureDatabase
+    args: {}
+  - kind: JWKSRotation
+    args: {}
+  - kind: CofferRotation
+    args:
+      namespaces:
+        - ""
+        - "providers"
+        - "capabilities"

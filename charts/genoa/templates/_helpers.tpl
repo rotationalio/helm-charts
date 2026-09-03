@@ -24,6 +24,14 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Because Genoa is a dependency chart, release names are usually set by the parent chart.
+Parent charts can override this definition to set the release name to a different value.
+*/}}
+{{- define "genoa.releaseName" -}}
+{{ .Values.genoa.release | default (include "genoa.fullname" . ) }}
+{{- end }}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "genoa.chart" -}}

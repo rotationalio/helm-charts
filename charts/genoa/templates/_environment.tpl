@@ -13,7 +13,7 @@ env:
   - name: GENOA_RESOURCE_PATH
     value: {{ include "genoa.resourcePath" . | quote }}
   - name: GENOA_RELEASE
-    value: {{ .Values.genoa.release | default (include "genoa.fullname" . ) | quote }}
+    value: {{ include "genoa.releaseName" . | quote }}
   - name: GENOA_NAMESPACE
     value: {{ .Release.Namespace | quote }}
   {{- if .Values.genoa.adminDatabaseURL.secretName }}
