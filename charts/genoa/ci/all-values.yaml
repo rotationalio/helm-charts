@@ -1,0 +1,13 @@
+genoa:
+  release: rotational-endeavor
+  adminDatabaseURL:
+    secretName: endeavor-admin-credentials
+  commands:
+  - kind: EnsureDatabase
+  - kind: JWKSRotation
+  - kind: CofferRotation
+    args:
+      namespaces:
+        - ""
+        - "providers"
+        - "capabilities"

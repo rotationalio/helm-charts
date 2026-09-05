@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "genoa.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "genoa.labels" . | nindent 4 }}
+  annotations:
+    {{- include "genoa.annotations" (dict "lifecycle" .Release.Service "order" .Values.config.ordering) | nindent 4 }}
+data:
+  {{ default "genoa.yaml" .Values.config.filename }}: |
+    version: {{ (trimPrefix "v" (.Values.config.version | default .Chart.AppVersion)) | quote }}
+    release: {{ .Values.genoa.release | default (include "genoa.fullname" . ) | quote }}
+    commands:
+    {{- toYaml .Values.genoa.commands | nindent 4 -}}

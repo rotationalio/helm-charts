@@ -8,13 +8,15 @@ global:
 endeavor:
   origin: http://endeavor.svc.cluster.local
 
-genoa:
-  enabled: true
-  serviceAccount:
-    create: true
-
 secrets:
   create: true
+
+genoa:
+  enabled: true
+
+  genoa:
+    adminDatabaseURL:
+      secretName: admin-database-credentials
 
 quarterdeck:
   enabled: true

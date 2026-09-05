@@ -21,13 +21,19 @@ rotational` to see the charts.
 
 ## Available Charts
 
+### Services
+
 - [Endeavor](charts/endeavor/README.md)
 - [Quarterdeck](charts/quarterdeck/README.md)
+- [FanTail](charts/fantail/README.md)
 - [Honu](charts/honu/README.md)
-- [Compass](charts/compass/README.md)
 - [Linode ACME Webhook for cert-manager](charts/acme-linode/README.md)
 - [Geoping](charts/geoping/README.md)
 - [Vanity](charts/vanity/README.md)
+
+### Subcharts (Tools)
+
+- [Genoa](charts/genoa/README.md)
 - [Region Info](charts/regioninfo/README.md)
 - [OpenTelemetry](charts/opentelemetry/README.md)
 

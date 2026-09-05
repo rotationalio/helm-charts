@@ -280,45 +280,29 @@ endeavor:
 genoa:
   enabled: false
 
-  # Lifecycle annotations can be either "argocd" or "helm"
-  lifecycle: "argocd"
+  genoa:
+    # Do not set to use the fullname of the endeavor release.
+    # It is not recommend to override this value, but to set the release in the
+    # args of the specific commands being specified.
+    release: ""
 
-  # Genoa needs a service account that can read and write secrets in the namespace.
-  serviceAccount:
-    # Creates the service account if true, otherwise expects the service account to already exist.
-    create: false
+    # Specify the admin database URL secret.
+    adminDatabaseURL:
+      secretName: ""
+      secretKey: "databaseURL"
 
-    # Name of the service account to use (required)
-    name: genoa-service-account
-
-    # If create is true specify the names of the role and bindings to use
-    role: genoa-secret-manager-role
-    bind: genoa-secret-manager-binding
-
-  image:
-    repository: rotationalio/genoa
-    pullPolicy: Always
-    tag: "v1.0.0"
-
-  # Override global.logging
-  logLevel: null
-  consoleLog: null
-
-  # Configuration for the admin database connection to create databases and roles.
-  adminDatabaseURL:
-    secretName: ""
-    secretKey: adminDatabaseURL
-    value: ""
-
-  # The name of the database to create for Endeavor. By default it is the same as the
-  # as the chart name, e.g. <release-name>-endeavor. Note that genoa does not use the
-  # secret values for the databaseURL, if you want genoa to create a database with a
-  # specific name and password, you must specify the database name here and a secret
-  # with the database password.
-  database: ""
-
-  # Genoa specific resources configuration.
-  resources: {}
+    # These are the endeavor specific commands
+    commands:
+    - kind: EnsureDatabase
+      args: {}
+    - kind: JWKSRotation
+      args: {}
+    - kind: CofferRotation
+      args:
+        namespaces:
+          - ""
+          - "providers"
+          - "capabilities"
 
 # PVC for local blob storage when endeavor.blobs.uri uses the file:// scheme. Ignored for
 # non-file URIs. If existingClaim is set, the chart does not create a PVC and mounts that claim.
