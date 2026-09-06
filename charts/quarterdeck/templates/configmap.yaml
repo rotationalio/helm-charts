@@ -12,8 +12,8 @@ data:
   security.txt: |+
     {{- .Values.quarterdeck.securitytxt.text | nindent 4 }}
 {{- end -}}
-{{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
-{{- if and .Values.quarterdeck.securitytxt.text $we.create }}
+{{- $we := (include "quarterdeck.welcomeEmail" .) | fromYaml -}}
+{{- if and .Values.quarterdeck.securitytxt.create $we.create }}
 ---
 {{ end -}}
 {{- if $we.create -}}

@@ -1,7 +1,4 @@
 # Default welcomeEmail (merged with .Values.quarterdeck.app.welcomeEmail in templates).
-create: true
-configMap: ""
-mountPath: /data/app/emails
 textTemplate:
   key: welcome.txt
   value: |-

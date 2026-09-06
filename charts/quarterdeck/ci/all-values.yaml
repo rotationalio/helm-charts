@@ -39,6 +39,9 @@ quarterdeck:
     webhookURI: https://endeavor.co/callback
 
     # welcomeEmail: chart defaults (welcome-email.defaults.yaml)
+    welcomeEmail:
+      create: false
+      configMap: "quarterdeck-welcome-emails"
 
   org:
     name: Acme, Inc.
