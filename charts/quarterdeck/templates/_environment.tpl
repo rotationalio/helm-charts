@@ -68,9 +68,16 @@ env:
     {{- end }}
   - name: QD_DATABASE_READ_ONLY
     value: {{ .Values.quarterdeck.database.readOnly | quote }}
-  {{- if .Values.quarterdeck.auth.keys }}
+  {{- if or .Values.quarterdeck.auth.jwks.secretKeyRef .Values.quarterdeck.auth.jwks.keys }}
   - name: QD_AUTH_KEYS
-    value: {{ include "authKeys" . }}
+    {{- if .Values.quarterdeck.auth.jwks.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.auth.jwks.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.auth.jwks.secretKeyRef.key }}
+    {{- else }}
+    value: {{ include "quarterdeck.jwksKeyMap" . }}
+    {{- end }}
   {{- end }}
   - name: QD_AUTH_AUDIENCE
     value: {{ include "quarterdeck.audience" . }}
@@ -104,12 +111,16 @@ env:
     value: {{ .Values.quarterdeck.auth.tokenOverlap | quote }}
   - name: QD_CSRF_COOKIE_TTL
     value: {{ .Values.quarterdeck.csrf.cookieTTL | quote }}
-  {{- if or .Values.secrets.csrfSecret.secretName (and .Values.secrets.create .Values.secrets.csrfSecret.value) }}
+  {{- if or .Values.quarterdeck.csrf.secret.secretKeyRef .Values.quarterdeck.csrf.secret.value }}
   - name: QD_CSRF_SECRET
+    {{- if .Values.quarterdeck.csrf.secret.secretKeyRef }}
     valueFrom:
       secretKeyRef:
-        name: {{ include "endeavor.csrfSecretName" . }}
-        key: {{ .Values.secrets.csrfSecret.secretKey }}
+        name: {{ .Values.quarterdeck.csrf.secret.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.csrf.secret.secretKeyRef.key }}
+    {{- else }}
+    value: {{ .Values.quarterdeck.csrf.secret.value | quote }}
+    {{- end }}
   {{- end }}
   - name: QD_SECURE_CONTENT_TYPE_NOSNIFF
     value: {{ .Values.quarterdeck.secure.contentTypeNosniff | quote }}
@@ -255,9 +266,9 @@ env:
 {{- end -}}
 
 
-{{- define "authKeys" -}}
+{{- define "quarterdeck.jwksKeyMap" -}}
 {{- $parts := list -}}
-{{- range $key, $val := .Values.quarterdeck.auth.keys -}}
+{{- range $key, $val := .Values.quarterdeck.auth.jwks.keys -}}
   {{- $parts = append $parts (printf "%s:%s" $key $val) -}}
 {{- end -}}
 {{ join ";" $parts -}}

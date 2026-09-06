@@ -234,8 +234,8 @@ endeavor:
     # selects the fixture compatible with the running Endeavor version.
     # Basic auth is optional cleartext env (temporary); omit username/password to skip cred env vars.
     beacon:
-      url: ""
-      ttl: ""
+      url: "https://beacon.rotational.app"
+      ttl: "24h"
       compassVersion: ""
       # Preferred: read basic auth credentials from a Secret.
       authSecret:

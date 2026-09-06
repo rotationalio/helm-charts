@@ -1,15 +1,16 @@
-{{- if .Values.quarterdeck.securitytxt.text -}}
+{{- if .Values.quarterdeck.securitytxt.create -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "quarterdeck.name" . }}-securitytxt
+  name: {{ include "quarterdeck.app.securitytxt.configMap.name" . }}
   namespace: {{ .Release.Namespace }}
   {{- with .Values.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 data:
-  security.txt: {{ .Values.quarterdeck.securitytxt.text | b64enc }}
+  security.txt: |+
+    {{- .Values.quarterdeck.securitytxt.text | nindent 4 }}
 {{- end -}}
 {{- $we := include "quarterdeck.welcomeEmail" . | fromYaml -}}
 {{- if and .Values.quarterdeck.securitytxt.text $we.create }}
@@ -27,7 +28,7 @@ metadata:
   {{- end }}
 data:
   {{ $we.textTemplate.key }}: |+
-    {{ $we.textTemplate.value | nindent 4 }}
+    {{- $we.textTemplate.value | nindent 4 }}
   {{ $we.htmlTemplate.key }}: |+
-    {{ $we.htmlTemplate.value | nindent 4 }}
+    {{- $we.htmlTemplate.value | nindent 4 }}
 {{- end -}}

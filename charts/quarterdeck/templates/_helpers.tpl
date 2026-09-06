@@ -23,6 +23,15 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 
+{{- define "quarterdeck.secrets.jwks.name" -}}
+{{- if .Values.secrets.jwks.secretRef -}}
+{{ .Values.secrets.jwks.secretRef }}
+{{- else -}}
+{{ include "quarterdeck.name" . }}-jwks
+{{- end -}}
+{{- end -}}
+
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}
@@ -91,7 +100,7 @@ Volume mounts for database storage if using sqlite3.
 {{- end -}}
 
 {{- define "quarterdeck.volumeMounts.jwks" -}}
-{{- if and .Values.quarterdeck.auth.keys .Values.secrets.jwks.secretName -}}
+{{- if or .Values.secrets.jwks.secretRef .Values.secrets.create -}}
 - name: {{ include "quarterdeck.name" . }}-jwks
   mountPath: {{ default "/data/jwks" .Values.secrets.jwks.mountPath }}
   readOnly: true
@@ -99,9 +108,9 @@ Volume mounts for database storage if using sqlite3.
 {{- end -}}
 
 {{- define "quarterdeck.volumeMounts.securitytxt" -}}
-{{- if .Values.quarterdeck.securitytxt.text -}}
+{{- if or .Values.quarterdeck.securitytxt.configMap .Values.quarterdeck.securitytxt.create -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
-  mountPath: {{ default "/data/info" (dir .Values.quarterdeck.securitytxt.path) }}
+  mountPath: {{ default "/data/info" .Values.quarterdeck.securitytxt.mountPath }}
   readOnly: true
 {{- end -}}
 {{- end -}}
@@ -141,18 +150,18 @@ volumes:
 {{- end -}}
 
 {{- define "quarterdeck.volumes.jwks" -}}
-{{- if and .Values.quarterdeck.auth.keys .Values.secrets.jwks.secretName -}}
+{{- if or .Values.secrets.jwks.secretRef .Values.secrets.create -}}
 - name: {{ include "quarterdeck.name" . }}-jwks
   secret:
-    secretName: {{ .Values.secrets.jwks.secretName }}
+    secretName: {{ default .Values.secrets.jwks.secretRef | default (include "quarterdeck.secrets.jwks.name" .) }}
 {{- end -}}
 {{- end -}}
 
 {{- define "quarterdeck.volumes.securitytxt" -}}
-{{- if .Values.quarterdeck.securitytxt.text -}}
+{{- if or .Values.quarterdeck.securitytxt.configMap .Values.quarterdeck.securitytxt.create -}}
 - name: {{ include "quarterdeck.name" . }}-securitytxt
   configMap:
-    name: {{ include "quarterdeck.name" . }}-securitytxt
+    name: {{ .Values.quarterdeck.securitytxt.configMap | default (include "quarterdeck.app.securitytxt.configMap.name" .) }}
 {{- end -}}
 {{- end -}}
 
@@ -183,5 +192,13 @@ volumes:
 {{ $we.configMap }}
 {{- else -}}
 {{ include "quarterdeck.name" . }}-welcome-emails
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.app.securitytxt.configMap.name" -}}
+{{- if .Values.quarterdeck.securitytxt.configMap -}}
+{{ .Values.quarterdeck.securitytxt.configMap }}
+{{- else -}}
+{{ include "quarterdeck.name" . }}-securitytxt
 {{- end -}}
 {{- end -}}

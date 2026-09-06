@@ -82,26 +82,31 @@ quarterdeck:
 
   org:
     name: null
-    streetAddres: null
+    streetAddress: null
     homepage: null
     supportEmail: null
 
   # The DSN to connect to the database. If using a statefulset, this should be set to
   # a sqlite3 volume mount point, if using an external database, this should be
-  # configured to allow connection to the databse server.
+  # configured to allow connection to the database server.
   # TODO: allow this to be stored in a secret if it has database credentials.
   database:
     URL:
       value: sqlite3:////data/db/quarterdeck.db
-      secretKeyRef: null  # { name: "", key: "" }
+      secretKeyRef: null
     readOnly: false
 
   # Modifies how Quarterdeck handles authentication and authorization for its applications.
   auth:
-    # If you're configuring Quarterdeck to use specific Ed25519 keys, set the key value
-    # to the KeyID and the value to the path the PEM encoded key is mounted to. If this is
-    # empty, then Quarterdeck will generate a new key pair on startup.
-    keys: {}
+
+    # If the JWKS configuration is empty, then Quarterdeck will generate a new key pair on startup.
+    jwks:
+      # If using genoa to rotate JWKS keys, set the configuration secret reference here.
+      secretKeyRef: null
+
+      # If you're configuring Quarterdeck to use specific Ed25519 keys, set the key value
+      # to the KeyID and the value to the path the PEM encoded key is mounted to.
+      keys: {}
 
     # Override global.origins as the primary audience (do not set unless you know what you're doing)
     # The audience is a list of domains that are allowed to authenticate with Quarterdeck.
@@ -136,7 +141,11 @@ quarterdeck:
   # Manages CSRF (cross-site request forgery) protection and middleware.
   csrf:
     cookieTTL: "15m"
-    secret: ""
+
+    # The secret to use for CSRF protection. If not set, a random secret will be generated.
+    secret:
+      value: ""
+      secretKeyRef: null
 
   # Manages browser security features such as Referrers, HSTS and Content Security Policies.
   secure:
@@ -251,7 +260,9 @@ quarterdeck:
   # Quarterdeck can be configured to return a security.txt file that defines security policies
   # see: https://securitytxt.org/ for more information.
   securitytxt:
-    path: /data/info/security.txt
+    create: false
+    configMap: ""
+    mountPath: /data/info
     text: ""
 
   # Enable rate limiting to prevent spam and abuse.
@@ -274,18 +285,15 @@ quarterdeck:
 secrets:
   create: false
 
-  # If specifing keys, then you must manually create a secret with the keys as files
-  # that will be mounted to the pods as specified below:
+  # If specifing JWKS keys, then you must manually create a secret with the keys as
+  # files that will be mounted to the pods as specified below. NOTE: this secret must
+  # match the reference in the quarterdeck.auth.jwks.secretKeyRef configuration.
+  # If setting the quarterdeck.auth.jwks.keys and the secrets.jwks.keyhs with create,
+  # ensure the filename of the keys matches the value of the key ID in quarterdeck.
   jwks:
-    secretName: ""
-    mountPath: /data/jwks
-
-  # Generally speaking the CSRF token secret does not need to be set
-  csrfSecret:
-    secretName: ""
-    secretKey: csrfSecret
-    value: ""
-
+    secretRef: ""           # The name of the secret to use/create for the JWKS keys (should be unique since all secrets are mounted as files)
+    mountPath: /data/jwks   # The path to mount the JWKS keys to in the pod.
+    keys: {}                # If create is true, then the key value should be the filename of the key and the value should be PEM encoded private keys.
 
 # Additional pod spec configuration
 pod:

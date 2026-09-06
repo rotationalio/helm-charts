@@ -17,6 +17,7 @@ quarterdeck:
     readOnly: true
 
   securitytxt:
+    create: true
     text: |
       Contact: mailto:security@example.com
       Expires: 2037-11-14T22:07:00.000Z
@@ -26,8 +27,10 @@ quarterdeck:
       Policy: https://example.com/security
 
   auth:
-    keys:
-      01K3KXRFKSVV9HQ26GD6RRBEK9: /data/jwks/01K3KXRFKSVV9HQ26GD6RRBEK9.pem
+    jwks:
+      secretKeyRef:
+        name: quarterdeck-jwks
+        key: authKeys
 
   app:
     name: Endeavor
@@ -58,7 +61,7 @@ quarterdeck:
 
 secrets:
   jwks:
-    secretName: rotational-jwks
+    secretRef: rotational-jwks
 
 
 opentelemetry:
