@@ -56,12 +56,10 @@ This section creates describes some of the best practices when developing charts
 To create a new chart:
 
 ```
-$ helm create -p $PWD/scaffold ./charts/[name]
+$ helm create -p $PWD/starts/deployment ./charts/[name]
 ```
 
-This will create a new chart with name [name] in the `./charts` directory. The scaffold setup ensures that things are setup the rotational way.
-
-NOTE: The `-p` flag requires an absolute path, hence the use of `$PWD`.
+This will create a new chart with name [name] in the `./charts` directory. The starts setup ensures that things are setup the Rotational way.
 
 Some key differences:
 
@@ -72,6 +70,53 @@ Some key differences:
 - Updates to the `NOTES.txt` template
 - Use of an `app` configuration dictionary for application specific values
 - Use of a config map to inject non-secret environment variables.
+
+NOTE: The `-p` flag requires an absolute path, hence the use of `$PWD`. To avoid this, you can copy the contents of the starters directory to `~/Library/helm/starters` then use the name of the folder as the starter.
+
+NOTE: The `Chart.yaml` file is not copied from starters, so make sure you update it with the following:
+
+```yaml
+apiVersion: v2
+name: <CHARTNAME>
+description: A Helm chart for <CHARTNAME>
+
+# Project Information
+home: https://rotational.io
+icon: https://rotational.io/img/favicon.png
+sources:
+  - https://github.com/rotationalio/<CHARTNAME>
+maintainers:
+  - name: Rotational Labs
+    email: support@rotational.io
+keywords:
+  - <CHARTNAME>
+
+# A chart can be either an 'application' or a 'library' chart. Applications are deployed
+# to clusters whereas library charts are used to share common utilities between charts.
+type: application
+
+# This is the chart version. This version number should be incremented each time you
+# make changes to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+# See the README.md for more information on versioning.
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number
+# should be incremented each time you make changes to the application.
+appVersion: "1.0.0"
+
+# Dependencies that the chart uses to render additional templates.
+# Use helm dep update to ensure the Chart.lock file is up to date.
+dependencies:
+  - name: opentelemetry
+    version: ~1.0
+    repository: file://../opentelemetry
+    condition: opentelemetry.enabled
+  - name: regioninfo
+    version: ~1.1
+    repository: file://../regioninfo
+    condition: regioninfo.enabled
+```
 
 ### Application configuration
 

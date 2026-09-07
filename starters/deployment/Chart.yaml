@@ -13,7 +13,6 @@ maintainers:
 keywords:
   - <CHARTNAME>
 
-
 # A chart can be either an 'application' or a 'library' chart. Applications are deployed
 # to clusters whereas library charts are used to share common utilities between charts.
 type: application
