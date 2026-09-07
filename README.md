@@ -56,10 +56,12 @@ This section creates describes some of the best practices when developing charts
 To create a new chart:
 
 ```
-$ helm create -p scaffold ./charts/[name]
+$ helm create -p $PWD/scaffold ./charts/[name]
 ```
 
 This will create a new chart with name [name] in the `./charts` directory. The scaffold setup ensures that things are setup the rotational way.
+
+NOTE: The `-p` flag requires an absolute path, hence the use of `$PWD`.
 
 Some key differences:
 
@@ -83,7 +85,81 @@ A note on precedence: If a variable name exists in both the ConfigMap (`envFrom`
 
 ### Secrets
 
-When specifying
+When specifying a sensitive configuration value, we should add the configuration value to the `app` values as follows:
+
+```yaml
+app:
+  databaseURL:
+    value: ""
+    secretKeyRef:
+      name: ""
+      key: databaseURL
+```
+
+Then in the `_environment.tpl` helper file, you would add the secret as follows:
+
+```yaml
+- name: APP_ENV_VAR
+  {{- if .Values.app.databaseURL.value }}
+  value: {{ .Values.app.databaseURL.value | quote}}
+  {{- else }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.app.databaseURL.secretKeyRef.name | default (include foo.name .) }}
+      key: {{ .Values.app.databaseURL.secretKeyRef.key }}
+  {{- end }}
+```
+
+NOTE: `foo.name` above is the chart name helper to generate the secret key value.
+
+The value of the configuration in the `.Values.app` dictionary is only used to hard set the value into the environment (not recommended). It is not used in the secret creation process.
+
+If the user wants the chart to generate the secret (e.g. the helm process loads the secret from an environment or vault) then that definition is as follows:
+
+```yaml
+secrets:
+  create: true
+
+  databaseURL:
+    value: "" # must be set by user to create this secret or it is skipped
+    secretKey: databaseURL
+```
+
+Note that this is a similar structure to above but this is only used for creating the secret rather than creating the environment reference.
+
+If you are creating files for mounting the secret, then use the following structure:
+
+```yaml
+secrets:
+  create: true
+
+  jwks:
+    mountPath: /data/jwks
+    secretName: "" # defaults to the chart default secret name with -jwks appended
+    keys: {} # specify the filename/data pairs for the secret -- skipped if omitted
+```
+
+### Volumes and Volume Mounts
+
+Volumes and volume mounts go hand in hand so define them as helpers in `_volumes.tpl`. To make our lives simpler keep the `volume` definition and the `volumeMount` definition together e.g.:
+
+```
+{{- define foo.jwks.volume -}}
+...
+{{- end -}}
+
+{{- define foo.jwks.volumeMount -}}
+...
+{{- end -}}
+
+{{- define foo.mtls.volume -}}
+...
+{{- end -}}
+
+{{- define foo.mtls.volumeMount -}}
+...
+{{- end -}}
+```
 
 ### Versioning
 

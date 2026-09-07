@@ -1,0 +1,15 @@
+# CI Test Values for <CHARTNAME>
+# name override is set to "otter" to make it easier for CI testing.
+nameOverride: otter
+
+secrets:
+  create: true
+  databaseURL:
+    value: "postgres://postgres:theeaglefliesatmidnight@localhost:5432/<CHARTNAME>"
+
+configMap:
+  create: true
+
+ingress:
+  enabled: true
+  hostname: "<CHARTNAME>.dev"
