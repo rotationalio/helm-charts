@@ -4,9 +4,9 @@ dependencies:
   version: 0.15.0
 - name: genoa
   repository: file://../genoa
-  version: 1.1.1
+  version: 1.2.0
 - name: opentelemetry
   repository: file://../opentelemetry
   version: 1.0.1
-digest: sha256:e26e59317e2edd994ceffe51d79b7a934c65cb68761611bb1525351faf156cb1
-generated: "2026-09-09T10:13:58.517943-05:00"
+digest: sha256:1a187f72ca91ca7862cb81e503a06525bb89c1bc129100d950260e36fbc3aede
+generated: "2026-09-09T13:02:09.816851-05:00"
