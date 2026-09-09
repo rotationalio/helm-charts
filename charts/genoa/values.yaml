@@ -10,6 +10,9 @@ image:
 
 imagePullSecrets: []
 
+# Set to "argocd" or "helm" to set the lifecycle annotations (defaults to Helm)
+lifecycle: "helm"
+
 # Global variables are available to other charts as well.
 global:
   # Specify a global log level for all microservices (can be overridden)

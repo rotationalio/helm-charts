@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "genoa.labels" . | nindent 4 }}
   annotations:
-    {{- include "genoa.annotations" (dict "lifecycle" .Release.Service "order" .Values.genoa.ordering) | nindent 4 }}
+    {{- include "genoa.annotations" (dict "Values" .Values "order" .Values.genoa.ordering) | nindent 4 }}
 spec:
   backoffLimit: 0
   ttlSecondsAfterFinished: 300

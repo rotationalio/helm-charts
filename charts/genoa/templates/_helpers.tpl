@@ -62,21 +62,21 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Annotations for the Genoa job.
 Must specify the lifecycle and order variables, e.g.
 
-{{- include "genoa.annotations" (dict "lifecycle" .Release.Service "order" -2) }}
+{{- include "genoa.annotations" (dict "Values" .Values "order" -2) }}
 */}}
 {{- define "genoa.annotations" -}}
-{{- if eq .lifecycle "Helm" -}}
+{{- $lifecycle := (default "helm" .Values.lifecycle) | lower -}}
+{{- if eq $lifecycle "helm" -}}
 helm.sh/hook: pre-upgrade,pre-install
 helm.sh/hook-weight: {{ .order | quote }}
 helm.sh/hook-delete-policy: before-hook-creation
 {{- end }}
-{{- if eq .lifecycle "ArgoCD" -}}
+{{- if eq $lifecycle "argocd" -}}
 argocd.argoproj.io/hook: PreSync
 argocd.argoproj.io/sync-wave: {{ .order | quote }}
 argocd.argoproj.io/hook-delete-policy: HookSucceeded
-{{- end }}
-{{- end }}
-
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create the name of the service account to use
