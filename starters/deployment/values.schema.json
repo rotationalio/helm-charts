@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "title": "<CHARTNAME> Chart Values",
+  "description": "Helm values for the <CHARTNAME> deployment",
+  "definitions": {
+    "slug": {
+      "type": "string",
+      "maxLength": 63,
+      "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$"
+    },
+    "resourceQuantity": {
+      "type": "string",
+      "pattern": "^[0-9]+(m|Mi|Gi)?$"
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": { "$ref": "#/definitions/resourceQuantity" },
+            "memory": { "$ref": "#/definitions/resourceQuantity" }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": { "$ref": "#/definitions/resourceQuantity" },
+            "memory": { "$ref": "#/definitions/resourceQuantity" }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "nameOverride": { "$ref": "#/definitions/slug" },
+    "fullnameOverride": { "$ref": "#/definitions/slug" },
+    "replicaCount": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 1,
+      "description": "Number of pod replicas"
+    },
+    "image": {
+      "type": "object",
+      "description": "Container image configuration",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "examples": ["nginx", "rotationalio/beacon"]
+        },
+        "tag": { "type": "string", "description": "Image tag (Defaults to che Chart appVersion" },
+        "pullPolicy": {
+          "type": "string",
+          "enum": ["IfNotPresent", "Always", "Never"],
+          "default": "Always"
+        }
+      },
+      "required": ["repository"]
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "description": "Image pull secrets",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" }
+        },
+        "required": ["name"]
+      },
+      "default": []
+    },
+    "global": {
+      "type": "object",
+      "description": "Global configuration for all Rotational microservices",
+      "properties": {},
+      "required": []
+    },
+    "app": {
+      "type": "object",
+      "description": "Application specific configuration",
+      "properties": {},
+      "required": []
+    },
+    "secrets": {
+      "type": "object",
+      "description": "Secrets configuration",
+      "properties": {},
+      "required": []
+    },
+    "configMap": {
+      "type": "object",
+      "description": "ConfigMap configuration",
+      "properties": {},
+      "required": []
+    },
+    "regioninfo": {
+      "type": "object",
+      "description": "Region info configuration",
+      "properties": {},
+      "required": []
+    },
+    "opentelemetry": {
+      "type": "object",
+      "description": "OpenTelemetry configuration",
+      "properties": {},
+      "required": []
+    },
+    "pod": {
+      "type": "object",
+      "description": "Pod configuration",
+      "properties": {},
+      "required": []
+    },
+    "containers": {
+      "type": "object",
+      "description": "Containers configuration",
+      "properties": {},
+      "required": []
+    },
+    "service": {
+      "type": "object",
+      "description": "Service configuration",
+      "properties": {},
+      "required": []
+    },
+    "ingress": {
+      "type": "object",
+      "description": "Ingress configuration",
+      "properties": {},
+      "required": []
+    },
+    "httpRoute": {
+      "type": "object",
+      "description": "HTTPRoute configuration",
+      "properties": {},
+      "required": []
+    },
+    "livenessProbe": {
+      "type": "object",
+      "description": "Liveness probe configuration",
+      "properties": {},
+      "required": []
+    },
+    "readinessProbe": {
+      "type": "object",
+      "description": "Readiness probe configuration",
+      "properties": {},
+      "required": []
+    },
+    "volumes": {
+      "type": "array",
+      "description": "Volumes configuration",
+      "items": { "type": "object" },
+      "required": []
+    },
+    "volumeMounts": {
+      "type": "array",
+      "description": "Volume mounts configuration",
+      "items": { "type": "object" },
+      "required": []
+    },
+    "resources": { "$ref": "#/definitions/resources" },
+    "nodeSelector": { "type": "object", "description": "Node selector for the pods" },
+    "tolerations": { "type": "array", "description": "Tolerations for the pods" },
+    "affinity": { "type": "object", "description": "Affinity rules for the pods" }
+  },
+  "required": ["image"]
+}

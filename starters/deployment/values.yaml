@@ -1,0 +1,201 @@
+# Default values for deploying <CHARTNAME>.
+
+# Name overrides: by default the name for most objects will be release-<CHARTNAME>. It
+# is recommended to create a descriptive release name, but if you must override the
+# names separate from the release, you can set nameOverride. To remove the -<CHARTNAME>
+# suffix, set fullnameOverride.
+nameOverride: ""
+fullnameOverride: ""
+
+# This will set the replicaset count.
+replicaCount: 1
+
+# Container image configuration.
+image:
+  repository: rotationalio/<CHARTNAME>
+  pullPolicy: IfNotPresent
+  tag: ""   # Overrides the image tag whose default is the chart appVersion.
+
+imagePullSecrets: []
+
+# Global variables are common to all microservices in the Rotational ecosystem and are
+# shared across charts being used together.
+global:
+
+  # Specify a global gin mode for all microservices (release, debug, testing)
+  # Only specify debug mode if you know what you're doing.
+  mode: release
+
+  # Specify a global log level for all microservices (can be overridden)
+  # Verbosity of logging: trace, debug, info, warn, error, fatal, panic
+  logging:
+    level: info
+    console: false
+
+# Set the application specific configuration for <CHARTNAME>.
+app:
+  # Prefix for the environment variables. If not specified, the chart name will be used.
+  prefix: ""
+
+  # Maintenance mode is used to start the application without connecting to external
+  # services and can be used to run the pod debugging.
+  maintenance: false
+
+  # Override global.mode
+  mode: null
+
+  # Override global.logging
+  logging:
+    level: ""
+    console: null
+
+  # The DSN to connect to the database.
+  # By default the database URL is fetched from the secret specified in the secretKeyRef.
+  # If no secret key reference is specified then a secret named for the release is used.
+  # If value is specified then it is injected directly into the environment.
+  database:
+    URL:
+      value: ""
+      secretKeyRef:
+        name: ""
+        key: "DATABASE_URL"
+
+    # DEPRECATED: use ?read_only=true as part of the database DSN instead.
+    readOnly: false
+
+  # Telemetry is primarily configured using the open telemetry sdk environment variables.
+  # The following configuration is used to enable/disable telemetry and to set values
+  # for custom telemetry.
+  # NOTES: 'opentelemetry.serviceName' uses env var: OTEL_SERVICE_NAME
+  # 'app.telemetry.serviceAddr' uses env var: GIMLET_OTEL_SERVICE_ADDR
+  telemetry:
+    enabled: true
+    serviceAddr: null
+
+# This section defines the secrets being used by <CHARTNAME>.
+# Generally speaking, we expect these secrets to be pre-installed in the cluster and
+# referenced by the name and/or mount path below. If you want Helm to create the secrets,
+# set create to true and specify the secrets values.
+# See README.md for more information on secrets management.
+secrets:
+  create: false
+  annotations: {}
+
+  # Create a secret with the database URL.
+  # Must match the app.database.URL.secretKeyRef configuration.
+  databaseURL:
+    value: ""
+    secretKey: "DATABASE_URL"
+
+configMap:
+  # Mark create as false if the configmap already exists.
+  create: true
+
+  # Name of the configmap to use for the environment variables.
+  # If not specified, the chart name will be used.
+  name: ""
+  annotations: {}
+
+regioninfo:
+  enabled: false # Disable region info environment variables
+  configMap: ""  # Specify the name of the region-info configmap to use
+
+opentelemetry:
+  enabled: false
+
+# Additional pod spec configuration
+pod:
+  annotations: {}
+  labels: {}
+  securityContext: {}
+  resources: {}
+
+# Additional container spec configuration
+containers:
+  securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# Configuration for the <CHARTNAME> service.
+service:
+  type: ClusterIP
+  port: 8888
+
+# Configuration for the <CHARTNAME> ingress.
+# Rotational clusters use Traefik ingress routes as defined below.
+ingress:
+  enabled: false
+  hostname: ""
+  apiVersion: traefik.io/v1alpha1
+  className: IngressRoute
+  annotations: {}
+  entryPoints:
+    - websecure
+  tls: {}
+
+# Expose the service via gateway-api HTTPRoute
+# Requires Gateway API resources and suitable controller installed within the cluster.
+httpRoute:
+  enabled: false
+  annotations: {}
+
+  # Which Gateways this Route is attached to.
+  parentRefs:
+  - name: gateway
+    sectionName: http
+    # namespace: default
+
+  # Hostnames matching HTTP header.
+  hostnames:
+  - <CHARTNAME>.local
+
+  # List of rules and filters applied.
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /headers
+
+# The liveness probe requires <CHARTNAME> to be running.
+livenessProbe:
+  httpGet:
+    path: /livez
+    port: 8888
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: liveness
+  initialDelaySeconds: 1
+  periodSeconds: 15
+
+# The readiness probe requires <CHARTNAME> to be running and connected to the database.
+readinessProbe:
+  httpGet:
+    path: /readyz
+    port: 8888
+    httpHeaders:
+    - name: X-Kubernetes-Probe
+      value: readiness
+  initialDelaySeconds: 5
+  periodSeconds: 30
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+# Pod requested resources and limits.
+resources: {}
+
+# Node selector for the pods.
+nodeSelector: {}
+
+# Tolerations for the pods.
+tolerations: []
+
+# Affinity rules for the pods.
+affinity: {}

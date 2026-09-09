@@ -1,0 +1,18 @@
+{{- if .Values.configMap.create -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "<CHARTNAME>.configMapName" . }}
+  labels:
+    {{- include "<CHARTNAME>.labels" . | nindent 4 }}
+  {{- with .Values.configMap.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{ include "envvar" "MAINTENANCE" }}: {{ .Values.app.maintenance | quote }}
+  {{ include "envvar" "MODE" }}: {{ (default "release" (default .Values.global.mode .Values.app.mode)) | quote }}
+  {{ include "envvar" "LOG_LEVEL" }}: {{ (default "info" (default .Values.global.logging.level .Values.app.logging.level)) | quote }}
+  {{ include "envvar" "CONSOLE_LOG" }}: {{ (default "false" (default .Values.global.logging.console .Values.app.logging.console)) | quote }}
+  {{ include "envvar" "BIND_ADDR" }}: ":{{ .Values.service.port }}"
+{{- end -}}

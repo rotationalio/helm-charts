@@ -1,0 +1,40 @@
+apiVersion: v2
+name: <CHARTNAME>
+description: A Helm chart for <CHARTNAME>
+
+# Project Information
+home: https://rotational.io
+icon: https://rotational.io/img/favicon.png
+sources:
+  - https://github.com/rotationalio/<CHARTNAME>
+maintainers:
+  - name: Rotational Labs
+    email: support@rotational.io
+keywords:
+  - <CHARTNAME>
+
+# A chart can be either an 'application' or a 'library' chart. Applications are deployed
+# to clusters whereas library charts are used to share common utilities between charts.
+type: application
+
+# This is the chart version. This version number should be incremented each time you
+# make changes to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+# See the README.md for more information on versioning.
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number
+# should be incremented each time you make changes to the application.
+appVersion: "1.0.0"
+
+# Dependencies that the chart uses to render additional templates.
+# Use helm dep update to ensure the Chart.lock file is up to date.
+dependencies:
+  - name: opentelemetry
+    version: ~1.0
+    repository: file://../opentelemetry
+    condition: opentelemetry.enabled
+  - name: regioninfo
+    version: ~1.1
+    repository: file://../regioninfo
+    condition: regioninfo.enabled
