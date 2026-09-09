@@ -559,6 +559,36 @@ entries:
   endeavor:
   - apiVersion: v2
     appVersion: 1.2.0
+    created: "2026-09-09T18:03:01.5505996Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.15
+    - condition: genoa.enabled
+      name: genoa
+      repository: file://../genoa
+      version: ~1.2
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: a473f85fedaac36a1da90ebd3409081c746a4b6867efdd629fa33832fa35b93d
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-1.2.4/endeavor-1.2.4.tgz
+    version: 1.2.4
+  - apiVersion: v2
+    appVersion: 1.2.0
     created: "2026-09-09T15:18:08.743424516Z"
     dependencies:
     - condition: quarterdeck.enabled
@@ -2781,6 +2811,23 @@ entries:
     version: 0.1.0
   genoa:
   - apiVersion: v2
+    appVersion: 1.1.1
+    created: "2026-09-09T18:03:01.721553238Z"
+    description: Implements Rotational environment setup and deployment management.
+    digest: 444ba0eb19f74a1d8bc35b4da1bf3f7e309977eb07a5d9f532c5d2ea428bbe82
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: genoa
+    sources:
+    - https://github.com/rotationalio/genoa
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/genoa-1.2.0/genoa-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
     appVersion: 1.1.0
     created: "2026-09-06T19:47:09.6446808Z"
     description: Implements Rotational environment setup and deployment management.
@@ -3804,4 +3851,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-09-09T15:18:08.937167864Z"
+generated: "2026-09-09T18:03:01.721948087Z"
