@@ -278,6 +278,23 @@ quarterdeck:
     burst: 512
     cacheTTL: 10m
 
+  # Bootstrap the database with a superuser account defined from a secret.
+  bootstrap:
+    enabled: false
+    superuser:
+      name:
+        value: ""
+        secretKeyRef: null
+      email:
+        value: ""
+        secretKeyRef: null
+      password:
+        value: ""
+        secretKeyRef: null
+      forcePassword:
+        value: false
+        secretKeyRef: null
+
 # Specify the secrets to be used by Quarterdeck.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
 # by the name and keys below. If you want Helm to create the secrets, set create to true

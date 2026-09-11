@@ -198,6 +198,46 @@ env:
     value: {{ .Values.quarterdeck.rateLimit.burst | quote }}
   - name: QD_RATE_LIMIT_CACHE_TTL
     value: {{ .Values.quarterdeck.rateLimit.cacheTTL | quote }}
+  {{- if .Values.quarterdeck.bootstrap.enabled }}
+  - name: QD_BOOTSTRAP_ENABLED
+    value: "true"
+  - name: QD_BOOTSTRAP_SUPERUSER_NAME
+  {{- if .Values.quarterdeck.bootstrap.superuser.name.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.bootstrap.superuser.name.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.bootstrap.superuser.name.secretKeyRef.key }}
+  {{- else }}
+    value: {{ .Values.quarterdeck.bootstrap.superuser.name.value | default "" | quote }}
+  {{- end }}
+  - name: QD_BOOTSTRAP_SUPERUSER_EMAIL
+  {{- if .Values.quarterdeck.bootstrap.superuser.email.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.bootstrap.superuser.email.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.bootstrap.superuser.email.secretKeyRef.key }}
+  {{- else }}
+    value: {{ .Values.quarterdeck.bootstrap.superuser.email.value | default "" | quote }}
+  {{- end }}
+  - name: QD_BOOTSTRAP_SUPERUSER_PASSWORD
+  {{- if .Values.quarterdeck.bootstrap.superuser.password.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.bootstrap.superuser.password.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.bootstrap.superuser.password.secretKeyRef.key }}
+  {{- else }}
+    value: {{ .Values.quarterdeck.bootstrap.superuser.password.value | default "" | quote }}
+  {{- end }}
+  - name: QD_BOOTSTRAP_SUPERUSER_FORCE_PASSWORD
+  {{- if .Values.quarterdeck.bootstrap.superuser.forcePassword.secretKeyRef }}
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.quarterdeck.bootstrap.superuser.forcePassword.secretKeyRef.name }}
+        key: {{ .Values.quarterdeck.bootstrap.superuser.forcePassword.secretKeyRef.key }}
+  {{- else }}
+    value: {{ .Values.quarterdeck.bootstrap.superuser.forcePassword.value | default "false" | quote }}
+  {{- end }}
+  {{- end }}
   {{- include "opentelemetry.environment" . | nindent 2 -}}
 {{- end -}}
 
