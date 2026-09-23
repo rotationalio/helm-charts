@@ -27,8 +27,8 @@ strategy:
 
 image:
   repository: rotationalio/endeavor
-  pullPolicy: Always   # Specify image pull policy (Always, IfNotPresent, Never).
-  tag: ""              # Overrides the image tag whose default is the chart appVersion.
+  pullPolicy: Always # Specify image pull policy (Always, IfNotPresent, Never).
+  tag: "" # Overrides the image tag whose default is the chart appVersion.
 
 imagePullSecrets: []
 
@@ -91,12 +91,15 @@ endeavor:
   auth:
     # Override global.issuer (do not set unless you know what you're doing)
     quarterdeckURL: null
+    quarterdeckCSRFNamespace: quarterdeck
 
     # Override endeavor.origin as the primary audience (do not set unless you know what you're doing)
     audience: null
 
   # CSRF protection configuration
   csrf:
+    disable: false
+    namespace: endeavor
     cookieTTL: 15m
 
   # Manages browser security features such as Referrers, HSTS and Content Security Policies.
@@ -274,7 +277,6 @@ endeavor:
   blobs:
     uri: file:///blobs
 
-
 # Genoa is the genesis agent for Endeavor, if enabled it is run as a pre-sync job
 # before the Endeavor development is launched.
 genoa:
@@ -293,16 +295,16 @@ genoa:
 
     # These are the endeavor specific commands
     commands:
-    - kind: EnsureDatabase
-      args: {}
-    - kind: JWKSRotation
-      args: {}
-    - kind: CofferRotation
-      args:
-        namespaces:
-          - ""
-          - "providers"
-          - "capabilities"
+      - kind: EnsureDatabase
+        args: {}
+      - kind: JWKSRotation
+        args: {}
+      - kind: CofferRotation
+        args:
+          namespaces:
+            - ""
+            - "providers"
+            - "capabilities"
 
 # PVC for local blob storage when endeavor.blobs.uri uses the file:// scheme. Ignored for
 # non-file URIs. If existingClaim is set, the chart does not create a PVC and mounts that claim.
@@ -322,6 +324,13 @@ storage:
 
 quarterdeck:
   enabled: true
+
+  # Quarterdeck's configuration
+  quarterdeck:
+    csrf:
+      # Set this to the tenant domain when Quarterdeck is served from a subdomain,
+      # e.g. tenant.example.com for auth.tenant.example.com.
+      cookieDomain: ""
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced

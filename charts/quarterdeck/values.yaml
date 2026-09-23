@@ -140,6 +140,15 @@ quarterdeck:
 
   # Manages CSRF (cross-site request forgery) protection and middleware.
   csrf:
+    # The namespace used to identify the CSRF cookie.
+    namespace: quarterdeck
+
+    # Disable CSRF protection. CSRF protection is enabled by default.
+    disable: false
+
+    # Explicit shared cookie domain, e.g. tenant.example.com.
+    cookieDomain: ""
+
     cookieTTL: "15m"
 
     # The secret to use for CSRF protection. If not set, a random secret will be generated.

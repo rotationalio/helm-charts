@@ -49,8 +49,11 @@ endeavor:
   shutdownTimeout: 183s
   auth:
     quarterdeckURL: "https://quarterdeck.example.com"
+    quarterdeckCSRFNamespace: quarterdeck
     audience: "https://endeavor.example.com"
   csrf:
+    disable: false
+    namespace: endeavor
     cookieTTL: 20m
   secure:
     contentTypeNosniff: true
@@ -174,6 +177,9 @@ storage:
 
 quarterdeck:
   enabled: true
+  quarterdeck:
+    csrf:
+      cookieDomain: tenant.example.com
 
 secrets:
   create: true

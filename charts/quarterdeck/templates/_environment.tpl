@@ -109,6 +109,12 @@ env:
     value: {{ .Values.quarterdeck.auth.refreshTokenTTL | quote }}
   - name: QD_AUTH_TOKEN_OVERLAP
     value: {{ .Values.quarterdeck.auth.tokenOverlap | quote }}
+  - name: QD_CSRF_NAMESPACE
+    value: {{ .Values.quarterdeck.csrf.namespace | quote }}
+  - name: QD_CSRF_DISABLED
+    value: {{ .Values.quarterdeck.csrf.disable | quote }}
+  - name: QD_CSRF_COOKIE_DOMAIN
+    value: {{ .Values.quarterdeck.csrf.cookieDomain | quote }}
   - name: QD_CSRF_COOKIE_TTL
     value: {{ .Values.quarterdeck.csrf.cookieTTL | quote }}
   {{- if or .Values.quarterdeck.csrf.secret.secretKeyRef .Values.quarterdeck.csrf.secret.value }}

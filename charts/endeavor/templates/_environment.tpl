@@ -47,8 +47,14 @@ env:
     value: {{ .Values.endeavor.static.url | quote }}
   - name: ENDEAVOR_AUTH_QUARTERDECK_URL
     value: {{ include "endeavor.quarterdeckURL" . }}
+  - name: ENDEAVOR_AUTH_QUARTERDECK_CSRF_NAMESPACE
+    value: {{ .Values.endeavor.auth.quarterdeckCSRFNamespace | quote }}
   - name: ENDEAVOR_AUTH_AUDIENCE
     value: {{ include "endeavor.audience" . }}
+  - name: ENDEAVOR_CSRF_DISABLE
+    value: {{ .Values.endeavor.csrf.disable | quote }}
+  - name: ENDEAVOR_CSRF_NAMESPACE
+    value: {{ .Values.endeavor.csrf.namespace | quote }}
   - name: ENDEAVOR_CSRF_COOKIE_TTL
     value: {{ .Values.endeavor.csrf.cookieTTL | quote }}
   {{- if or .Values.secrets.csrfSecret.secretName (and .Values.secrets.create .Values.secrets.csrfSecret.value) }}

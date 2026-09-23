@@ -7,6 +7,11 @@ global:
 
 endeavor:
   origin: http://endeavor.svc.cluster.local
+  auth:
+    quarterdeckCSRFNamespace: quarterdeck
+  csrf:
+    disable: false
+    namespace: endeavor
 
 secrets:
   create: true
@@ -20,3 +25,6 @@ genoa:
 
 quarterdeck:
   enabled: true
+  quarterdeck:
+    csrf:
+      cookieDomain: tenant.example.com

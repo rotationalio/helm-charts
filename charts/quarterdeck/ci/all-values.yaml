@@ -8,6 +8,8 @@ quarterdeck:
 
   docsName: "Testing Documentation"
   supportEmail: "testing@support.io"
+  csrf:
+    cookieDomain: tenant.example.com
 
   database:
     URL:
