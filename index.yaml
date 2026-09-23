@@ -558,6 +558,36 @@ entries:
     version: 0.2.1
   endeavor:
   - apiVersion: v2
+    appVersion: 1.4.2
+    created: "2026-09-23T23:44:08.34839988Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.17
+    - condition: genoa.enabled
+      name: genoa
+      repository: file://../genoa
+      version: ~1.4
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 5e57f0d945789b4150fd8921a142f243fd652c391fc2b62fe1efef31de26a0b0
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-1.4.2/endeavor-1.4.2.tgz
+    version: 1.4.2
+  - apiVersion: v2
     appVersion: 1.4.1
     created: "2026-09-23T22:52:33.115661839Z"
     dependencies:
@@ -3285,6 +3315,28 @@ entries:
     version: 1.0.0
   quarterdeck:
   - apiVersion: v2
+    appVersion: 0.17.1
+    created: "2026-09-23T23:44:08.598919237Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: 910167ac2e3e20523d700c8a3df58b9cb4a8b04a05dbd1f0f967d95360310b6b
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.17.1/quarterdeck-0.17.1.tgz
+    version: 0.17.1
+  - apiVersion: v2
     appVersion: 0.17.0
     created: "2026-09-23T22:52:33.242220676Z"
     dependencies:
@@ -4079,4 +4131,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-09-23T22:52:33.242859582Z"
+generated: "2026-09-23T23:44:08.5994835Z"
