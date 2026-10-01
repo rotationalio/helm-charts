@@ -24,7 +24,6 @@ imagePullSecrets: []
 
 # Global variables are available to both Endeavor and Quarterdeck charts
 global:
-
   # Origins specifies all hosts that are in the Endeavor ecosystem and is used for the
   # allowed origins setting in CORS and the audience value in Quarterdeck.
   # Should be a full URLs with scheme (e.g. https://) and no trailing slashes.
@@ -44,7 +43,6 @@ global:
   # Specify a global mode for all microservices (release, debug, testing)
   # Only specify debug mode if you know what you're doing.
   mode: release
-
 
 # Set the specific configuration for the Quarterdeck service. For more information about
 # the various configuration options, use quarterdeck config on the command line.
@@ -98,7 +96,6 @@ quarterdeck:
 
   # Modifies how Quarterdeck handles authentication and authorization for its applications.
   auth:
-
     # If the JWKS configuration is empty, then Quarterdeck will generate a new key pair on startup.
     jwks:
       # If using genoa to rotate JWKS keys, set the configuration secret reference here.
@@ -138,23 +135,23 @@ quarterdeck:
     refreshTokenTTL: 4h
     tokenOverlap: -15m
 
-  # Manages CSRF (cross-site request forgery) protection and middleware.
+  # Fetch Metadata CSRF protection. expectedOrigins is separate from CORS allowOrigins;
+  # when empty, the chart uses the resolved CORS origins as trusted browser origins.
   csrf:
-    # The namespace used to identify the CSRF cookie.
     namespace: quarterdeck
-
-    # Disable CSRF protection. CSRF protection is enabled by default.
     disable: false
-
-    # Explicit shared cookie domain, e.g. tenant.example.com.
-    cookieDomain: ""
-
-    cookieTTL: "15m"
-
-    # The secret to use for CSRF protection. If not set, a random secret will be generated.
-    secret:
-      value: ""
-      secretKeyRef: null
+    expectedOrigins: []
+    safeHTTPMethods:
+      - GET
+      - HEAD
+      - OPTIONS
+    allowMissingMetadata: false
+    allowUnknownSite: false
+    allowSiteNone: false
+    allowedFetchModes: []
+    allowedFetchDestinations: []
+    requireFetchMode: false
+    requireFetchDestination: false
 
   # Manages browser security features such as Referrers, HSTS and Content Security Policies.
   secure:
@@ -250,14 +247,14 @@ quarterdeck:
       username: ""
       password:
         value: ""
-        secretKeyRef: null  # { name: "", key: "" }
+        secretKeyRef: null # { name: "", key: "" }
       useCRAMMD5: false
       poolSize: 2
 
     sendgrid:
       apiKey:
         value: ""
-        secretKeyRef: null  # { name: "", key: "" }
+        secretKeyRef: null # { name: "", key: "" }
 
     # Configuration for timeouts and retries when sending emails.
     backoff:
@@ -317,9 +314,9 @@ secrets:
   # If setting the quarterdeck.auth.jwks.keys and the secrets.jwks.keyhs with create,
   # ensure the filename of the keys matches the value of the key ID in quarterdeck.
   jwks:
-    secretRef: ""           # The name of the secret to use/create for the JWKS keys (should be unique since all secrets are mounted as files)
-    mountPath: /data/jwks   # The path to mount the JWKS keys to in the pod.
-    keys: {}                # If create is true, then the key value should be the filename of the key and the value should be PEM encoded private keys.
+    secretRef: "" # The name of the secret to use/create for the JWKS keys (should be unique since all secrets are mounted as files)
+    mountPath: /data/jwks # The path to mount the JWKS keys to in the pod.
+    keys: {} # If create is true, then the key value should be the filename of the key and the value should be PEM encoded private keys.
 
 # Additional pod spec configuration
 pod:
@@ -365,8 +362,8 @@ livenessProbe:
     path: /livez
     port: 8888
     httpHeaders:
-    - name: X-Kubernetes-Probe
-      value: liveness
+      - name: X-Kubernetes-Probe
+        value: liveness
   initialDelaySeconds: 2
   periodSeconds: 10
 
@@ -376,8 +373,8 @@ readinessProbe:
     path: /readyz
     port: 8888
     httpHeaders:
-    - name: X-Kubernetes-Probe
-      value: readiness
+      - name: X-Kubernetes-Probe
+        value: readiness
   initialDelaySeconds: 2
   periodSeconds: 10
 

@@ -113,21 +113,24 @@ env:
     value: {{ .Values.quarterdeck.csrf.namespace | quote }}
   - name: QD_CSRF_DISABLED
     value: {{ .Values.quarterdeck.csrf.disable | quote }}
-  - name: QD_CSRF_COOKIE_DOMAIN
-    value: {{ .Values.quarterdeck.csrf.cookieDomain | quote }}
-  - name: QD_CSRF_COOKIE_TTL
-    value: {{ .Values.quarterdeck.csrf.cookieTTL | quote }}
-  {{- if or .Values.quarterdeck.csrf.secret.secretKeyRef .Values.quarterdeck.csrf.secret.value }}
-  - name: QD_CSRF_SECRET
-    {{- if .Values.quarterdeck.csrf.secret.secretKeyRef }}
-    valueFrom:
-      secretKeyRef:
-        name: {{ .Values.quarterdeck.csrf.secret.secretKeyRef.name }}
-        key: {{ .Values.quarterdeck.csrf.secret.secretKeyRef.key }}
-    {{- else }}
-    value: {{ .Values.quarterdeck.csrf.secret.value | quote }}
-    {{- end }}
-  {{- end }}
+  - name: QD_CSRF_EXPECTED_ORIGINS
+    value: {{ include "quarterdeck.csrfExpectedOrigins" . }}
+  - name: QD_CSRF_SAFE_HTTP_METHODS
+    value: {{ join "," .Values.quarterdeck.csrf.safeHTTPMethods | quote }}
+  - name: QD_CSRF_ALLOW_MISSING_METADATA
+    value: {{ .Values.quarterdeck.csrf.allowMissingMetadata | quote }}
+  - name: QD_CSRF_ALLOW_UNKNOWN_SITE
+    value: {{ .Values.quarterdeck.csrf.allowUnknownSite | quote }}
+  - name: QD_CSRF_ALLOW_SITE_NONE
+    value: {{ .Values.quarterdeck.csrf.allowSiteNone | quote }}
+  - name: QD_CSRF_ALLOWED_FETCH_MODES
+    value: {{ join "," .Values.quarterdeck.csrf.allowedFetchModes | quote }}
+  - name: QD_CSRF_ALLOWED_FETCH_DESTINATIONS
+    value: {{ join "," .Values.quarterdeck.csrf.allowedFetchDestinations | quote }}
+  - name: QD_CSRF_REQUIRE_FETCH_MODE
+    value: {{ .Values.quarterdeck.csrf.requireFetchMode | quote }}
+  - name: QD_CSRF_REQUIRE_FETCH_DESTINATION
+    value: {{ .Values.quarterdeck.csrf.requireFetchDestination | quote }}
   - name: QD_SECURE_CONTENT_TYPE_NOSNIFF
     value: {{ .Values.quarterdeck.secure.contentTypeNosniff | quote }}
   {{- if .Values.quarterdeck.secure.crossOriginOpenerPolicy }}
@@ -278,6 +281,14 @@ env:
 {{- join "," .Values.global.origins | quote -}}
 {{- else -}}
 {{ .Values.global.issuer | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "quarterdeck.csrfExpectedOrigins" -}}
+{{- if .Values.quarterdeck.csrf.expectedOrigins -}}
+{{- join "," .Values.quarterdeck.csrf.expectedOrigins | quote -}}
+{{- else -}}
+{{- include "quarterdeck.allowOrigins" . -}}
 {{- end -}}
 {{- end -}}
 

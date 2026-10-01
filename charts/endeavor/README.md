@@ -69,6 +69,79 @@ Radish queue connection settings are managed by Endeavor's store. Configure task
 queue behavior with the `RADISH_*` tunables below; do not use
 `ENDEAVOR_RADISH_*` variables.
 
+## Fetch Metadata CSRF protection
+
+Endeavor uses Gimlet's Fetch Metadata CSRF protection. Same-origin mutations pass;
+same-site mutations require a trusted exact `Origin`. Requests with missing or
+unknown fetch metadata require a trusted `Origin` or `Referer`. Explicit cross-site
+mutations and `Sec-Fetch-Site: none` mutations are rejected by default. Safe methods
+default to `GET,HEAD,OPTIONS`.
+
+Configure the middleware under `endeavor.csrf`. `expectedOrigins` is separate from
+CORS `allowOrigins`; when it is empty, Endeavor uses the resolved CORS origins
+(`endeavor.allowOrigins`, `global.origins`, or `endeavor.origin`, in that order).
+Specify a non-empty `expectedOrigins` list to override this fallback. Origins must
+be exact browser-facing HTTP(S) origins (scheme and host, including a non-default
+port when applicable), with no wildcard domains or URL paths. Lists are exported
+as comma-separated environment variables. Boolean relaxations default to `false`,
+and fetch mode/destination allowlists default to empty.
+
+For example, these configured origins automatically become the CSRF expected origins
+unless `endeavor.csrf.expectedOrigins` is set explicitly:
+
+```yaml
+global:
+  origins:
+    - https://endeavor.example.com
+    - https://quarterdeck.example.com
+endeavor:
+  origin: https://endeavor.example.com
+  csrf:
+    namespace: endeavor
+    disable: false
+    expectedOrigins: []
+    safeHTTPMethods: [GET, HEAD, OPTIONS]
+    allowMissingMetadata: false
+    allowUnknownSite: false
+    allowSiteNone: false
+    allowedFetchModes: []
+    allowedFetchDestinations: []
+    requireFetchMode: false
+    requireFetchDestination: false
+```
+
+The expected-origin trust list and CORS `allowOrigins` list serve different policies.
+The namespace configures Endeavor's CSRF error response header; it is separate from
+`endeavor.auth.quarterdeckCSRFNamespace`, which determines the header Endeavor expects
+from Quarterdeck. Preserve the existing authentication cookie settings when changing
+CSRF configuration.
+
+When Quarterdeck is enabled as Endeavor's dependency, configure its CSRF middleware at
+`quarterdeck.quarterdeck.csrf` (the first `quarterdeck` selects the dependency chart):
+
+```yaml
+quarterdeck:
+  enabled: true
+  quarterdeck:
+    csrf:
+      namespace: quarterdeck
+      disable: false
+      # Empty uses Quarterdeck's resolved CORS origins; a non-empty list overrides them.
+      expectedOrigins: []
+      safeHTTPMethods: [GET, HEAD, OPTIONS]
+      allowMissingMetadata: false
+      allowUnknownSite: false
+      allowSiteNone: false
+      allowedFetchModes: []
+      allowedFetchDestinations: []
+      requireFetchMode: false
+      requireFetchDestination: false
+```
+
+Quarterdeck's empty `expectedOrigins` falls back to its own resolved CORS origins
+(`quarterdeck.allowOrigins`, `global.origins`, or `global.issuer`). This configuration
+is independent of Endeavor's `endeavor.csrf` settings.
+
 ```text
 This application is configured via the environment. The following environment
 variables can be used:
@@ -173,16 +246,66 @@ ENDEAVOR_AUTH_AUDIENCE
   [type]        String
   [default]     http://localhost:8000
   [required]
-ENDEAVOR_CSRF_COOKIE_TTL
-  [description] the duration for which CSRF tokens are valid
-  [type]        Duration
-  [default]     15m
+ENDEAVOR_CSRF_DISABLED
+  [description] if true, logs would-be CSRF rejections without blocking requests
+  [type]        True or False
+  [default]     false
   [required]
-ENDEAVOR_CSRF_SECRET
-  [description] a hexadecimal secret key for signing CSRF tokens; if omitted a random key will be generated
+ENDEAVOR_CSRF_NAMESPACE
+  [description] namespace used for Endeavor's CSRF error response header
   [type]        String
+  [default]     endeavor
+  [required]
+ENDEAVOR_AUTH_QUARTERDECK_CSRF_NAMESPACE
+  [description] namespace used for the CSRF error response header expected from Quarterdeck
+  [type]        String
+  [default]     quarterdeck
+  [required]
+ENDEAVOR_CSRF_EXPECTED_ORIGINS
+  [description] exact trusted browser-facing HTTP(S) origins; defaults to the resolved CORS allowed origins
+  [type]        Comma-separated list of String
+  [default]     resolved CORS origins
+  [required]
+ENDEAVOR_CSRF_SAFE_HTTP_METHODS
+  [description] methods that are safe from CSRF checks
+  [type]        Comma-separated list of String
+  [default]     GET,HEAD,OPTIONS
+  [required]
+ENDEAVOR_CSRF_ALLOW_MISSING_METADATA
+  [description] allow requests missing Fetch Metadata headers
+  [type]        True or False
+  [default]     false
+  [required]
+ENDEAVOR_CSRF_ALLOW_UNKNOWN_SITE
+  [description] allow requests with unknown Fetch Metadata site values
+  [type]        True or False
+  [default]     false
+  [required]
+ENDEAVOR_CSRF_ALLOW_SITE_NONE
+  [description] allow requests with Sec-Fetch-Site: none
+  [type]        True or False
+  [default]     false
+  [required]
+ENDEAVOR_CSRF_ALLOWED_FETCH_MODES
+  [description] allowed Sec-Fetch-Mode values
+  [type]        Comma-separated list of String
   [default]
-  [required]    false
+  [required]
+ENDEAVOR_CSRF_ALLOWED_FETCH_DESTINATIONS
+  [description] allowed Sec-Fetch-Dest values
+  [type]        Comma-separated list of String
+  [default]
+  [required]
+ENDEAVOR_CSRF_REQUIRE_FETCH_MODE
+  [description] require a Sec-Fetch-Mode header
+  [type]        True or False
+  [default]     false
+  [required]
+ENDEAVOR_CSRF_REQUIRE_FETCH_DESTINATION
+  [description] require a Sec-Fetch-Dest header
+  [type]        True or False
+  [default]     false
+  [required]
 ENDEAVOR_SECURE_CONTENT_TYPE_NOSNIFF
   [description] If true, adds the X-Content-Type-Options header with the nosniff directive.
   [type]        True or False

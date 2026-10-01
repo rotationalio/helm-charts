@@ -5,11 +5,20 @@ global:
     - https://endeavor.svc.cluster.local
 
 quarterdeck:
-
   docsName: "Testing Documentation"
   supportEmail: "testing@support.io"
   csrf:
-    cookieDomain: tenant.example.com
+    namespace: quarterdeck-ci
+    disable: true
+    expectedOrigins: [https://quarterdeck-csrf.example.test]
+    safeHTTPMethods: [GET, HEAD]
+    allowMissingMetadata: true
+    allowUnknownSite: true
+    allowSiteNone: true
+    allowedFetchModes: [cors]
+    allowedFetchDestinations: [document]
+    requireFetchMode: true
+    requireFetchDestination: true
 
   database:
     URL:
@@ -84,7 +93,6 @@ quarterdeck:
         secretKeyRef:
           name: quarterdeck-superuser-credentials
           key: forceSuperuserPassword
-
 
 secrets:
   jwks:

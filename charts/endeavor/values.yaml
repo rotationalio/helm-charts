@@ -96,11 +96,23 @@ endeavor:
     # Override endeavor.origin as the primary audience (do not set unless you know what you're doing)
     audience: null
 
-  # CSRF protection configuration
+  # Fetch Metadata CSRF protection. expectedOrigins is separate from CORS allowOrigins;
+  # when empty, the chart uses the resolved CORS origins as trusted browser origins.
   csrf:
     disable: false
     namespace: endeavor
-    cookieTTL: 15m
+    expectedOrigins: []
+    safeHTTPMethods:
+      - GET
+      - HEAD
+      - OPTIONS
+    allowMissingMetadata: false
+    allowUnknownSite: false
+    allowSiteNone: false
+    allowedFetchModes: []
+    allowedFetchDestinations: []
+    requireFetchMode: false
+    requireFetchDestination: false
 
   # Manages browser security features such as Referrers, HSTS and Content Security Policies.
   secure:
@@ -324,13 +336,24 @@ storage:
 
 quarterdeck:
   enabled: true
-
-  # Quarterdeck's configuration
   quarterdeck:
+    # Quarterdeck CSRF is independently configurable from Endeavor's CSRF settings.
+    # An empty expectedOrigins list falls back to Quarterdeck's resolved CORS origins.
     csrf:
-      # Set this to the tenant domain when Quarterdeck is served from a subdomain,
-      # e.g. tenant.example.com for auth.tenant.example.com.
-      cookieDomain: ""
+      namespace: quarterdeck
+      disable: false
+      expectedOrigins: []
+      safeHTTPMethods:
+        - GET
+        - HEAD
+        - OPTIONS
+      allowMissingMetadata: false
+      allowUnknownSite: false
+      allowSiteNone: false
+      allowedFetchModes: []
+      allowedFetchDestinations: []
+      requireFetchMode: false
+      requireFetchDestination: false
 
 # Specify the secrets to be used by Endeavor.
 # Endeavor expects these secrets are already pre-installed in the cluster and referenced
@@ -350,10 +373,7 @@ secrets:
   databasePassword:
     secretName: ""
     value: ""
-  csrfSecret:
-    secretName: ""
-    secretKey: csrfSecret
-    value: ""
+
   # Coffer key material (ENDEAVOR_COFFER_KEYS string, e.g. ":<base64-pkcs8>").
   # Defaults to the same Secret as databaseURL when secretName is unset.
   cofferKeys:

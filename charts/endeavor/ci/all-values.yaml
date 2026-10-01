@@ -1,7 +1,7 @@
 global:
   origins:
-  - http://quarterdeck.svc.cluster.local
-  - http://endeavor.svc.cluster.local
+    - http://quarterdeck.svc.cluster.local
+    - http://endeavor.svc.cluster.local
 
   issuer: "http://quarterdeck.svc.cluster.local"
 
@@ -10,8 +10,17 @@ endeavor:
   auth:
     quarterdeckCSRFNamespace: quarterdeck
   csrf:
-    disable: false
-    namespace: endeavor
+    disable: true
+    namespace: endeavor-ci
+    expectedOrigins: [https://endeavor-csrf.example.test]
+    safeHTTPMethods: [GET, HEAD]
+    allowMissingMetadata: true
+    allowUnknownSite: true
+    allowSiteNone: true
+    allowedFetchModes: [cors]
+    allowedFetchDestinations: [document]
+    requireFetchMode: true
+    requireFetchDestination: true
 
 secrets:
   create: true
@@ -27,4 +36,14 @@ quarterdeck:
   enabled: true
   quarterdeck:
     csrf:
-      cookieDomain: tenant.example.com
+      namespace: quarterdeck-ci
+      disable: true
+      expectedOrigins: [https://quarterdeck-csrf.example.test]
+      safeHTTPMethods: [GET, HEAD]
+      allowMissingMetadata: true
+      allowUnknownSite: true
+      allowSiteNone: true
+      allowedFetchModes: [cors]
+      allowedFetchDestinations: [document]
+      requireFetchMode: true
+      requireFetchDestination: true

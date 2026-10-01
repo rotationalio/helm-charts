@@ -54,7 +54,17 @@ endeavor:
   csrf:
     disable: false
     namespace: endeavor
-    cookieTTL: 20m
+    expectedOrigins:
+      - https://endeavor.example.com
+      - https://quarterdeck.example.com
+    safeHTTPMethods: [GET, HEAD, OPTIONS]
+    allowMissingMetadata: false
+    allowUnknownSite: false
+    allowSiteNone: false
+    allowedFetchModes: []
+    allowedFetchDestinations: []
+    requireFetchMode: false
+    requireFetchDestination: false
   secure:
     contentTypeNosniff: true
     crossOriginOpenerPolicy: same-origin
@@ -179,7 +189,17 @@ quarterdeck:
   enabled: true
   quarterdeck:
     csrf:
-      cookieDomain: tenant.example.com
+      # Explicitly override the inherited global CORS origins.
+      expectedOrigins:
+        - https://auth.example.com
+      safeHTTPMethods: [GET, HEAD, OPTIONS]
+      allowMissingMetadata: false
+      allowUnknownSite: false
+      allowSiteNone: false
+      allowedFetchModes: []
+      allowedFetchDestinations: []
+      requireFetchMode: false
+      requireFetchDestination: false
 
 secrets:
   create: true
@@ -187,10 +207,6 @@ secrets:
     secretName: ""
     secretKey: databaseURL
     value: "postgres://user:pass@db.example.com:5432/endeavor"
-  csrfSecret:
-    secretName: ""
-    secretKey: csrfSecret
-    value: "00112233445566778899aabbccddeeff"
 
 pod:
   annotations:

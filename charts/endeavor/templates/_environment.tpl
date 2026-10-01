@@ -51,19 +51,28 @@ env:
     value: {{ .Values.endeavor.auth.quarterdeckCSRFNamespace | quote }}
   - name: ENDEAVOR_AUTH_AUDIENCE
     value: {{ include "endeavor.audience" . }}
-  - name: ENDEAVOR_CSRF_DISABLE
+  - name: ENDEAVOR_CSRF_DISABLED
     value: {{ .Values.endeavor.csrf.disable | quote }}
   - name: ENDEAVOR_CSRF_NAMESPACE
     value: {{ .Values.endeavor.csrf.namespace | quote }}
-  - name: ENDEAVOR_CSRF_COOKIE_TTL
-    value: {{ .Values.endeavor.csrf.cookieTTL | quote }}
-  {{- if or .Values.secrets.csrfSecret.secretName (and .Values.secrets.create .Values.secrets.csrfSecret.value) }}
-  - name: ENDEAVOR_CSRF_SECRET
-    valueFrom:
-      secretKeyRef:
-        name: {{ include "endeavor.csrfSecretName" . }}
-        key: {{ .Values.secrets.csrfSecret.secretKey }}
-  {{- end }}
+  - name: ENDEAVOR_CSRF_EXPECTED_ORIGINS
+    value: {{ include "endeavor.csrfExpectedOrigins" . }}
+  - name: ENDEAVOR_CSRF_SAFE_HTTP_METHODS
+    value: {{ join "," .Values.endeavor.csrf.safeHTTPMethods | quote }}
+  - name: ENDEAVOR_CSRF_ALLOW_MISSING_METADATA
+    value: {{ .Values.endeavor.csrf.allowMissingMetadata | quote }}
+  - name: ENDEAVOR_CSRF_ALLOW_UNKNOWN_SITE
+    value: {{ .Values.endeavor.csrf.allowUnknownSite | quote }}
+  - name: ENDEAVOR_CSRF_ALLOW_SITE_NONE
+    value: {{ .Values.endeavor.csrf.allowSiteNone | quote }}
+  - name: ENDEAVOR_CSRF_ALLOWED_FETCH_MODES
+    value: {{ join "," .Values.endeavor.csrf.allowedFetchModes | quote }}
+  - name: ENDEAVOR_CSRF_ALLOWED_FETCH_DESTINATIONS
+    value: {{ join "," .Values.endeavor.csrf.allowedFetchDestinations | quote }}
+  - name: ENDEAVOR_CSRF_REQUIRE_FETCH_MODE
+    value: {{ .Values.endeavor.csrf.requireFetchMode | quote }}
+  - name: ENDEAVOR_CSRF_REQUIRE_FETCH_DESTINATION
+    value: {{ .Values.endeavor.csrf.requireFetchDestination | quote }}
   - name: ENDEAVOR_SECURE_CONTENT_TYPE_NOSNIFF
     value: {{ .Values.endeavor.secure.contentTypeNosniff | quote }}
   {{- if .Values.endeavor.secure.crossOriginOpenerPolicy }}
@@ -223,6 +232,14 @@ env:
 {{- join "," .Values.global.origins | quote -}}
 {{- else -}}
 {{ .Values.endeavor.origin | quote }}
+{{- end -}}
+{{- end -}}
+
+{{- define "endeavor.csrfExpectedOrigins" -}}
+{{- if .Values.endeavor.csrf.expectedOrigins -}}
+{{- join "," .Values.endeavor.csrf.expectedOrigins | quote -}}
+{{- else -}}
+{{- include "endeavor.allowOrigins" . -}}
 {{- end -}}
 {{- end -}}
 

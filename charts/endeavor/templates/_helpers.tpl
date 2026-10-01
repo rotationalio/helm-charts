@@ -58,13 +58,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 {{- end -}}
 
-{{- define "endeavor.csrfSecretName" -}}
-{{- if .Values.secrets.create -}}
-{{ include "endeavor.fullname" . }}
-{{- else -}}
-{{ default (include "endeavor.fullname" .) .Values.secrets.csrfSecret.secretName }}
-{{- end -}}
-{{- end -}}
 
 {{- define "endeavor.hostname" -}}
 {{- if hasPrefix "https://" .Values.endeavor.origin  -}}
