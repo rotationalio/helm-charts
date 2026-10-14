@@ -1,12 +1,12 @@
 dependencies:
 - name: quarterdeck
   repository: file://../quarterdeck
-  version: 0.17.2
+  version: 0.18.0
 - name: genoa
   repository: file://../genoa
   version: 1.4.0
 - name: opentelemetry
   repository: file://../opentelemetry
   version: 1.0.1
-digest: sha256:aa39490e415157e16d3f523b2d4d500e8698b770e72616f29403b03b39c031ef
-generated: "2026-09-30T14:37:34.307556-10:00"
+digest: sha256:1383110c708014abb630196a1a17e9ba968b97950a86c3fbac2b3abf2b20c21c
+generated: "2026-10-14T10:05:36.797767-10:00"
