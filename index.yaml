@@ -3345,6 +3345,28 @@ entries:
     version: 1.0.0
   quarterdeck:
   - apiVersion: v2
+    appVersion: 0.18.1
+    created: "2026-10-16T18:53:11.67187756Z"
+    dependencies:
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Distributed authentication and authorization service for Rotational
+      applications.
+    digest: 46824747a6c07c3e89452423c97820a12f2e21f151a50ad9a35d36d1984dc078
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: quarterdeck
+    sources:
+    - https://github.com/rotationalio/quarterdeck
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/quarterdeck-0.18.1/quarterdeck-0.18.1.tgz
+    version: 0.18.1
+  - apiVersion: v2
     appVersion: 0.18.0
     created: "2026-10-14T20:12:48.196680431Z"
     dependencies:
@@ -4183,4 +4205,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-10-14T20:12:48.197235718Z"
+generated: "2026-10-16T18:53:11.672171784Z"
