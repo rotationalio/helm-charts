@@ -91,8 +91,26 @@ env:
   - name: ENDEAVOR_SECURE_HSTS_PRELOAD
     value: {{ .Values.endeavor.secure.hsts.preload | quote }}
   {{- end }}
-  - name: ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
+  - name: HORIZON_RENDERER_CACHE_SIZE
     value: {{ .Values.endeavor.horizon.rendererCacheSize | quote }}
+  - name: HORIZON_PROVIDER_CACHE_SIZE
+    value: {{ .Values.endeavor.horizon.providerCacheSize | quote }}
+  - name: HORIZON_MAX_TOOL_TURNS
+    value: {{ .Values.endeavor.horizon.maxToolTurns | quote }}
+  - name: HORIZON_ATTACHMENT_MAX_DOWNLOAD_BYTES
+    value: {{ .Values.endeavor.horizon.attachmentMaxDownloadBytes | quote }}
+  - name: HORIZON_ATTACHMENT_DOWNLOAD_TIMEOUT
+    value: {{ .Values.endeavor.horizon.attachmentDownloadTimeout | quote }}
+  - name: HORIZON_EXECUTION_TIMEOUT
+    value: {{ .Values.endeavor.horizon.executionTimeout | quote }}
+  - name: HORIZON_FINALIZE_TIMEOUT
+    value: {{ .Values.endeavor.horizon.finalizeTimeout | quote }}
+  - name: HORIZON_PROVIDER_REQUEST_TIMEOUT
+    value: {{ .Values.endeavor.horizon.providerRequestTimeout | quote }}
+  - name: HORIZON_HTTP_CLIENT_TIMEOUT
+    value: {{ .Values.endeavor.horizon.httpClientTimeout | quote }}
+  - name: HORIZON_BEST_EFFORT_PARSING
+    value: {{ .Values.endeavor.horizon.bestEffortParsing | quote }}
   - name: ENDEAVOR_COMPASS_BASE
     value: {{ .Values.endeavor.compass.base | quote }}
   - name: ENDEAVOR_COMPASS_TIMEOUT

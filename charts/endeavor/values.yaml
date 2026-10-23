@@ -202,9 +202,20 @@ endeavor:
   backup:
     enableAPI: false
 
-  # Horizon runtime configuration
+  # Horizon (go.rtnl.ai/horizon) runtime configuration
   horizon:
     rendererCacheSize: 128
+    providerCacheSize: 32
+    maxToolTurns: 32
+    attachmentMaxDownloadBytes: "67108864"
+    attachmentDownloadTimeout: 8s
+    executionTimeout: 0s
+    finalizeTimeout: 8s
+    providerRequestTimeout: 128s
+    httpClientTimeout: 768s
+    # Enables best-effort parsing of tool outputs by default for Endeavor's
+    # Horizon; Horizon normally sets this false by default.
+    bestEffortParsing: true
 
   # Compass specifies the configuration for the Compass client.
   compass:

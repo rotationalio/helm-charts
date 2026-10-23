@@ -136,6 +136,15 @@ endeavor:
     enableAPI: true
   horizon:
     rendererCacheSize: 256
+    providerCacheSize: 32
+    maxToolTurns: 32
+    attachmentMaxDownloadBytes: "67108864"
+    attachmentDownloadTimeout: 8s
+    executionTimeout: 0s
+    finalizeTimeout: 8s
+    providerRequestTimeout: 128s
+    httpClientTimeout: 768s
+    bestEffortParsing: true
   radish:
     managedDB: true
     numWorkers: 4
