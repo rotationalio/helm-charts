@@ -559,6 +559,36 @@ entries:
   endeavor:
   - apiVersion: v2
     appVersion: 1.5.0
+    created: "2026-10-23T03:56:06.272278485Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.18
+    - condition: genoa.enabled
+      name: genoa
+      repository: file://../genoa
+      version: ~1.4
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 1d55fedb42fbd90ab6b3d059d4f735ee1204770716be7d76813250fd9bc6a351
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-1.5.3/endeavor-1.5.3.tgz
+    version: 1.5.3
+  - apiVersion: v2
+    appVersion: 1.5.0
     created: "2026-10-16T19:09:26.020208515Z"
     dependencies:
     - condition: quarterdeck.enabled
@@ -4235,4 +4265,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-10-16T19:09:26.020443571Z"
+generated: "2026-10-23T03:56:06.272610071Z"
