@@ -176,8 +176,14 @@ endeavor:
         usernameKey: "beaconBasicAuthUsername"
         passwordKey: "beaconBasicAuthPassword"
   mcp:
-    refreshControllerInterval: 5m
-    integrationRefreshInterval: 60m
+    client:
+      refreshControllerInterval: 5m
+      integrationRefreshInterval: 60m
+    server:
+      enabled: true
+      allowWrites: true
+      include: [search, fetch]
+      exclude: [admin]
   telemetry:
     enabled: true
     serviceAddr: "endeavor.example.com:443"

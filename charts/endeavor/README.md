@@ -606,15 +606,35 @@ ENDEAVOR_HORIZON_RENDERER_CACHE_SIZE
   [type]        Integer
   [default]     128
   [required]
-ENDEAVOR_MCP_REFRESH_CONTROLLER_INTERVAL
-  [description] the interval between checking if MCP integrations require refreshing and if so running the integration refresh task for that specific integration (deafult every 5 minutes)
+ENDEAVOR_MCP_CLIENT_REFRESH_CONTROLLER_INTERVAL
+  [description] the interval between checking if MCP integrations require refreshing and if so running the integration refresh task for that specific integration (default every 5 minutes)
   [type]        Duration
   [default]     5m
   [required]
-ENDEAVOR_MCP_INTEGRATION_REFRESH_INTERVAL
-  [description] the time interval between refreshing an integration by requesting all of it&#39;s MCP server&#39;s metadata and listing all capabilities (default every 60 minutes)
+ENDEAVOR_MCP_CLIENT_INTEGRATION_REFRESH_INTERVAL
+  [description] the time interval between refreshing an integration by requesting all of its MCP server&#39;s metadata and listing all capabilities (default every 60 minutes)
   [type]        Duration
   [default]     60m
+  [required]
+ENDEAVOR_MCP_SERVER_ENABLED
+  [description] enable Endeavor&#39;s inbound MCP server routes
+  [type]        True or False
+  [default]     false
+  [required]
+ENDEAVOR_MCP_SERVER_ALLOW_WRITES
+  [description] allow writable MCP tools to modify data
+  [type]        True or False
+  [default]     false
+  [required]
+ENDEAVOR_MCP_SERVER_INCLUDE
+  [description] MCP tool names to expose; empty includes all registered tools
+  [type]        Comma-separated list of String
+  [default]
+  [required]
+ENDEAVOR_MCP_SERVER_EXCLUDE
+  [description] MCP tool names to hide; exclusions take precedence over include
+  [type]        Comma-separated list of String
+  [default]
   [required]
 ENDEAVOR_CATALOG_SYNC_CONTROLLER_INTERVAL
   [description] interval between catalog sync controller runs (0 disables)

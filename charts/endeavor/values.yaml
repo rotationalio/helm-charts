@@ -269,10 +269,16 @@ endeavor:
         usernameKey: beaconBasicAuthUsername
         passwordKey: beaconBasicAuthPassword
 
-  # MCP specifies the configuration for the MCP gateway and related systems
+  # MCP configures inbound MCP servers and outbound MCP integration clients.
   mcp:
-    refreshControllerInterval: null
-    integrationRefreshInterval: null
+    client:
+      refreshControllerInterval: null
+      integrationRefreshInterval: null
+    server:
+      enabled: false
+      allowWrites: false
+      include: []
+      exclude: []
 
   # Coffer encrypts application secrets at rest. When enabled, set secrets.cofferKeys
   # to a dedicated Secret containing ENDEAVOR_COFFER_KEYS (see endeavor README).

@@ -115,13 +115,25 @@ env:
     value: {{ .Values.endeavor.compass.base | quote }}
   - name: ENDEAVOR_COMPASS_TIMEOUT
     value: {{ .Values.endeavor.compass.timeout | quote }}
-  {{- if .Values.endeavor.mcp.refreshControllerInterval }}
-  - name: ENDEAVOR_MCP_REFRESH_CONTROLLER_INTERVAL
-    value: {{ .Values.endeavor.mcp.refreshControllerInterval | quote }}
+  {{- if .Values.endeavor.mcp.client.refreshControllerInterval }}
+  - name: ENDEAVOR_MCP_CLIENT_REFRESH_CONTROLLER_INTERVAL
+    value: {{ .Values.endeavor.mcp.client.refreshControllerInterval | quote }}
   {{- end }}
-  {{- if .Values.endeavor.mcp.integrationRefreshInterval }}
-  - name: ENDEAVOR_MCP_INTEGRATION_REFRESH_INTERVAL
-    value: {{ .Values.endeavor.mcp.integrationRefreshInterval | quote }}
+  {{- if .Values.endeavor.mcp.client.integrationRefreshInterval }}
+  - name: ENDEAVOR_MCP_CLIENT_INTEGRATION_REFRESH_INTERVAL
+    value: {{ .Values.endeavor.mcp.client.integrationRefreshInterval | quote }}
+  {{- end }}
+  - name: ENDEAVOR_MCP_SERVER_ENABLED
+    value: {{ .Values.endeavor.mcp.server.enabled | quote }}
+  - name: ENDEAVOR_MCP_SERVER_ALLOW_WRITES
+    value: {{ .Values.endeavor.mcp.server.allowWrites | quote }}
+  {{- if .Values.endeavor.mcp.server.include }}
+  - name: ENDEAVOR_MCP_SERVER_INCLUDE
+    value: {{ join "," .Values.endeavor.mcp.server.include | quote }}
+  {{- end }}
+  {{- if .Values.endeavor.mcp.server.exclude }}
+  - name: ENDEAVOR_MCP_SERVER_EXCLUDE
+    value: {{ join "," .Values.endeavor.mcp.server.exclude | quote }}
   {{- end }}
   - name: ENDEAVOR_CATALOG_SYNC_CONTROLLER_INTERVAL
     value: {{ .Values.endeavor.catalog.syncControllerInterval | quote }}
