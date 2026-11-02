@@ -127,6 +127,8 @@ env:
     value: {{ .Values.endeavor.mcp.server.enabled | quote }}
   - name: ENDEAVOR_MCP_SERVER_ALLOW_WRITES
     value: {{ .Values.endeavor.mcp.server.allowWrites | quote }}
+  - name: ENDEAVOR_MCP_SERVER_ALLOW_DESTRUCTIVE
+    value: {{ .Values.endeavor.mcp.server.allowDestructive | quote }}
   {{- if .Values.endeavor.mcp.server.include }}
   - name: ENDEAVOR_MCP_SERVER_INCLUDE
     value: {{ join "," .Values.endeavor.mcp.server.include | quote }}

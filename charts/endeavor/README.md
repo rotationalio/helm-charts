@@ -626,6 +626,11 @@ ENDEAVOR_MCP_SERVER_ALLOW_WRITES
   [type]        True or False
   [default]     false
   [required]
+ENDEAVOR_MCP_SERVER_ALLOW_DESTRUCTIVE
+  [description] allow destructive MCP tools to modify or delete data
+  [type]        True or False
+  [default]     false
+  [required]
 ENDEAVOR_MCP_SERVER_INCLUDE
   [description] MCP tool names to expose; empty includes all registered tools
   [type]        Comma-separated list of String
