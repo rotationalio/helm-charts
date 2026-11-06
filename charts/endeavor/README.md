@@ -631,6 +631,11 @@ ENDEAVOR_MCP_SERVER_ALLOW_DESTRUCTIVE
   [type]        True or False
   [default]     false
   [required]
+ENDEAVOR_MCP_SERVER_DISABLE_HANDLER_LOGGING
+  [description] disable MCP SDK HTTP handler logging
+  [type]        True or False
+  [default]     false
+  [required]
 ENDEAVOR_MCP_SERVER_INCLUDE
   [description] MCP tool names to expose; empty includes all registered tools
   [type]        Comma-separated list of String

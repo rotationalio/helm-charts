@@ -278,6 +278,7 @@ endeavor:
       enabled: false
       allowWrites: false
       allowDestructive: false
+      disableHandlerLogging: false
       include: []
       exclude: []
 

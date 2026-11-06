@@ -182,6 +182,7 @@ endeavor:
     server:
       enabled: true
       allowWrites: true
+      disableHandlerLogging: true
       include: [search, fetch]
       exclude: [admin]
   telemetry:

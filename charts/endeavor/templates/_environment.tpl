@@ -129,6 +129,8 @@ env:
     value: {{ .Values.endeavor.mcp.server.allowWrites | quote }}
   - name: ENDEAVOR_MCP_SERVER_ALLOW_DESTRUCTIVE
     value: {{ .Values.endeavor.mcp.server.allowDestructive | quote }}
+  - name: ENDEAVOR_MCP_SERVER_DISABLE_HANDLER_LOGGING
+    value: {{ .Values.endeavor.mcp.server.disableHandlerLogging | quote }}
   {{- if .Values.endeavor.mcp.server.include }}
   - name: ENDEAVOR_MCP_SERVER_INCLUDE
     value: {{ join "," .Values.endeavor.mcp.server.include | quote }}
