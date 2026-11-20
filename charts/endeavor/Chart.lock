@@ -7,6 +7,6 @@ dependencies:
   version: 1.4.0
 - name: opentelemetry
   repository: file://../opentelemetry
-  version: 1.0.1
-digest: sha256:a77099f36c5616f1abc68ea38a6f8e56743178f1aabf5d027729a169e6004d27
-generated: "2026-11-06T08:34:47.918977-10:00"
+  version: 1.0.2
+digest: sha256:fbf115de395fee611ba8b85e66348dced7ee740bff8b9d69c66a95f5fbcc05a2
+generated: "2026-11-19T18:14:20.401054-10:00"

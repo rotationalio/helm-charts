@@ -97,11 +97,11 @@
   value: {{ .Values.opentelemetry.span.linkCountLimit | quote }}
 {{- end }}
 {{- if and .Values.opentelemetry.span.eventAttributeCountLimit (gt (.Values.opentelemetry.span.eventAttributeCountLimit | int) 0) }}
-- name: OTEL_SPAN_EVENT_ATTRIBUTE_COUNT_LIMIT
+- name: OTEL_EVENT_ATTRIBUTE_COUNT_LIMIT
   value: {{ .Values.opentelemetry.span.eventAttributeCountLimit | quote }}
 {{- end }}
 {{- if and .Values.opentelemetry.span.linkAttributeCountLimit (gt (.Values.opentelemetry.span.linkAttributeCountLimit | int) 0) }}
-- name: OTEL_SPAN_LINK_ATTRIBUTE_COUNT_LIMIT
+- name: OTEL_LINK_ATTRIBUTE_COUNT_LIMIT
   value: {{ .Values.opentelemetry.span.linkAttributeCountLimit | quote }}
 {{- end }}
 {{- end -}}
