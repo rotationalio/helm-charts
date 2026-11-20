@@ -558,6 +558,36 @@ entries:
     version: 0.2.1
   endeavor:
   - apiVersion: v2
+    appVersion: 1.7.0
+    created: "2026-11-20T04:16:00.817074073Z"
+    dependencies:
+    - condition: quarterdeck.enabled
+      name: quarterdeck
+      repository: file://../quarterdeck
+      version: ~0.19
+    - condition: genoa.enabled
+      name: genoa
+      repository: file://../genoa
+      version: ~1.4
+    - name: opentelemetry
+      repository: file://../opentelemetry
+      version: ~1.0
+    description: Configure, evaluate, and extend LLMs for business workflows with
+      rigor and speed
+    digest: 67a41f7d487d129dc6545154e66cd545e6100ff437b23f217bd64dcb496a4c7c
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: endeavor
+    sources:
+    - https://github.com/rotationalio/endeavor
+    type: application
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/endeavor-1.7.0/endeavor-1.7.0.tgz
+    version: 1.7.0
+  - apiVersion: v2
     appVersion: 1.6.0
     created: "2026-11-06T18:40:15.709460053Z"
     dependencies:
@@ -3462,6 +3492,22 @@ entries:
     version: 0.2.0
   opentelemetry:
   - apiVersion: v2
+    created: "2026-11-20T04:16:01.082633013Z"
+    description: Configure OpenTelemetry environment variables for your application.
+    digest: 3b67964f628af0d661821123e5722024b83c40a0bad016cfa8da194c454f73cb
+    home: https://rotational.io
+    icon: https://rotational.io/img/favicon.png
+    maintainers:
+    - email: support@rotational.io
+      name: rotationalio
+    name: opentelemetry
+    sources:
+    - https://github.com/rotationalio/helm-charts
+    type: library
+    urls:
+    - https://github.com/rotationalio/helm-charts/releases/download/opentelemetry-1.0.2/opentelemetry-1.0.2.tgz
+    version: 1.0.2
+  - apiVersion: v2
     created: "2026-03-13T21:11:16.236297083Z"
     description: Configure OpenTelemetry environment variables for your application.
     digest: 4f23908a2e75dc9353b09d0a4775d18f229edac34d966194f1a9f5fd44ff462c
@@ -4377,4 +4423,4 @@ entries:
     urls:
     - https://github.com/rotationalio/helm-charts/releases/download/vanity-1.2.0/vanity-1.2.0.tgz
     version: 1.2.0
-generated: "2026-11-06T18:40:15.866114985Z"
+generated: "2026-11-20T04:16:01.083126502Z"
